@@ -1,0 +1,243 @@
+﻿@{
+    ViewData["Title"] = "Position Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+<div class="register-main-container">
+
+                <div class="card-body ">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="pos-table" class="myTableLarge" >
+                                         <thead>
+                                        <th>
+                                           <button class="register"  style ="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New Position" id="add-position"><i class="fas fa-user-plus"></i>Add New</button>
+                                        </th>
+                                        <th>Description</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody style="height: 150px;">
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+               
+                    </div>
+                </div>
+            </div>
+<div class="modal fade" id="positionmodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Offering Form</h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+                    <form action="" class="mod-form" id="submitpos">
+          
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="employeeID">Position Name<span class="req" >*</span></label>
+              <input type="text" value="" id="posname" class="mod-input" required />
+            </div>
+         
+          </div>
+          <div class="mod-form-row">
+               <div class="input-container-whole">
+              <label for="email">Position Description</label>
+              <input type="text" value="" id="desc" class="mod-input" />
+            </div>
+          </div>
+       
+          
+          <div class="actions" style="align-items: center;">
+            <div class="actionss">
+             @* <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button> *@
+             @* <input type="button" value="Add Mechanics" id="btn-register"/> <i class="fas fa-cogs"></i> *@
+
+            </div>
+
+            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="submit" value="Submit" id="btn-save"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+@section Scripts{
+<script>
+ $(document).ready(function () {
+  postable = $('#pos-table').DataTable({
+                     "columnDefs": [
+
+                        { "width": "80px", "targets": 0 },
+                        { "width": "150px", "targets": 1 },
+                        {  "width": "70px", "targets": 2 }
+                      ],
+                    order: [[ 2, "desc" ]],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                     "paging": true,
+                      "aLengthMenu": [10],
+                      "searching": true,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "",
+                    
+                }});
+ShowPositionList();
+ });
+
+
+$('#add-position').click(function () {
+            i_id = 0;
+            $('input[type="text"]').val("");
+            $('#positionmodal').modal('show');
+
+           });
+$('#pos-table').on('click', '.tbl-edit', function () {
+            i_id = $(this).data("id");
+             $("#posname ").val($(this).data("posname"));
+             $("#desc").val($(this).data("description"));
+            document.getElementById("btn-save").value = 'Update';
+             $('#positionmodal').modal('show');
+   });
+$('#submitpos').submit(function(e){
+       e.preventDefault();
+       
+       var data={};
+       data.id=i_id;
+      data.PositionName = $("#posname").val();
+      data.Description = $("#desc").val();
+       
+                        iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new User?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Register/SavePosition',
+                                        data: {
+                                            data: data,
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                      console.log(response.stats);
+                                      if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
+                                      {
+                                          
+                                          notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                          $("#h-close").click();
+                                          ShowPositionList();
+                                      }
+                                      else
+                                      {
+                                         notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
+                                      }
+                                            
+                                         $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+       
+                          
+      });
+ $('#pos-table').on('click', '.tbl-delete', function () {
+                      var data = {};
+                      data.id = $(this).data("id");
+                        
+                      iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Register/DeletePositionInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+                                    
+                                      console.log(data.stats);
+                                      if(data.stats=="Succesfully deleted" )
+                                      {
+                                          notifyMsg('Success!', data.stats, 'green', 'fas fa-check');
+                                          $("#h-close").click();
+                                          ShowPositionList();
+                                      }
+                                      else
+                                      {
+                                         notifyMsg('Warning!', data.stats, 'red', 'fas fa-exclamation-triangle');
+                                      }
+                                  
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+
+                    });
+
+</script>
+}

@@ -1,0 +1,433 @@
+﻿@{
+    ViewData["Title"] = "Corporate Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+
+}
+
+<div class="register-main-container">
+ 
+    <div class="card-header">
+        <div class="row">
+            <div class="list-title">
+                <h4 style="font-size: 26px;" class="text-left"><i class="fas fa-building"></i> @ViewData["Title"].ToString()</h4>
+            </div>
+        </div>
+  
+
+</div>
+    <div class="tab-pane active " id="User">
+                <br>
+                <div class="card-body ">
+                    <div class="row">
+
+                        <div class="col-lg-10">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="_corporate-table" class="myTableMedium">
+                                         <thead>
+                                        <th>
+                                           <button class="register"  style ="margin-bottom: 5px;font-size: 13px; height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem); width:100px" title="Add New" id="add-newcorporate"><i class="fas fa-user-plus"></i>Add New</button>
+                                        </th>
+                             
+                                        <th>Address</th>
+                                        <th>Contact number</th>
+                                        <th>Email Address</th>
+                                        <th>Membership Tier</th>
+                                        <th>User Count</th>
+                                        <th>VIP Count</th>
+                                        <th>Membership Description</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-6">
+                                    <hr>
+                                    <div>
+                                    @using (Html.BeginForm("Index", "Corporate", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                                                <label>Import Excel File:</label>
+                                                                <input id="upload-excel" type="file" size="1" name="file" accept="excel/*" class="form-control-sm mb-1">
+                                                                <button type="submit" class="btn btn-success btn-block mb-1" id="btnimport" data-toggle="tooltip" title="Import Excel"><i class="fas fa-upload"></i> Upload</button>
+                                    }
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6">
+                                    <button type="button" class="btn btn-info btn-block" id="btn-download-corporate" data-toggle="tooltip" title="Download Header"><i class="fas fa-download"></i> Download Template</button>
+                                </div>
+                                <div style="font-size:12px !important;margin-left:10px">
+                                @if (message != "")
+                                {
+
+                                    @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
+                                    {
+                                     <div class="alert alert-warning" style="height: 80px;width: 150px;">
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong id="blink">Warning! @message.Replace(" Error: ", "")</strong>
+                                      </div>
+
+                                      <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+
+                                    }
+                                    else
+                                    {
+                                     <div class="alert alert-success" style="height: 80px;width: 150px;">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          <strong id="blink">Success!@message</strong>
+                                      </div>
+                                        <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+                                    }
+                                }
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+@* Corporate Modal *@
+ <div class="modal fade" id="_corporateModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="corporatemodal-name">Corporate Registration Form </h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+    <form action="" class="mod-form" id="corp-register">
+       
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="fname">Corporate Name</label>
+              <input type="text" value="" id="cname" class="mod-input" required/>
+            </div>
+              <div class="input-container-whole">
+              <label for="address">Address</label>
+              <input type="text" value="" id="address" class="mod-input"  required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> Contact Number</label>
+              <input type="text" value="" id="cno"  class="mod-input" required/>
+            </div>
+              <div class="input-container-whole">
+              <label for="email">Email Address</label>
+              <input type="email" value="" id="email" class="mod-input" required/>
+            </div>
+          </div>
+          
+          <div class="mod-form-row">
+            <div class="input-container-whole" required>
+              <label for="membershipTier">Membership Tier</label>
+             <select id="corp-mem-option" class="mod-input" >
+                 <option value=""  selected>Select your option</option>
+             </select>
+          </div>
+               <div class="input-container-whole">
+              <label for="lname">Membership Description</label>
+              <input type="text" value="" id="desc" class="mod-input" required disabled/>
+            </div>
+          
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> User Count</label>
+              <input type="number" value="" id="usercount"  class="mod-input" required />
+            </div>
+              <div class="input-container-whole">
+              <label for="email">VIP Count</label>
+              <input type="number" value="" id="vipcount" class="mod-input" required />
+            </div>
+          </div>
+          <div class="actions">
+            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel" disabled>Cancel</a>
+            <input type="submit" value="Submit" id="_btn-register"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+@* End here *@
+        @section Scripts{
+        <script>
+          i_id=0;
+            $(document).ready(function () {
+               
+               corptable = $('#_corporate-table').DataTable({
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": ""
+                }});
+               ShowCorporateDetails();
+               CorpShowOptionMembership();
+               CorpShowCorporateOption();
+            });
+            $('#corp-mem-option').change(function () {
+                var data = {};
+                data.Id = $('#corp-mem-option').val();
+                 
+
+                $.ajax({
+                url: '/Corporate/GetMembershipDescList',
+                    data: {
+                        data: data,
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function (response) {
+                        console.log(response);
+                       $('#desc').val(response[0].description);
+                       $('#usercount').val(response[0].userCount);
+                       $('#vipcount').val(response[0].vipCount);
+                       
+                    }
+                });
+           
+                     });
+
+         
+            $('#add-newcorporate').click(function () {
+                      
+                i_id = 0;
+                $('input[type="text"]').val("");
+                $('input[type="email"]').val("");
+                $('#position').prop('selectedIndex', 0);
+                $('#gender').prop('selectedIndex', 0);
+                $('#_corporateModal').modal('show');
+                document.getElementById("corporatemodal-name").innerHTML = ' Add New Corporate'.bold();
+
+            });
+                $('#btn-download-corporate').click(function () {
+                      location.replace('../Corporate/DownloadHeader');
+                    });
+@* User register edit *@
+                    $('#_corporate-table').on('click', '.tbl-edit', function () {
+                      i_id = $(this).data("id");
+                      corporatename = $(this).data("corporatename");
+                      address = $(this).data("address");
+                      cno = $(this).data("cno");
+                      description = $(this).data("description");
+                      email = $(this).data("eadd");
+                      tier = $(this).data("tier");
+                      memid = $(this).data("memid");
+                      usercount = $(this).data("ucount");
+                      vipcount = $(this).data("vcount");
+                      console.log(memid);
+                      $("#cname").val(corporatename);
+                      $("#address").val(address);
+                      $("#desc").val(description);
+                      $("#cno").val(cno);
+                      $("#email").val(email);
+                      $("#corp-mem-option").val(memid);
+                      $('#usercount').val(usercount);
+                      $('#vipcount').val(vipcount);
+                       
+           
+                      document.getElementById("_btn-register").innerHTML = 'Update';
+                       document.getElementById("corporatemodal-name").innerHTML = 'Update Corporate Information'.bold();
+                      $('#_corporateModal').modal('show');
+                      $(".alert-warning").hide();
+
+                    });
+@* User Register Edit End Here*@
+       $('#_corporate-table').on('click', '.tbl-delete', function () {
+                      var data = {};
+                          i_id = $(this).data("id");
+                              data.id = i_id;
+                           
+                      iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Corporate/DeleteCorporateInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      if(data.stats=="Successfully Deleted" )
+                                      {
+                                            notifyMsg('Success!', data.stats, 'green', 'fas fa-check');
+                                            ShowCorporateDetails();
+
+                                      }
+                                      else
+                                      {
+                                         notifyMsg('Warning!', data.stats, 'red', 'fas fa-exclamation-triangle');
+                                      }
+                                  
+                                   
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+
+                    });
+  $('#corp-register').submit(function(e){
+        e.preventDefault();
+
+                    var data = {};
+                    data.id = i_id;
+                    data.corporateName = $('#cname').val();
+                    data.description = $('#desc').val();
+                    data.cNo = $('#cno').val();
+                    data.address = $('#address').val();
+                    data.emailAddress = $('#email').val();
+                    data.Active =2;
+                    data.MembershipID =  $('#corp-mem-option').val();
+                    data.Count =   $('#usercount').val();
+                    data.VipCount =  $('#vipcount').val();
+                     
+                      
+            
+                    if ($('#cname').val() == '' || $('#desc').val() == '' ||  $('#cno').val() == '' || $('#address').val() == '' ||  $('#email').val() == '' || $('#corp-mem-option').prop('selectedIndex') == 0 ) 
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+                    }
+                    else
+
+                    {
+                            if(parseInt($('#usercount').val()) <  parseInt($('#vipcount').val()))
+                            {
+                            notifyMsg('Warning!', 'VIP User cannot be Greater than User Count!.', 'yellow', 'fas fa-exclamation-triangle');
+                            }
+                            else
+                            {
+                            iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new Corporate?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Corporate/SaveCorporate',
+                                        data: {
+                                            data: data
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+
+                                         notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                            $.ajax({
+                                            url: '/Corporate/SaveMembershipPrivilegeCount',
+                                                data: {
+                                                    data: data,
+                                                },
+                                                type: "POST",
+                                                datatype: "json",
+                                                success: function (response) {
+                                                    if(response.stats != "Success")
+                                                    {
+                                                     notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
+                                                    }
+                                                }
+                                            });
+                             
+                                            ShowCorporateDetails();
+                                            $(".cancel").click();
+                                           @* $.ajax({
+                                            url: '/Register/UploadFile',
+                                            type: 'POST',
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (result) {
+                                            }
+                                            });
+                                            notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                            ShowUserDetails();
+                                            clear();
+                                            $("#h-close").click();
+                                        *@
+                                        
+                                     
+                                        $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                    }   }
+                    });
+
+</script>
+}
+
+        

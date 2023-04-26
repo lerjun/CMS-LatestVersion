@@ -1,0 +1,90 @@
+.topbar {
+  width: calc(100% - var(--sidebarwidth));
+  height: var(--topbarheight);
+  background-color: var(--light);
+  border-bottom: 1px solid var(--shade);
+  position: fixed;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar .page-title {
+  height: 100%;
+  width: 300px;
+  margin: auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.topbar .page-title>h1 {
+  margin: auto 0;
+  color: var(--accent);
+  font-weight: 200;
+  font-family: "Montserrat-Bold";
+}
+
+.topbar .user-panel {
+  height: 100%;
+  width: 600px;
+  margin: auto 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.user-panel .language {
+  height: 100%;
+  width: 100%;
+  margin: auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.language .lang-selector {
+  font-size: clamp(0.5rem, 2vw, 1rem);
+  height: 40px;
+  padding: 10px;
+  width: 150px;
+  margin: auto 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.user-panel .avatar {
+  height: 100%;
+  width: 100%;
+  margin: auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.user {
+  margin: auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.user .profile {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  margin: auto 0;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px var(--shade);
+}
+
+.user .info {
+  margin: auto 10px;
+}
+
+.info .name {
+  font-size: clamp(0.3rem, 2vw, 1rem);
+  color: var(--dark);
+}
+
+.info .role {
+  font-size: clamp(0.3rem, 2vw, 0.7rem);
+  color: var(--accent);
+}

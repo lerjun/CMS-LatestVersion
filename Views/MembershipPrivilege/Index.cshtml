@@ -1,0 +1,1037 @@
+﻿@{
+    ViewData["Title"] = "Membership Privilege Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+<style>
+
+</style>
+
+
+
+<!-- Tab content -->
+    <div class="corporate-main-container">
+        
+        <div class="bloc-data">
+                <div class="list-title">
+            <h3>Privileges Maintenance</h3>
+          </div>
+            
+         <div class="card-body ">
+           <div class="row">
+           <div class="col-lg-12">
+
+             <div class="row ">
+                @* <div class="list-head" >
+         
+            <form class="search-form" style="margin-right: 35px;">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.2825 14.4675L10.7325 11.925C11.5552 10.8768 12.0017 9.58249 12 8.25C12 7.06331 11.6481 5.90328 10.9888 4.91658C10.3295 3.92989 9.39246 3.16085 8.2961 2.70673C7.19975 2.2526 5.99335 2.13378 4.82946 2.36529C3.66557 2.5968 2.59648 3.16825 1.75736 4.00736C0.918247 4.84648 0.346802 5.91557 0.115291 7.07946C-0.11622 8.24335 0.00259969 9.44975 0.456725 10.5461C0.910851 11.6425 1.67989 12.5795 2.66658 13.2388C3.65328 13.8981 4.81331 14.25 6 14.25C7.33249 14.2517 8.62684 13.8052 9.675 12.9825L12.2175 15.5325C12.2872 15.6028 12.3702 15.6586 12.4616 15.6967C12.553 15.7347 12.651 15.7544 12.75 15.7544C12.849 15.7544 12.947 15.7347 13.0384 15.6967C13.1298 15.6586 13.2128 15.6028 13.2825 15.5325C13.3528 15.4628 13.4086 15.3798 13.4467 15.2884C13.4847 15.197 13.5044 15.099 13.5044 15C13.5044 14.901 13.4847 14.803 13.4467 14.7116C13.4086 14.6202 13.3528 14.5372 13.2825 14.4675ZM1.5 8.25C1.5 7.35999 1.76392 6.48996 2.25839 5.74994C2.75286 5.00992 3.45566 4.43314 4.27793 4.09254C5.10019 3.75195 6.00499 3.66284 6.87791 3.83647C7.75082 4.0101 8.55265 4.43869 9.18198 5.06802C9.81132 5.69736 10.2399 6.49918 10.4135 7.3721C10.5872 8.24501 10.4981 9.14981 10.1575 9.97208C9.81687 10.7943 9.24009 11.4971 8.50007 11.9916C7.76005 12.4861 6.89002 12.75 6 12.75C4.80653 12.75 3.66194 12.2759 2.81802 11.432C1.97411 10.5881 1.5 9.44348 1.5 8.25Z"
+                  fill="#231F20"
+                />
+              </svg>
+
+              <input type="text" class="input-search" />
+            </form>
+          </div> *@
+            <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+            <table class="myTableLarge" id="privilege-table">
+               <thead>
+                <th>
+                     <button class="register"  style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add-privilege"><i class="fas fa-hand-sparkles"></i>Add New</button>
+           
+                   </th>
+         
+                <th>Description</th>
+                <th>Validity</th>
+                <th>NoExpiry</th>
+                <th>VendorID</th>
+                <th>isVIP</th>
+                <th>Business Type Name</th>
+                 <th>Date Created</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+          </table>
+                               </div>
+                            </div>
+                        </div>
+
+                      
+                    </div>
+                </div>
+
+        </div>
+        <div class="business-data">
+    
+           <div class="list-title">
+            <h3>Membership Tier Maintenance</h3>
+          </div>
+          
+            <table id="membership-table" class="myTableMedium">
+              <thead>
+                <th>
+                  <button class="register"  style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add-membershipTier"><i class="fas fa-id-card"></i>Add New</button>
+                </th>
+                <th>Desciptions</th>
+                <th>Date Started</th>
+                <th>Date Ended</th>
+                <th>User Count</th>
+                <th>VIP Count</th>
+                <th>Date Created</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+           </table>
+      
+          
+        </div>
+      </div>
+      @* modal start here *@
+       <div class="modal fade" id="privilegemodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Privilege Form</h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+                    <form action="" class="mod-form" id="privmem-submit">
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+
+                  <div class="upload-image-preview" id="upload-image-preview" style="background-color: gainsboro;">
+                    <img
+                      width="100%"
+                      src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="input-container-whole upload" >
+                  <label for="img"><i class="fas fa-upload"></i>Upload Image </label>
+                  <input
+                    type="file"
+                    value=""
+                    id="img"
+                    class="mod-input img-choose"
+                    name="uploadimg" accept="image/*"
+                  />
+                </div>
+              </div>
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                  <label for="employeeID">Title <span class="req" >*</span></label>
+                  <input type="text" value="" id="title" class="mod-input" required />
+                </div>
+                <div class="input-container-whole">
+                 <label for="lname">No Expiry <span class="req" >*</span></label>
+                  <select id="NoExpiry"  class="mod-input" required>
+                            <option value="" disabled selected>Select your option</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>            
+                  </select>
+                </div>
+              </div>
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                  <label for="email">Description </label>
+                  @* <input type="text" value="" id="description" class="mod-input" /> *@
+                  <textarea id="descrip" name="Address" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+                </div>
+              </div>
+              <div class="mod-form-row">
+                  <div class="input-container-whole">
+                 <label for="username"> Vendor Name</label>
+                <select id="vendor-option" class="mod-input" >
+                        <option value=""  selected>Select your option</option>
+                    </select>
+                </div>
+                <div class="input-container-whole">
+                  <label for="fname">Validity </label>
+                  <input type="date" id="validity" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input"   />
+                </div>
+              
+              </div>
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                   <label for="vipStatus">Business Type Name<span class="req" >*</span></label>
+                  <select id="btype-option" class="mod-input" required>
+                        <option value="" disabled selected>Select your option</option>
+                    </select>
+                </div>
+                <div class="input-container-whole">
+                  <label for="position">is VIP <span class="req" >*</span></label>
+                  <select id="isVIP"  class="mod-input" required>
+                            <option value="" disabled selected>Select your option</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>            
+                  </select>
+                </div>
+              </div>
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                  <label for="tnc">Terms and Conditions <span class="req" >*</span></label>
+                  @* <input type="text" value="" id="tnc" class="mod-input" />  *@
+                  <textarea id="tnc" name="Terms and Condition" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+                </div>
+          </div>
+           <div class="mod-form-row">
+            
+            <div class="input-container-whole">
+              <label for="mechanics">Mechanics <span class="req" >*</span></label>
+              @* <input type="text" value="" id="mechanics" class="mod-input" required/> *@
+              <textarea id="mechanics" name="mechanics" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+            </div>
+          </div>
+          <div class="actions" style="align-items: center;">
+            @* <div class="actionss">
+             <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button>
+             @* <input type="button" value="Add Mechanics" id="btn-register"/> <i class="fas fa-cogs"></i> 
+
+            </div> *@
+
+            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="submit" value="Submit" id="save-privmem"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+      @* modal end here *@
+         @* modal start here *@
+       <div class="modal fade" id="membershipmodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Membership Tier Form</h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+              <form action="" class="mod-form" id="mem-submit">
+         
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                  <label for="employeeID">Membership Name</label>
+                  <input type="text" value="" id="memname" class="mod-input" required />
+                </div>
+                <div class="input-container-whole">
+                  <label for="email">Description</label>
+                  <input type="text" value="" id="desc" class="mod-input" />
+                </div>
+              </div>
+              <div class="mod-form-row">
+                  <div class="input-container-whole">
+                  <label for="fname">Date Used</label>
+                  <input type="date" id="dateuse" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input" />
+                </div>
+                <div class="input-container-whole">
+                  <label for="fname">Date Ended</label>
+                  <input type="date" id="dateended" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input"   />
+                </div>
+              </div>
+              <div class="mod-form-row">
+                <div class="input-container-whole">
+                  <label for="username">User Count</label>
+                 <input type="text" value="" id="usercount" class="mod-input" required />
+                </div>
+                <div class="input-container-whole">
+                  <label for="position">VIP Count</label>
+                   <input type="text" value="" id="vipcount" class="mod-input" required />
+                </div>
+              </div>
+            
+          <div class="actions" style="align-items: center;">
+            @* <div class="actionss">
+             <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button>
+             @* <input type="button" value="Add Mechanics" id="btn-register"/> <i class="fas fa-cogs"></i> 
+
+            </div> *@
+
+            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="submit" value="Submit" id="save-mem"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+      @* modal end here *@
+       @* modal start here *@
+       <div class="modal fade" id="privilegelistmodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="priv-name"></h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" style="margin:10px">
+                
+                            <form action="" class="mod-form" id="privlist">
+                                  <table class="privTable" id="privilegelist-table">
+                                      <thead>
+                                          <th>
+                                          <input type="checkbox" class="check-all"  id="checkall"/>
+                                          <labebl id="checkers" style="text-align:center"> Check All</labebl>
+                                            <p style="
+                                            color: white;
+                                            text-align: center;
+                                            background: #c89328;
+                                            padding: 5px;">Available Privilege</p>
+                                          </th>
+                                      </thead>
+                                      <tbody style="
+                                      height: 300px;">
+                                      </tbody>
+                                  </table>
+                                   <div class="mod-form-row">
+                          <div class="input-container-whole" style="width: 98%;">
+                           <div class="actions" style="align-items: center;">
+                              <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+                             <input type="submit" value="Submit" id="save-privmemlist"/>
+                       </div>
+                   </div>
+                             </form>
+                       
+              
+                
+               </div>
+            </div>
+        </div>
+
+    </div>
+
+      @* modal end here *@
+@section Scripts{
+<script>
+  var i_id = "";
+  var img_edit="";
+  var memid="";
+  var usercount="";
+  var vipcount="";
+    $(document).ready(function () {
+                 privilegelisttable = $('#privilegelist-table').DataTable({
+             
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                  
+                      "aLengthMenu": [30],
+                      "searching": true,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "",
+                    
+                }});
+                 privilegelistaddtable = $('#privilegelistadd-table').DataTable({
+             
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+               
+                      "aLengthMenu": [30],
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "",
+                    
+                }});
+                 membershiptable = $('#membership-table').DataTable({
+               
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                     "paging": true,
+                      "aLengthMenu": [30],
+                      "searching": true,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "",
+                    
+                }});
+                privilegetable = $('#privilege-table').DataTable({
+                       "columnDefs": [
+                        { "width": "100px", "targets": 0 },
+                        { "width": "120px", "targets": 1 },
+                        { "width": "70px", "targets": 2 },
+                        { "width": "70px", "targets": 3 },
+                        { "width": "70px", "targets": 4 },
+                        { "width": "70px", "targets": 5 },
+                        { "width": "70px", "targets": 6 },
+                        { "width": "70px", "targets": 7 }
+                      ],
+                  "bPaginate": false,
+                  "bFilter": false,
+                  "stripeClasses": [],
+                  "ordering": false,
+                  "ordering": false,
+                  "info": false,
+                  "bInfo": false,
+                  "bAutoWidth": false,
+                  "bLengthChange": false, 
+                  "bLengthChange": false, 
+                     "paging": true,
+                      "aLengthMenu": [4],
+                          "searching": true,
+                  "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }});
+                    $("input[name=uploadimg]").change(function () {
+                    if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                    var img = $('<img>').attr('src', e.target.result);
+                    img.attr('height', '120px');
+                    img.attr('width', '120px');
+                    $('.upload-image-preview').html(img);};
+                    reader.readAsDataURL(this.files[0]);
+                   }});
+        
+                ShowprivilegeList();
+                ShowMembershipList();
+                ShowOptBtype();
+                ShowVendorOpt();
+                
+       });
+                      $('#NoExpiry').change(function () {
+                         noexpiry();         
+                      });
+                      $("#checkall").click(function () {
+  $("input:checkbox").not(this).prop("checked", this.checked);
+  if ($(this).prop("checked") == true) {
+    $("#checkers").html("Uncheck All");
+  } else {
+    $("#checkers").html("Check All");
+  }
+});
+$("#checkAll").click(function () {
+  $("input:checkbox").not(this).prop("checked", this.checked);
+});
+$("#checkall2").click(function () {
+  $("input:checkbox").not(this).prop("checked", this.checked);
+  if ($(this).prop("checked") == true) {
+    $("#checkers2").html("Uncheck All");
+  } else {
+    $("#checkers2").html("Check All");
+  }
+});
+$("#checkAll2").click(function () {
+  $("input:checkbox").not(this).prop("checked", this.checked);
+});
+
+@* Add Privilege *@
+                     $('#add-privilege').click(function () {
+                      i_id = 0;
+                      var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      $(".upload-image-preview").attr("src", );
+                      $('input[type="text"]').val("");
+                      $('input[type="date"]').val("");
+                      $('#vendor-option').prop('selectedIndex', 0);
+                      $('#NoExpiry').prop('selectedIndex', 0);
+                      $('#btype-option').prop('selectedIndex', 0);
+                      $('#isVIP').prop('selectedIndex', 0);
+                      $('#privilegemodal').modal('show');
+
+                    });
+                     $('#add-membershipTier').click(function () {
+                      i_id = 0;
+                      $('.upload-image-preview').html(img);
+                      $(".upload-image-preview").attr("src", );
+                      $('input[type="text"]').val("");
+                      $('input[type="date"]').val("");
+                      $('#vendor-option').prop('selectedIndex', 0);
+                      $('#NoExpiry').prop('selectedIndex', 0);
+                      $('#btype-option').prop('selectedIndex', 0);
+                      $('#isVIP').prop('selectedIndex', 0);
+                      $('#membershipmodal').modal('show');
+
+                    });
+                       $('#add-privilege-item').click(function () {
+                 
+                 //    var dataTable = $('#privilegelist-table').children('tr');
+                     var dataTable = $('#privilegelist-table').children('tbody').children('tr').children('td').children('label').children('input');
+                     var privilegeAddTable = $('#privilegelistadd-table').children('tbody');
+                     $.each(dataTable,(key,value)=>{
+                        if($(value).is(':checked')){
+             
+                         var selectedPrivilege = $(value).parent('label').parent('td').parent('tr').html();
+                         console.log(selectedPrivilege);
+                          privilegeAddTable.append(`<tr>${selectedPrivilege}</tr>`);
+                          $(value).parent('label').parent('td').parent('tr').remove();
+
+                        }
+                     })
+                
+                    });
+
+
+
+@* Add Privilege End Here*@
+@* Save Privilege *@
+                     $('#privmem-submit').submit(function(e){
+                    e.preventDefault();
+                      var filename = $("#img").val().replace(/.*(\/|\\)/, '');
+                    console.log(filename);
+                    if(filename =="" || filename == null)
+                    {
+                      filename = img_edit;
+                    }
+             
+                      var data={};
+                      data.id = i_id;
+                      data.Title =$('#title').val();
+                      data.Description =$('#description').val();
+                      data.Mechanics =$('#mechanics').val();
+                      data.Validity =$('#validity').val();
+                      data.NoExpiry =$('#NoExpiry').val();
+                      data.ImgUrl =filename;
+                      data.VendorID =$('#vendor-option').val();
+                      data.isVIP =$('#isVIP').val();
+                      data.BusinessTypeID =$('#btype-option').val();
+                      data.tmc =$('#tnc').val();
+                      data.Active = 5;
+                       
+
+                      var fileUpload = $("#img").get(0);
+                      var files = fileUpload.files;
+                      var formData = new FormData();
+                      formData.append('file', files[0]);
+                      var fileUpload = $("#upload-img").get(0);
+                      console.log(formData);
+                       if ($('#title').val() == '' || $('#mechanics').val() == '' ||  $('#NoExpiry').prop('selectedIndex') == 0  
+                    ||   $('#isVIP').prop('selectedIndex') == 0 ||   $('#btype-option').prop('selectedIndex') == 0  ) 
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+                        
+                    }
+                    else
+                    {
+                          if (files.length > 0) {
+                          if (files[0].size > 500000) {
+                              notifyMsg('Warning!', 'Uploaded image reached the maximum file size. Image size should be maximum of 500 KB.', 'yellow', 'fas fa-exclamation-triangle');
+                              return false;
+                          }
+                    }
+                     iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new Privilege?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/MembershipPrivilege/SavePrivilegeInfo',
+                                        data: {
+                                            data: data
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                       
+                                      notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                      ShowprivilegeList();
+                                      $("#h-close").click();
+                                       
+                                        $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                    }   
+                    });
+                     $('#mem-submit').submit(function(e){
+                    e.preventDefault();
+                
+                      var data={};
+                      data.id = i_id;
+                      data.MembershipName =$('#memname').val();
+                      data.DateStarted =$('#dateuse').val();
+                      data.Description =$('#desc').val();
+                      data.DateEnded =$('#dateended').val();
+                      data.UserCount =$('#usercount').val();
+                      data.VIPCount =$('#vipcount').val();
+                      var today = new Date();
+                      var dd = String(today.getDate()).padStart(2, '0');
+                      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                      var yyyy = today.getFullYear();
+                      today = mm + '/' + dd + '/' + yyyy;
+                      let date1 = new Date($('#dateuse').val());
+                      let date2 = new Date($('#dateended').val());
+                      let limitDate = new Date(today);
+                      var today = new Date(); 
+                       
+                      // Get the input date 
+                      var inputDate = new Date(date1); 
+                       console.log($('#vipcount').val());
+                          console.log($('#usercount').val());
+                    if (inputDate < today) 
+                    {
+                         notifyMsg('Warning!', 'Date Used cannot be less than or Equal date Today!', 'yellow', 'fas fa-exclamation-triangle');
+              
+                    }
+                    else
+                    {
+                      if (date1.getTime() >= date2.getTime()) 
+                     { 
+                      notifyMsg('Warning!', 'Date Used cannot be greater than Date Used ', 'yellow', 'fas fa-exclamation-triangle');
+                         $("#dateuse").focus();
+                     } 
+                     else
+                     {
+                        if (parseInt($('#usercount').val()) < parseInt($('#vipcount').val()))
+                         {
+                          notifyMsg('Warning!', 'VIP Count cannot be Greater than User Count!!', 'yellow', 'fas fa-exclamation-triangle');
+                          $("#vipcount").focus();
+                   
+                        }
+                        else
+                        {
+           
+                          iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new Membership Tier?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/MembershipPrivilege/SaveMembershipTier',
+                                        data: {
+                                            data: data
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                       if(response.stats == "Duplicate Entry")
+                                       {
+                                        notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
+                                       }
+                                       else
+                                       {
+                                          notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                          ShowMembershipList();
+                                          clear();
+                                          $(".cancel").click();
+                                       }
+                                     
+                                       
+                                        $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                        }    
+                        }
+                     }
+                
+                     
+
+                   
+                    });
+              
+                    @* Function Clear *@
+                    function clear()
+                    {
+                      $('input[type="text"]').val("");
+                      $('#isVIP').prop('selectedIndex', 0);
+                      $('#vendor-option').prop('selectedIndex', 0);
+                      $('#NoExpiry').prop('selectedIndex', 0);
+                      $('#btype-option').prop('selectedIndex', 0);
+                    }
+@* Clear End Here*@
+@* Save Privilege End Here*@
+function ShowprivilegeListModal(id) {
+   var data ={};
+  data.Id= id;
+  $.blockUI(reloadLoading);
+  setTimeout(function () {
+  $.ajax({
+      url: '/MembershipPrivilege/GetPrivilegeMembershipList',
+      data: {
+        data:data
+      },
+      type: "POST",
+      datatype: "json"
+  }).done(function (data) {
+    privilegelisttable.clear().draw();
+     
+    var stats="";
+      for (var i = 0; i < data.length; i++) {
+          if(data[i].status == "1")
+          {
+              stats="checked";
+          }
+          else
+          {
+            stats="unchecked";
+          }
+                  $('#privilegelist-table').dataTable().fnAddData([
+          '<td>' + '<label for="cb' + data[i].privilegeID + '"><input type="checkbox" id="cb' + data[i].privilegeID + '" class="check-all" data-id="' + data[i].privilegeID +
+                            '" data-title="' + data[i].title + '" data-status="' + data[i].status + '"  data-usercount="' + data[i].userCount + '"  data-vipcount="' + data[i].vipCount +
+                            '"   data-membershipid="' + data[i].membershipID + '" ' + stats + '/>' +
+                            '<div>' +
+                            '<p></p>' +
+                            '<p>' + data[i].title + '</p>' + '</div><label></td>'
+                  ]);
+        
+      }
+      $.unblockUI();
+    }).fail(function () {
+        alert("There was an Error When Loading Data...");
+    });
+
+}, 100);
+
+}
+
+
+
+$('#membership-table').on('click', '.tbl-view', function () {
+  
+      memid=$(this).data("id");
+      memname = $(this).data("memname");
+      usercount=$(this).data("ucount");
+      vipcount=$(this).data("vcount");
+      console.log(memname);
+      var data ={};
+      data.Id= $(this).data("id");
+      ShowprivilegeListModal(data.Id);
+      document.getElementById("priv-name").innerHTML = memname;
+      $('#privilegelistmodal').modal('show');
+
+});
+$('#membership-table').on('click', '.tbl-edit', function () {
+    @* ShowprivilegeListModal(); *@
+    i_id = $(this).data("id");
+    memname = $(this).data("memname");
+    desc  = $(this).data("descrip");
+    dstart = $(this).data("dstart");
+    dend = $(this).data("dend");
+    ucount  = $(this).data("ucount");
+    vcount  = $(this).data("vcount");
+  console.log(i_id);
+  console.log(ucount);
+  console.log(ucount);
+      $('#memname').val(memname);
+      $('#desc').val(desc);
+      $('#dateuse').val(dstart);
+      $('#dateended').val(dend);
+      $('#usercount').val(ucount);
+      $('#vipcount').val(vcount);
+        $('#membershipmodal').modal('show');
+
+});
+$('#membership-table').on('click', '.tbl-delete', function () {
+                      var data = {};
+                      data.id = $(this).data("id");
+                       
+                     iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/MembershipPrivilege/DeleteMemInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', data.stats, 'green', 'fas fa-check');
+                                         ShowMembershipList();
+                                  $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+});
+
+$('#privilege-table').on('click', '.tbl-edit', function () {
+
+    i_id = $(this).data("id");
+    btypeid = $(this).data("btypeid");
+    description  = $(this).data("descrip");
+    isVIP = $(this).data("vip");
+    mechanics = $(this).data("mechanics");
+    noExpiry  = $(this).data("nexpr");
+    title  = $(this).data("title");
+    tmc  = $(this).data("tmc");
+    validity  = $(this).data("validity");
+    vendorID  = $(this).data("vid");
+    imgUrl  = $(this).data("imgfile");
+    var date = new Date(validity); 
+    var formattedDate = date.toISOString().substring(0, 10); 
+    console.log(imgUrl);
+                      if (imgUrl != null) {
+                      var img = $('<img>').attr('src', imgUrl);
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      } 
+                      else {
+                          document.getElementById("upload-image-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+                      }
+                      var data={};
+                      data.id = i_id;
+                      data.Title =title;
+                      data.Description =description;
+                      data.Mechanics =mechanics;
+                      data.Validity =validity;
+                      data.NoExpiry =noExpiry;
+                      data.ImgUrl =imgUrl;
+                      data.VendorID =vendorID;
+                      data.isVIP =isVIP;
+                      data.BusinessTypeID =btypeid;
+                      data.tmc =tmc;
+                       
+    ShowprivilegeList();
+    $('#title').val(title);
+    $('#description').val(description);
+    $('#mechanics').val(mechanics);
+    $('#validity').val(formattedDate);
+    $('#NoExpiry').val(noExpiry);
+    $('#vendor-option').val(vendorID);
+    $('#isVIP').val(isVIP);
+    $('#btype-option').val(btypeid);
+    $('#tnc').val(tmc);
+    $('#privilegemodal').modal('show');
+    noexpiry();
+
+});
+@*  Delete *@
+                   $('#privilege-table').on('click','.tbl-delete', function () {
+                        var data = {};
+                      data.id = $(this).data("id");
+                       
+                     iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/MembershipPrivilege/DeletePrivilegeInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', data, 'green', 'fas fa-check');
+                                      ShowprivilegeList();
+                                  $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+                    });
+@*Delete End Here*@
+function noexpiry()
+{
+   if($('#NoExpiry').val() == 1)
+              {
+                $('#validity').prop('disabled', false);
+              }
+              else
+              {
+                  $('#validity').prop('disabled', true);
+              }
+}
+function CheckedRows() {
+  IdList = [];
+  $('.check-all:checked').each(function (id, item) {
+      var id = $(item).data('id');
+      var status = $(item).data('status');
+
+      var stats="";
+
+      IdList.push({
+          privilegeID: id,
+          status: "1",
+          MembershipID:memid,
+          usercount: usercount,
+          vipcount: vipcount,
+          stats:"1"
+
+      });
+  });
+  return IdList;
+}
+      $('#privlist').submit(function(e){
+                    e.preventDefault();
+                      i_id = 0;
+                      @* var data={}; *@
+                      @* data.MembershipID = memid;
+                      data.userCount = usercount;;
+                      data.vipCount = vipcount; *@
+                      var data = {};
+                      data.IdList = CheckedRows();
+                       
+                      iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to Update?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                           
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                     url: '/MembershipPrivilege/Saveprivlist',
+                                       data: {
+                                       IdList: CheckedRows(),
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+                                       
+                                      if(data.stats == "Duplicate Entry")
+                                      {
+                                    notifyMsg('Warning!', data.stats, 'red', 'fas fa-exclamation-triangle');
+                                      }
+                                      else
+                                      {
+                                      notifyMsg('Success!', data.stats, 'green', 'fas fa-check');
+                                      ShowprivilegeList();
+                                      }
+                                    
+                                      $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+                    });
+                   
+</script>
+}

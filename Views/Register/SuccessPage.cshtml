@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+@{
+    ViewData["Title"] = "Registration Maintenance";
+    Layout = "~/Views/Shared/RegistrationLayout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+  <style>
+    body {
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .login-background {
+      background-image: url("../img/black-cover-pattern.jpg");
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .success-container {
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .success-container .logo {
+      width: 250px;
+      height: 150px;
+      margin: 0 auto;
+    }
+    .success-container h1 {
+      text-align: center;
+      margin: 20px auto;
+      color: #c89328;
+      font-size: "Montserrat-Bold";
+    }
+    .success-container a {
+      text-align: center;
+      margin: 20px auto;
+      color: #c89328;
+    }
+    .success-check {
+      height: 150px;
+      width: 150px;
+      border: 10px solid #c89328;
+      border-radius: 50%;
+      margin: 20px auto 0 auto;
+      position: relative;
+      box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    }
+    .success-check::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 42px;
+      width: 30px;
+      height: 60px;
+      border: solid #c89328;
+      border-width: 0 15px 15px 0;
+      transform: rotate(45deg);
+    }
+  </style>
+  <div class="hero">
+ <div class="login-background">
+      <div class="success-container">
+        <div class="logo">
+          <img id="topBarLogo" src="/img/AOPCWHITEPNG.png" width="100%" />
+        </div>
+        <h1>Congratulations!</h1>
+        <span class="success-check"></span>
+        <a  href="../../LogIn/LogOut">Proceed to Login</a>
+      </div>
+    </div>
+    </div>

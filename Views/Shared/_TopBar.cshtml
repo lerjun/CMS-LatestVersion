@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+
+<div class="topbar">
+  <div class="page-title">
+    <h1>Dashboard</h1>
+  </div>
+  <div class="user-panel">
+    <div class="language">
+      <select class="lang-selector">
+        <option value="en">🇺🇸 Eng (US)</option>
+        <option value="ar">🇦🇪 Arabic</option>
+      </select>
+            <span id="darkmode" class="btn-darkmode"> Light </span>
+    </div>
+    <div class="avatar">
+      <div class="user">
+        <div class="profile">
+          <img src="@Accessor.HttpContext.Session.GetString("ImgUrl")" alt="@Accessor.HttpContext.Session.GetString("Name")" width="100%"  />
+        </div>
+        <div class="info">
+          <p class="name">@Accessor.HttpContext.Session.GetString("Name")</p>
+          <p class="role">@Accessor.HttpContext.Session.GetString("UserType")</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

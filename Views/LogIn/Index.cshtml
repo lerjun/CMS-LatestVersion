@@ -1,0 +1,43 @@
+﻿    
+        <link href="~/css/iziToast.min.css" rel="stylesheet" />
+    <script src="~/js/iziToast.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+@* @section Scripts{
+    <script >
+        $(document).ready(function () {
+
+    });
+
+$('.btn-save').on('click', function () {
+            var data = {};
+            data.Username = $('#username').val();
+            data.password = $('#password').val();
+             
+            
+            $.ajax({
+                url: '/LogIn/LoginUser',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+              success: function (response) {
+                console.log(response);
+                if(response.stats != null) {
+        
+                 notifyMsg('Error!', response.stats, 'red', 'fas fa-ban');
+                }
+              else
+              {
+                  window.location.href = response.redirectToUrl;
+              } 
+          
+          
+            }
+            });
+});
+
+    </script>
+} *@

@@ -1,0 +1,28 @@
+.search-form {
+  margin: auto 10px auto 0;
+      display: flex;
+      border: 1px solid var(--shade);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: inset 1px 1px 5px 2px var(--shade);
+      width: 30%;
+  }
+  
+.search-form:active {
+  background-color: var(--secondary-dark);
+}
+.search-form > input.input-search {
+  border-width: 0;
+  height: 100%;
+  margin: auto;
+  background-color: transparent;
+}
+input.input-search:focus-visible {
+  border-width: 0;
+  border-color: transparent;
+  outline: none;
+}
+
+input.input-search:focus-within .search-form {
+  background-color: black;
+}

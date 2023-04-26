@@ -1,0 +1,90 @@
+.sidebar {
+  width: var(--sidebarwidth);
+  height: 100vh;
+  background-color: var(--light);
+  box-shadow: 0 1px 5px 5px var(--shade);
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .img-container {
+  width: 70%;
+  margin: 10px auto;
+}
+
+.sidebar .sidenav {
+  height: 400px;
+  position: relative;
+  display: flex;
+  flex-direction: start;
+  margin: auto;
+  width: 100%;
+}
+
+.sidebar .sidenav ul {
+  height: 400px;
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar .sidenav ul li {
+  height: 50px;
+  font-size: clamp(0.5rem, 2vw, 1rem);
+  display: flex;
+  width: 100%;
+}
+
+.sidebar .sidenav ul li a {
+  display: flex;
+  gap: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--dark);
+}
+
+.sidebar .sidenav ul li a:hover {
+  color: var(--accent);
+  fill: var(--accent);
+}
+
+.sidebar .sidenav ul li a .nav-icon {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  fill: var(--dark);
+}
+
+.sidebar .sidenav ul li a span {
+  margin: auto;
+  width: 100%;
+}
+
+.sidenav ul.sub-nav {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidenav ul.sub-nav li {
+  height: 35px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidenav ul.sub-nav li>a {
+  width: 100%;
+}
+
+li.maintenance:hover~.sub-nav {
+  height: auto;
+}
+
+.sidenav ul.sub-nav:hover {
+  height: auto;
+}

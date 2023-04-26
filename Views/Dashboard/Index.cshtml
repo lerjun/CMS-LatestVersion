@@ -1,0 +1,1004 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+
+}
+
+<div class="main-container">
+    <!-- Top Corp User  -->
+
+    <div class="row-group1">
+        <div class="top-corp-user">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="inner-group">
+            <div class="new-users">
+                <div class="controls">
+                    <h4>New User Registration</h4>
+                    <select id="nur" class="option-filters">
+                        <option value="7">Last 7 Days</option>
+                        <option value="15">Last 15 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="1">Last 1 Year</option>
+                        
+                    </select>
+                </div>
+                <div class="user-counter">
+                    <div id="new-registered">
+                        <p class="count" id="new_user"></p>
+                        <p>New User</p>
+                    </div>
+                    <svg* width="150"
+                          height="60"
+                          viewBox="0 0 72 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                        <path d="M71.0607 13.0607C71.6464 12.4749 71.6464 11.5251 71.0607 10.9393L61.5147 1.3934C60.9289 0.807611 59.9792 0.807611 59.3934 1.3934C58.8076 1.97919 58.8076 2.92893 59.3934 3.51472L67.8787 12L59.3934 20.4853C58.8076 21.0711 58.8076 22.0208 59.3934 22.6066C59.9792 23.1924 60.9289 23.1924 61.5147 22.6066L71.0607 13.0607ZM0 13.5H70V10.5H0V13.5Z"
+                              fill="#C89328" />
+                    </svg*>
+                    <div >
+                        <p class="count" id="all-user">65</p>
+                        <p>Total User</p>
+                    </div>
+                </div>
+                <p class="nur-note">
+                    <span id="percent-registered">60%</span> of expected user are
+                    registered.
+                </p>
+            </div>
+            <div class="supports">
+                <div class="controls">
+                    <h4>Support Center</h4>
+                </div>
+                <div class="support-counter">
+                    <div id="support-unattended">
+                        <p class="count" id="supcount">5</p>
+                    </div>
+                </div>
+                <p class="nur-note">Total concern that need to attends.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row-group2">
+        <!-- Top Restaurants  -->
+        <div class="top-restaurants">
+            <div class=""><h4>Top 3 Most Clicked Restaurant</h4></div>
+            <div class="outlet-data">
+                <div class="to-pie-graph" id="to-pie-graph"></div>
+                <div class="tr-pie-graph-info" id="tr-pie-graph-info">
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--accent)"></span>
+                        <span class="data-name" style="color: var(--accent)" id="mcr_top1">Others</span>
+                        <span class="data-value" style="color: var(--accent)" id="mcr_perc1">40%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--primary)"></span>
+                        <span class="data-name" style="color: var(--primary)" id="mcr_top2">Business1</span>
+                        <span class="data-value" style="color: var(--primary)" id="mcr_perc2">30%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-brown)"></span>
+                        <span class="data-name" style="color: var(--secondary-brown)" id="mcr_top3">Business2</span>
+                        <span class="data-value" style="color: var(--secondary-brown)" id="mcr_perc3">20%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-light)"></span>
+                        <span class="data-name" style="color: var(--secondary-light)" id="mcr_top4"">Business3</span>
+                        <span class="data-value"
+                              style="color: var(--secondary-light)" id="mcr_perc4">
+                            10%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <select id="mcr" class="option-filters">
+                    <option value="7">Last 7 Days</option>
+                    <option value="15">Last 15 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="1">Last 12 Months</option>
+
+                </select>
+                <a class="btn-view-more" id="mcr_vm">View Details</a>
+            </div>
+        </div>
+
+        <!-- Top Outlets  -->
+        <!-- Top Hospitality  -->
+        <div class="top-hospitality">
+            <div class=""><h4>Top 3 Most Clicked Hospitality</h4></div>
+            <div class="user-data">
+                <div class="th-pie-graph" id="th-pie-graph"></div>
+                <div class="th-pie-graph-info">
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--accent)"></span>
+                        <span class="data-name" style="color: var(--accent)" id="mch_top1">Others</span>
+                        <span class="data-value" style="color: var(--accent)" id="mch_perc1">40%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--primary)"></span>
+                        <span class="data-name" style="color: var(--primary)" id="mch_top2">John Doe</span>
+                        <span class="data-value" style="color: var(--primary)" id="mch_perc2">30%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-brown)"></span>
+                        <span class="data-name" style="color: var(--secondary-brown)" id="mch_top3">Jane Doe</span>
+                        <span class="data-value" style="color: var(--secondary-brown)" id="mch_perc3">20%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-light)"></span>
+                        <span class="data-name" style="color: var(--secondary-light)" id="mch_top4">Alfred Doe</span>
+                        <span class="data-value"
+                              style="color: var(--secondary-light)" id="mch_perc4">
+                            10%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+              <select id="mch" class="option-filters">
+                        <option value="7">Last 7 Days</option>
+                        <option value="15">Last 15 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="1">Last 12 Months</option>
+                        
+                    </select>
+                <a class="btn-view-more" id="mch_vm">View Details</a>
+            </div>
+        </div>
+        <!-- Top Users  -->
+        <!-- Top Privileges  -->
+        <div class="top-stores">
+            <div class="head"><h4>Top 3 Most Clicked Store</h4></div>
+            <div class="user-data">
+                <div class="ts-pie-graph" id="ts-pie-graph"></div>
+                <div class="ts-pie-graph-info">
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--accent)"></span>
+                        <span class="data-name" style="color: var(--accent)" id="mcs_top1"></span>
+                        <span class="data-value" style="color: var(--accent)" id="mcs_perc1">40%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--primary)"></span>
+                        <span class="data-name" style="color: var(--primary)" id="mcs_top2">John Doe</span>
+                        <span class="data-value" style="color: var(--primary)" id="mcs_perc2">30%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-brown)"></span>
+                        <span class="data-name" style="color: var(--secondary-brown)" id="mcs_top3">Jane Doe</span>
+                        <span class="data-value" style="color: var(--secondary-brown)" id="mcs_perc3">20%</span>
+                    </div>
+                    <div class="data">
+                        <span class="data-label"
+                              style="background-color: var(--secondary-light)" ></span>
+                        <span class="data-name" style="color: var(--secondary-light)" id="mcs_top4" >Alfred Doe</span>
+                        <span class="data-value"
+                              style="color: var(--secondary-light)" id="mcs_perc4">
+                            10%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <select id="mcs" class="option-filters">
+                    <option value="7">Last 7 Days</option>
+                    <option value="15">Last 15 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="1">Last 12 Months</option>
+
+                </select>
+                <a class="btn-view-more" id="mcs_vm">View Details</a>
+            </div>
+        </div>
+        <!-- Top Privileges  -->
+    </div>
+    <!-- Top Corp  -->
+    <div class="row-group3">
+        <div class="cta-table">
+            <div class="controls">
+                <h4>Call to Actions</h4>
+                <div class="filters">
+                    <select id="user-position" class="option-filters">
+                        <option value="7">Restaurant</option>
+                        <option value="15">Hotel</option>
+                    </select>
+                    <select id="user-position" class="option-filters">
+                        <option value="7">Last 7 Days</option>
+                        <option value="15">Last 15 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="1">Last 12 Months</option>
+                        
+                    </select>
+                </div>
+            </div>
+
+            <table id="cAction_table">
+                <thead>
+                    <tr>
+                        <th >Name</th>
+                        <th>Categories</th>
+                        <th>Call</th>
+                        <th>Email</th>
+                        <th>Book</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <a class="btn-view-more" id="vm_action">View More</a>
+        </div>
+        <div class="news-feed">
+            <div class="controls">
+                <h4>New Feed Clicks</h4>
+                <div class="filters">
+                    <select id="user-position" class="option-filters">
+                        <option value="7">Last 7 Days</option>
+                        <option value="15">Last 15 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="1">Last 12 Months</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <table id="tbl_cnt">
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <a class="btn-view-more" id="vm_feedclicks">View More</a>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="clickModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+   <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" >New Feed Clicks List</h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div style="margin:10px">
+
+
+                <table class="myTableMedium" id="n_clicktbl">
+                    <thead>
+                  
+                    <th>Module</th>
+                    <th>No. of Clicks</th>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal fade" id="CallModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+     aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Call to Actions List</h4>
+                <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+            </div>
+            <div style="margin:10px">
+
+
+                <table class="myTableMedium" id="n_call">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Categories</th>
+                            <th>Call</th>
+                            <th>Email</th>
+                            <th>Book</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MostClickStoreModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+     aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Most Click Store List</h4>
+                <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+            </div>
+            <div style="margin:10px">
+
+
+                <table class="myTableMedium" id="mcs_call">
+                    <thead>
+                        <tr>
+                            <th>Store</th>
+                            <th>Click Count</th>
+                            <th>Total Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ShowGetMostClickModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+     aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Most Click Hospitality List</h4>
+                <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+            </div>
+            <div style="margin:10px">
+
+
+                <table class="myTableMedium" id="mch_call">
+                    <thead>
+                        <tr>
+                            <th>Store</th>
+                            <th>Click Count</th>
+                            <th>Total Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ShowMostClickRestoModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+     aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Most Click Restaurant List</h4>
+                <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+            </div>
+            <div style="margin:10px">
+
+
+                <table class="myTableMedium" id="mcr_call">
+                    <thead>
+                        <tr>
+                            <th>Store</th>
+                            <th>Click Count</th>
+                            <th>Total Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer"></div>
+
+<script src="/js/app.js" async defer></script>
+<script src="
+    https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js
+    "></script>
+<script>
+
+   //       var now = new Date();
+   //         var dateString = new Date(now.getTime() - (now.getTimezoneOffset() * 60000))
+   //                 .toISOString()
+   //                 .split("T")[0];
+
+   //         var future = new Date(); // get today date
+   //         future.setDate(future.getDate() - 7); // add 7 days
+   //         var finalDate = future.getFullYear() + '-' + ((future.getMonth() + 1) < 10 ? '0' : '') + (future.getMonth() + 1) + '-' + future.getDate();
+   //        // console.log(finalDate);
+   //         var startDate = new Date(finalDate); //YYYY-MM-DD
+   //         var endDate = new Date(dateString) //YYYY-MM-DD
+     
+            //var getDateArray = function(start, end) {
+            //    var arr = new Array();
+            //    var dt = new Date(start);
+            //    while (dt <= end) {
+            //    arr.push(new Date(dt.setDate(dt.getDate() + 1)).getDate());
+            //    }
+            //    return arr;
+      
+            //}
+
+   // var dateArr = getDateArray(startDate, endDate);
+   // console.log(dateArr);
+   // var ctx = document.getElementById("myChart").getContext("2d");
+   //// console.log(dateArr)
+   // var chartData = {
+   //     labels: dateArr, // conditions to made
+   //     datasets: [
+   //         {
+   //             label: "",
+   //             data: [100, 330, 200, 250, 300, 350, 200,300], // create an aync ajax function
+   //             backgroundColor: "rgba(255, 99, 132, 0.2)",
+   //             borderColor: "rgba(255, 99, 132, 1)",
+   //             borderWidth: 1,
+   //         },
+   //     ],
+   // };
+   // var chartOptions = {
+   //     responsive: true,
+   //     maintainAspectRatio: false,
+
+   //     scales: {
+   //         yAxes: [
+   //             {
+   //                 ticks: {
+   //                     beginAtZero: true,
+   //                 },
+   //             },
+   //         ],
+   //     },
+   // };
+
+   // // Create the chart instance
+   // var myChart = new Chart(ctx, {
+   //     type: "line",
+   //     data: chartData,
+   //     options: chartOptions,
+   // });
+
+   // // Update the chart data
+   // setInterval(function () {
+
+   //     myChart.update();
+   // }, 5000);
+</script>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            nbtable = $('#n_clicktbl').DataTable({
+                         
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              }); 
+              nctable = $('#n_call').DataTable({
+                   "columnDefs": [
+
+                    { "width": "150px", "targets": 0 },
+                    { "width": "100px", "targets": 1 },
+                    { "width": "100px", "targets": 2 },
+                    { "width": "100px", "targets": 3 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              });      
+              mcstable = $('#mcs_call ').DataTable({
+                            "columnDefs": [
+
+                    { "width": "150px", "targets": 0 },
+                    { "width": "100px", "targets": 1 },
+                    { "width": "100px", "targets": 2 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              });
+            mchtable = $('#mch_call').DataTable({
+                "columnDefs": [
+
+                    { "width": "150px", "targets": 0 },
+                    { "width": "100px", "targets": 1 },
+                    { "width": "100px", "targets": 2 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              });
+
+            mcrtable = $('#mcr_call').DataTable({
+                "columnDefs": [
+
+                    { "width": "150px", "targets": 0 },
+                    { "width": "100px", "targets": 1 },
+                    { "width": "100px", "targets": 2 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                "bPaginate": false,
+                "bFilter": false,
+                "stripeClasses": [],
+                "ordering": false,
+                "ordering": false,
+                "info": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "bLengthChange": false,
+                "searching": false,
+                "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+            });
+            cAbtable = $('#cAction_table').DataTable({
+                "columnDefs": [
+
+                    { "width": "180px", "targets": 0 },
+                    { "width": "80px", "targets": 1 },
+                    { "width": "70px", "targets": 2 },
+                    { "width": "70px", "targets": 3 },
+                    { "width": "70px", "targets": 4 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              });
+              ShowGetLineGraphCountList();
+            ShowPiegraphMostClickStore();
+            ShowPiegraphMostClickHospitality();
+            ShowPiegraphMostClickRestaurant();
+            ShowFilteredNewRegistered();
+            GetClickCountTop2();
+            ShowSupportcount();
+            ShowAllUserCount();
+            ShowGetCallToActions();
+            ShowMostClickStoreList();
+            ShowGetMostClickedHospitalityList();
+            ShowGetMostClickRestaurant();
+      
+        });
+        $('#vm_feedclicks').click(function () {
+            GetClickCountAll();
+            $('#clickModal').modal('show');
+        });
+        $('#vm_action').click(function () {
+            ShowGetCallToActionsModal();
+            $('#CallModal').modal('show');
+        });
+        $('#mcs_vm').click(function () {
+            ShowGetMostClickStoreAll();
+            $('#MostClickStoreModal').modal('show');
+        });
+        $('#mch_vm').click(function () {
+            ShowShowGetMostClickModal();
+            $('#ShowGetMostClickModal').modal('show');
+        });
+        $('#mcr_vm').click(function () {
+            ShowMostClickRestaurantAllkModal();
+            $('#ShowMostClickRestoModal').modal('show');
+        });
+
+
+        $('#nur').change(function () {
+            var data = {};
+            data.day = $('#nur').val();
+            //console.log(data);
+
+            $.ajax({
+                url: '/Dashboard/PostNewRegisteredCount',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (response) {
+                    //console.log(response.stats);
+                    document.getElementById("new_user").innerHTML = response.stats;
+                }
+            });
+
+        });
+        $('#mcs').change(function () {
+            var data = {};
+            data.day = $('#mcs').val();
+            //console.log(data);
+
+            $.ajax({
+                url: '/Dashboard/PostMostCickStore',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    console.log(data);
+                 var sum = 0;
+                for (var x = 3; x < data.length; x++) {
+                    sum += data[x].total;
+                   
+                } 
+                //console.log(sum);
+                for (var i = 0; i < data.length; i++) {
+                    document.getElementById("mcs_top1").innerHTML = "Others";
+                    document.getElementById("mcs_perc1").innerHTML = sum.toFixed(2) + " %";
+
+                    document.getElementById("mcs_top2").innerHTML = data[0].business;
+                    document.getElementById("mcs_perc2").innerHTML = data[0].total + " %";
+
+                    document.getElementById("mcs_top3").innerHTML = data[1].business;
+                    document.getElementById("mcs_perc3").innerHTML = data[1].total + " %";
+
+                    document.getElementById("mcs_top4").innerHTML = data[2].business;
+                    document.getElementById("mcs_perc4").innerHTML = data[2].total + " %";
+
+                     topBusinesOutlet = [
+                        {
+                            name: "Others",
+                            totalVisit: sum, //percentage
+                        },
+                        {
+                            name: data[0].business,
+                            totalVisit: data[0].total, //percentage
+                        },
+                        {
+                            name: data[1].business,
+                            totalVisit: data[1].total,  //percentage
+                        },
+                        {
+                            name: data[2].business,
+                                totalVisit: data[2].total,  //percentage
+                        },
+                    ];
+                }
+
+                    const pieGraphMovement = (elementContainer, data) => {
+                        let oldValue = 0;
+                        let styleString = "";
+                        let startingPoint = "";
+                        const color = {
+                            0: " var(--accent)",
+                            1: " var(--primary)",
+                            2: " var(--secondary-brown)",
+                            3: " var(--secondary-light)",
+                        };
+                        data.map((value, key) => {
+                            startingPoint = oldValue == 0 ? "" : `${oldValue}%`;
+                            let newValue = value.totalVisit + oldValue;
+                            styleString +=
+                                oldValue == 0
+                                    ? `${color[key]} ${startingPoint} ${value.totalVisit}%`
+                                    : `,${color[key]} ${startingPoint} ${newValue}%`;
+                            oldValue += value.totalVisit;
+                        });
+                        // console.log(styleString);
+                        document
+                            .querySelector(`${elementContainer}`)
+                            .setAttribute("style", `background: conic-gradient(${styleString})`);
+                    };
+
+                    const populateInfo = (elementContainer, data) => {
+                        let element = document.querySelector(`${elementContainer}`);
+                        data.map((value, key) => {
+                            // console.log();
+                            element.children[key].children[1].innerText = value.name;
+                            element.children[key].children[2].innerText = `${value.totalVisit}%`;
+                        });
+                    };
+
+                    const populateTable = (elementContainer, data) => {
+                        let element = document
+                            .querySelector(`${elementContainer}`)
+                            .children[0].getElementsByTagName("tbody");
+                        data.map((value, key) => {
+                            if (value.name !== "Others") {
+                                let newRow = element[0].insertRow();
+                                let nameCell = newRow.insertCell();
+                                let valueCell = newRow.insertCell();
+                                var nameNode = document.createTextNode(value.name);
+                                var valueNode = document.createTextNode(value.totalVisit);
+                                nameCell.appendChild(nameNode);
+                                valueCell.appendChild(valueNode);
+                            }
+                        });
+                    };
+
+                    pieGraphMovement("#ts-pie-graph", topBusinesOutlet);
+                }
+            });
+
+        });
+        $('#mch').change(function () {
+            var data = {};
+            data.day = $('#mch').val();
+            //console.log(data);
+
+            $.ajax({
+                url: '/Dashboard/PostMostClickedHospitality',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (response) {
+                    //console.log(response);
+                    var sum = 0;
+                for (var x = 3; x < response.length; x++) {
+                    sum += response[x].total;
+                    
+                } 
+                //console.log(sum);
+                    for (var i = 0; i < response.length; i++) {
+                    document.getElementById("mch_top1").innerHTML = "Others";
+                        document.getElementById("mch_perc1").innerHTML = sum.toFixed(2) + " %";
+
+                    document.getElementById("mch_top2").innerHTML = response[0].business;
+                    document.getElementById("mch_perc2").innerHTML = response[0].total + " %";
+
+                    document.getElementById("mch_top3").innerHTML = response[1].business;
+                    document.getElementById("mch_perc3").innerHTML = response[1].total + " %";
+
+                    document.getElementById("mch_top4").innerHTML = response[2].business;
+                   document.getElementById("mch_perc4").innerHTML = response[2].total + " %";
+
+                      topBusinesOutlet = [
+                        {
+                            name: "Others",
+                            totalVisit: sum, //percentage
+                        },
+                        {
+                            name: response[0].business,
+                            totalVisit: response[0].total, //percentage
+                        },
+                        {
+                            name: response[1].business,
+                            totalVisit: response[1].total,  //percentage
+                        },
+                        {
+                            name: response[2].business,
+                                totalVisit: response[2].total,  //percentage
+                        },
+                    ];
+                }
+                    const pieGraphMovement = (elementContainer, data) => {
+                        let oldValue = 0;
+                        let styleString = "";
+                        let startingPoint = "";
+                        const color = {
+                            0: " var(--accent)",
+                            1: " var(--primary)",
+                            2: " var(--secondary-brown)",
+                            3: " var(--secondary-light)",
+                        };
+                        data.map((value, key) => {
+                            startingPoint = oldValue == 0 ? "" : `${oldValue}%`;
+                            let newValue = value.totalVisit + oldValue;
+                            styleString +=
+                                oldValue == 0
+                                    ? `${color[key]} ${startingPoint} ${value.totalVisit}%`
+                                    : `,${color[key]} ${startingPoint} ${newValue}%`;
+                            oldValue += value.totalVisit;
+                        });
+                        //console.log(styleString);
+                        document
+                            .querySelector(`${elementContainer}`)
+                            .setAttribute("style", `background: conic-gradient(${styleString})`);
+                    };
+
+                    const populateInfo = (elementContainer, data) => {
+                        let element = document.querySelector(`${elementContainer}`);
+                        data.map((value, key) => {
+                            // console.log();
+                            element.children[key].children[1].innerText = value.name;
+                            element.children[key].children[2].innerText = `${value.totalVisit}%`;
+                        });
+                    };
+
+                    const populateTable = (elementContainer, data) => {
+                        let element = document
+                            .querySelector(`${elementContainer}`)
+                            .children[0].getElementsByTagName("tbody");
+                        data.map((value, key) => {
+                            if (value.name !== "Others") {
+                                let newRow = element[0].insertRow();
+                                let nameCell = newRow.insertCell();
+                                let valueCell = newRow.insertCell();
+                                var nameNode = document.createTextNode(value.name);
+                                var valueNode = document.createTextNode(value.totalVisit);
+                                nameCell.appendChild(nameNode);
+                                valueCell.appendChild(valueNode);
+                            }
+                        });
+                    };
+
+                    pieGraphMovement("#th-pie-graph", topBusinesOutlet);
+                   
+                }
+            });
+
+        });
+
+        $('#mcr').change(function () {
+            var data = {};
+            data.day = $('#mcr').val();
+            //console.log(data);
+
+            $.ajax({
+                url: '/Dashboard/PostMostClickRestaurant',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (response) {
+                    //console.log(response);
+
+                    var sum = 0;
+                    for (var x = 3; x < response.length; x++) {
+                        sum += response[x].total;
+
+                    }
+                    //console.log(sum);
+                    for (var i = 0; i < response.length; i++) {
+                        document.getElementById("mcr_top1").innerHTML = "Others";
+                        document.getElementById("mcr_perc1").innerHTML = sum.toFixed(2) + " %";
+
+                        document.getElementById("mcr_top2").innerHTML = response[0].business;
+                        document.getElementById("mcr_perc2").innerHTML = response[0].total + " %";
+
+                        document.getElementById("mcr_top3").innerHTML = response[1].business;
+                        document.getElementById("mcr_perc3").innerHTML = response[1].total + " %";
+
+                        document.getElementById("mcr_top4").innerHTML = response[2].business;
+                        document.getElementById("mcr_perc4").innerHTML = response[2].total + " %";
+
+
+                        topBusinesOutlet = [
+                            {
+                                name: "Others",
+                                totalVisit: sum, //percentage
+                            },
+                            {
+                                name: response[0].business,
+                                totalVisit: response[0].total, //percentage
+                            },
+                            {
+                                name: response[1].business,
+                                totalVisit: response[1].total,  //percentage
+                            },
+                            {
+                                name: response[2].business,
+                                totalVisit: response[2].total,  //percentage
+                            },
+                        ];
+                    }
+
+                    const pieGraphMovement = (elementContainer, data) => {
+                        let oldValue = 0;
+                        let styleString = "";
+                        let startingPoint = "";
+                        const color = {
+                            0: " var(--accent)",
+                            1: " var(--primary)",
+                            2: " var(--secondary-brown)",
+                            3: " var(--secondary-light)",
+                        };
+                        data.map((value, key) => {
+                            startingPoint = oldValue == 0 ? "" : `${oldValue}%`;
+                            let newValue = value.totalVisit + oldValue;
+                            styleString +=
+                                oldValue == 0
+                                    ? `${color[key]} ${startingPoint} ${value.totalVisit}%`
+                                    : `,${color[key]} ${startingPoint} ${newValue}%`;
+                            oldValue += value.totalVisit;
+                        });
+                        //  console.log(styleString);
+                        document
+                            .querySelector(`${elementContainer}`)
+                            .setAttribute("style", `background: conic-gradient(${styleString})`);
+                    };
+
+                    const populateInfo = (elementContainer, data) => {
+                        let element = document.querySelector(`${elementContainer}`);
+                        data.map((value, key) => {
+                            // console.log();
+                            element.children[key].children[1].innerText = value.name;
+                            element.children[key].children[2].innerText = `${value.totalVisit}%`;
+                        });
+                    };
+
+                    const populateTable = (elementContainer, data) => {
+                        let element = document
+                            .querySelector(`${elementContainer}`)
+                            .children[0].getElementsByTagName("tbody");
+                        data.map((value, key) => {
+                            if (value.name !== "Others") {
+                                let newRow = element[0].insertRow();
+                                let nameCell = newRow.insertCell();
+                                let valueCell = newRow.insertCell();
+                                var nameNode = document.createTextNode(value.name);
+                                var valueNode = document.createTextNode(value.totalVisit);
+                                nameCell.appendChild(nameNode);
+                                valueCell.appendChild(valueNode);
+                            }
+                        });
+                    };
+                    pieGraphMovement("#to-pie-graph", topBusinesOutlet);
+
+                }
+            });
+
+        });
+    </script>
+}
+

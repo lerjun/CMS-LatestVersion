@@ -1,0 +1,51 @@
+table.myTable {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  -webkit-border-horizontal-spacing: 0;
+}
+table.myTable thead {
+  background-color: var(--dark);
+}
+table.myTable th {
+  height: 30px;
+  color: var(--light);
+  border: 0;
+  text-align: left;
+  padding: 10px;
+}
+table.myTable th:nth-child(4) {
+  text-align: right;
+}
+table.myTable tbody {
+  background-color: var(--white);
+}
+
+table.myTable tbody tr:nth-child(even) {
+  background-color: var(--shade);
+}
+table.myTable td {
+  height: 30px;
+  vertical-align: top;
+  font-size: clamp(0.5rem, 2vw, 0.8rem);
+  padding: 10px;
+  color: var(--dark);
+}
+
+table.myTable tbody tr td:nth-child(1) {
+  width: 200px;
+}
+table.myTable tbody tr td:nth-child(4) {
+  text-align: right;
+}
+table.myTable tbody tr td:nth-child(1) p:nth-child(2) {
+  font-size: clamp(0.5rem, 2vw, 0.5rem);
+  margin: 3px 0;
+}
+table.myTable tbody tr td:nth-child(1) p:nth-child(1) {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

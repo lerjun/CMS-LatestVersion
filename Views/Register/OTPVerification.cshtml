@@ -1,0 +1,304 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+@{
+    ViewData["Title"] = "OTP VERIFICATION";
+    Layout = "~/Views/Shared/RegistrationLayout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+
+  <style>
+
+    body {
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .otp-container {
+      background-image: url("../img/black-cover-pattern.jpg");
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      width: 100vw;
+      height: 100vh;
+      margin: 0 auto;
+      border-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .otp-container .logo {
+      margin-top: 50px;
+      display: flex;
+      margin-bottom: 0;
+    }
+    .otp-container .logo img {
+      width: 250px;
+      height: 150px;
+      margin: 0 auto;
+    }
+    .otp-container h2 {
+      margin: 0 auto;
+      font-family: "Montserrat-Semibold";
+      color: #c89328;
+    }
+
+    .otp-container p {
+      width: 80%;
+      margin: 10px auto;
+      text-align: center;
+      color: white;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+    }
+    .otp-container a {
+      margin: 0 auto;
+      font-family: "Montserrat-Semibold";
+      color: white;
+    }
+
+    .otp-container form {
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 400px;
+    }
+    .otp-container form .number-container {
+      display: flex;
+      margin: 0 auto;
+      gap: 5px;
+    }
+    .otp-container form .number-container .otp-input {
+      width: 100%;
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      outline: none;
+      padding: 10px;
+      border: 0;
+      border-bottom: 3px solid #c89328;
+      background-color: transparent;
+      text-align: center;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #c89328;
+      font-family: "Montserrat-Bold";
+    }
+    .otp-container form p {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+    }
+    .otp-container .success-check {
+      height: 150px;
+      width: 150px;
+      border: 10px solid #c89328;
+      border-radius: 50%;
+      margin: 20px auto 0 auto;
+      position: relative;
+      box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    }
+    .otp-container .success-check::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 42px;
+      width: 30px;
+      height: 60px;
+      border: solid #c89328;
+      border-width: 0 15px 15px 0;
+      transform: rotate(45deg);
+    }
+    .otp-container a {
+      width: 100px;
+      margin: 20px auto 0 auto;
+      text-align: center;
+      padding: 5px;
+      border-radius: 10px;
+      color: #c89328;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .cl-submit {
+      padding: 5px 10px;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      background-color: #c89328;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    .resubmit {
+      display: flex;
+    }
+    .resubmit p {
+      color: #c89328;
+      font-family: "Montserrat-Reg";
+    }
+    .resubmit input[type="submit"] {
+      color: white;
+      font-family: "Montserrat-Reg";
+      background-color: #c89328;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+  </style>
+<div class="hero">
+
+    <div class="otp-container">
+      <div class="logo">
+        <img src="/img/AOPC-White.png" alt="AOPC" width="100%" />
+      </div>
+
+      <h2>Verify Account</h2>
+      <p>Code has been sent to your mobile number.</p>
+
+      <form id="otpverification" >
+        <div class="number-container">
+          <input type="hidden" name="email" id="email2" value="" />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit1"
+            name="digit1"
+            maxlength="1"
+            min="0"
+            data-next="digit2"
+            required
+          />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit2"
+            name="digit2"
+            maxlength="1"
+            min="0"
+            data-next="digit3"
+            data-previous="digit1"
+            required
+          />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit3"
+            name="digit3"
+            maxlength="1"
+            min="0"
+            data-next="digit4"
+            data-previous="digit2"
+            required
+          />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit4"
+            name="digit4"
+            maxlength="1"
+            min="0"
+            data-next="digit5"
+            data-previous="digit3"
+            required
+          />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit5"
+            name="digit5"
+            maxlength="1"
+            min="0"
+            data-next="digit6"
+            data-previous="digit4"
+            required
+          />
+          <input
+            type="text"
+            class="otp-input"
+            id="digit6"
+            name="digit6"
+            maxlength="1"
+            min="0"
+            data-previous="digit5"
+            required
+          />
+        </div>
+
+        <input class="cl-submit" type="submit" value="VERIFY" />
+      </form>
+      <form class="resubmit" method="POST" action="/reverify-otp">
+        <input type="hidden" name="email" id="email" value=" " />
+        <input type="hidden" name="mobile" id="mobile" value="" />
+        <p>
+          Haven't received the code yet?
+          <input type="submit" value="Resend" class="cl-submit-link" />
+        </p>
+      </form>
+      <a href="/">Cancel</a>
+    </div>
+
+    </div>
+
+
+  <script>
+    const digits = document.querySelectorAll(".otp-input");
+
+    digits.forEach((values) => {
+      //  console.log(values);
+      values.addEventListener("keyup", (e) => {
+        // console.log(e.keyCode);
+        if (e.keyCode === 8 || e.keyCode === 37) {
+          let previous = values.getAttribute("data-previous");
+          document.querySelector("#" + previous).focus();
+        } else if (
+          (e.keyCode >= 48 && e.keyCode <= 57) ||
+          (e.keyCode >= 65 && e.keyCode <= 90) ||
+          (e.keyCode >= 96 && e.keyCode <= 105) ||
+          e.keyCode === 39
+        ) {
+          let next = values.getAttribute("data-next");
+          document.querySelector("#" + next).focus();
+        }
+      });
+    });
+    const email = document.querySelector("#email");
+    const email2 = document.querySelector("#email2");
+    const mobile = document.querySelector("#mobile");
+    if (mobile.value !== "" && mobile.value !== "") {
+      localStorage.setItem("email", email.value);
+      localStorage.setItem("mobile", mobile.value);
+    }
+    email.value = localStorage.getItem("email");
+    email2.value = localStorage.getItem("email");
+    mobile.value = localStorage.getItem("mobile");
+  </script>
+
+    @section Scripts{
+        <script>
+
+   $(document).ready(function () {
+
+   });
+  $('#otpverification').submit(function(e){
+        e.preventDefault();
+        var otpval = $("#digit1").val()+$("#digit2").val()+$("#digit3").val()+$("#digit4").val()+$("#digit5").val()+$("#digit6").val();
+
+                        var data = {};
+                        data.otp = otpval;
+                        data.email ="@Accessor.HttpContext.Session.GetString("registeremail")";
+                  
+                        $.ajax({
+                            url: '/Register/VerifyOTP',
+                            data: {
+                                data: data,
+                            },
+                            type: "POST",
+                            datatype: "json",
+                            success: function (response) {
+                            if(response.stats =="OTP Matched!")
+                            {
+                                    window.location.replace("https://cms.alfardanoysterprivilegeclub.com/Register/SuccessPage");
+                            }
+                        }
+                        });
+
+  });
+
+
+ </script>
+    }

@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="~/image/favicon.ico" />
+    <title>@ViewData["Title"] -AOPC Registration</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+        <link href="~/css/iziToast.min.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/61ebb60581.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/fontawesome.css"
+      rel="stylesheets"
+    />
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/brands.css"
+      rel="stylesheets"
+    />
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/solid.css"
+      rel="stylesheets"
+    />
+
+    <title>Document</title>
+</head>
+ <style>
+
+    body {
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .login-container {
+      background-image: url("../img/black-cover-pattern.jpg");
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 15px;
+    }
+    .form h1 {
+      text-align: center;
+      color: #c89328;
+      font-family: "Montserrat-SemiBold";
+      font-size: clamp(1rem, 2vw, 1.5rem);
+    }
+    .form .cl-input {
+      font-family: "Montserrat-Reg";
+      height: 30px;
+
+      border: none;
+      padding: 5px 10px;
+      box-shadow: inset 1px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+    }
+    .form .pass-cont {
+      font-family: "Montserrat-Reg";
+      background-color: white;
+      display: flex;
+      box-shadow: inset 1px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .form .pass-cont > .cl-pass {
+      height: 30px;
+      background-color: transparent;
+      border: none;
+      padding: 5px 10px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      width: 90%;
+    }
+    .ln-generate {
+      color: #c89328;
+      font-family: "Montserrat-Reg";
+    }
+    .form .pass-cont > #view-pass {
+      display: flex;
+      justify-content: center;
+      width: 10%;
+      align-items: center;
+      padding: 5px 10px;
+      box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.595);
+      background-color: #d7d2cb;
+      cursor: pointer;
+    }
+
+    .cb {
+      width: 100%;
+      position: relative;
+      font-family: "Montserrat-Reg";
+    }
+    .cb .label {
+      font-size: clamp(0.7rem, 2vw, 0.9em);
+      margin-left: 30px;
+      color: #c89328;
+    }
+    .cb .label a {
+      color: #c89328;
+    }
+    .cb:hover .checkmark {
+      background-color: #c89328;
+    }
+    .cb .cl-checkbox {
+      display: none;
+    }
+    .cb .cl-checkbox:checked ~ .checkmark {
+      background-color: #c89328;
+    }
+    .cb .cl-checkbox:checked ~ .checkmark:after {
+      display: block;
+    }
+    .cb .checkmark {
+      height: 18px;
+      width: 18px;
+      background-color: rgb(205, 205, 205);
+      position: absolute;
+      left: 0;
+      border-radius: 2px;
+    }
+    .cb .checkmark:hover {
+      background-color: #c89328;
+    }
+ 
+    .cb .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    .cb .checkmark:after {
+      top: 2px;
+      left: 6px;
+      width: 3px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+  
+    .ln-cancel {
+      color: #c89328;
+      text-align: center;
+      font-size: clamp(0.9rem, 2vw, 0.9em);
+      text-decoration: none;
+      font-family: "Montserrat-Reg";
+    }
+  </style>
+<body>
+    @RenderBody();
+     
+    <div class="footer">
+    <script src="~/js/jquery.blockUI.js"></script>
+    <script src="/js/app.js" async defer></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/dataTables.responsive.min.js"></script>
+    <script src="~/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/js/dataTables.rowReorder.min.js"></script>
+    <script src="~/js/jquery.blockUI.js"></script>
+    <script src="~/js/bootbox.min.js"></script>
+    <script src="~/js/iziToast.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-autocomplete.js"></script>
+    <script src="~/js/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="~/js/dataTables.fixedColumns.js"></script>
+
+</body>
+<script>
+    const generatePassword = document.querySelector("#generate-pass");
+    const passwordInput = document.querySelector("#password");
+    const chars =
+      "1234567890abcdefghijklmnopqrstuvwxyzABCDEF!#$%^&*()-._~./,<>?";
+    const viewpass = document.querySelector("#view-pass");
+    generatePassword.addEventListener("click", () => {
+      passwordInput.value = randomString(10, chars);
+    });
+    viewpass.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        viewpass.innerHTML = '<i class="fa fa-eye"></i>';
+      } else {
+        passwordInput.type = "password";
+        viewpass.innerHTML = '<i class="fa fa-eye-slash"></i>';
+      }
+    });
+    const randomString = (length, chars) => {
+      var result = "";
+      for (var i = length; i > 0; --i)
+        result += chars[Math.floor(Math.random() * chars.length)];
+      return result;
+    };
+  </script>
+    @RenderSection("Scripts", required: false)
+</html>

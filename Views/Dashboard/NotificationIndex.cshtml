@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+
+}
+
+<div class="register-main-container">
+
+    <div class="card-header">
+        <div class="row">
+            <div class="list-title" style="border-radius:10px 10px 0px 0px">
+                <h4 style="font-size: 26px;" class="text-left"><i class="fas fa-bell"></i> @ViewData["Title"].ToString()</h4>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="tab-pane active " id="User">
+        <br>
+        <div class="card-body ">
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <div class="row ">
+                        <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                            <table id="notif-table" class="myTableMedium">
+                                <thead>
+                                <th>User Details</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th>DateCreated</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div> 
+@section Scripts{
+        <script>
+          i_id=0;
+            $(document).ready(function () {
+               
+               notiftable = $('#notif-table').DataTable({
+                    "columnDefs": [
+
+                    { "width": "100px", "targets": 0 },
+                    { "width": "200px", "targets": 1 },
+                    { "width": "100px", "targets": 2 },
+                    { "width": "100px", "targets": 3 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                     "paging": true,
+                      "aLengthMenu": [20],
+                      "searching": true,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": ""
+                }});
+               ShowNotificationList();
+            });
+ function ShowNotificationList() {
+   $.blockUI(reloadLoading);
+            setTimeout(function () {
+  $.ajax({
+      url: '/Dashboard/GetNotification',
+      data: {
+
+      },
+      type: "GET",
+      datatype: "json"
+  }).done(function (data) {
+       
+      notiftable.clear().draw();
+      for (var i = 0; i < data.length; i++) {
+
+                        var tbl = "<div>" + "<p>" + data[i].employeeID + "</p>" + "<p>" + data[i].fullname + "</p>";
+         
+        
+                        $('#notif-table').dataTable().fnAddData([
+                     
+                            '<td>'+tbl+'</td>',
+                            '<td>' + data[i].details + '</td>',
+                            '<td>' + data[i].isRead + '</td>',
+                            '<td>' + data[i].dateCreated + '</td>',
+
+
+                        ]);
+      }
+ $.unblockUI();
+                }).fail(function () {
+                    alert("There was an Error When Loading Data...");
+                });
+
+            }, 100);
+
+}
+
+</script>
+}
+
+        

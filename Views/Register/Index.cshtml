@@ -1,0 +1,1535 @@
+﻿@{
+    ViewData["Title"] = "Registration Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+<style>
+
+</style>
+
+<div class="register-main-container">
+         <ul class="nav nav-tabs justify-content-lg-start">
+            <li class="nav-items">
+                <a class="nav-link" href="#User" data-toggle="tab" aria-expanded="true"><i class="fas fa-users"></i>User Registration</a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link" href="#Admin" data-toggle="tab" aria-expanded="false"><i class="fas fa-users"></i>Oyster Admin Registration</a>
+            </li>
+            <li class="nav-items">
+                <a class="nav-link" href="#Corporate" data-toggle="tab" aria-expanded="false"><i class="fas fa-building"></i>Corporate Admin Registration</a>
+            </li>
+
+        </ul>
+
+<!-- Tab content -->
+
+    <div class="tab-content">
+
+      @* User *@
+            <div class="tab-pane active " id="User">
+                <br>
+                <div class="card-body ">
+                    <div class="row">
+
+                        <div class="col-lg-10">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="register-table" class="myTableMedium">
+                                         <thead>
+                                        <th>
+                                           <button class="register"  style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add-newuser"><i class="fas fa-user-plus"></i>Add New</button>
+                                        </th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Company Name</th>
+                                        <th>Position</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-6">
+                                    <hr>
+                                    <div>
+                                    @using (Html.BeginForm("Index", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                                                <label>Import Excel File:</label>
+                                                                <input id="upload-excel" type="file" size="1" name="file" accept="excel/*" class="form-control-sm mb-1">
+                                                                <button type="submit" class="btn btn-success btn-block mb-1" id="btnimport" data-toggle="tooltip" title="Import Excel"><i class="fas fa-upload"></i> Upload</button>
+                                    }
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6">
+                                    <button type="button" class="btn btn-info btn-block" id="btn-download-user" data-toggle="tooltip" title="Download Template"><i class="fas fa-download"></i> Download Template</button>
+                                </div>
+                                <div style="font-size:12px !important;margin-left:10px">
+                                @if (message != "")
+                                {
+
+                                    @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
+                                    {
+                                     <div class="alert alert-warning" style="height: 80px;width: 150px;">
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong id="blink">Warning! @message.Replace(" Error: ", "")</strong>
+                                      </div>
+
+                                      <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+
+                                    }
+                                    else
+                                    {
+                                     <div class="alert alert-success" style="height: 80px;width: 150px;">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          <strong id="blink">Success!@message</strong>
+                                      </div>
+                                        <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+                                    }
+                                }
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@* User End Here *@
+
+@* Admin *@
+            <div class="tab-pane" id="Admin">
+                <br>
+               <div class="card-body ">
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="adminuser-table" class="myTableMedium">
+                                         <thead>
+                                        <th>
+                                           <button class="register"  style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New"  id="btn-add-admin"><i class="fas fa-user-plus"></i>Add New</button>
+                                        </th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Company Name</th>
+                                        <th>Position</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-6">
+                                    <hr>
+                                    <div>
+                                 @using (Html.BeginForm("Admin", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                         
+                                            <label>Import Excel File:</label>
+                                          <input id="admin-upload-excel" type="file" size="1" name="file" accept="excel/*" class="form-control-sm mb-1">
+                                            <button type="submit" class="btn btn-success btn-block mb-1" id="admin-btnimport" data-toggle="tooltip" title="Import Excel"><i class="fas fa-upload"></i>Upload</button>
+                                 
+                                 }
+                                </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6">
+                                    <button type="button" class="btn btn-info btn-block" id="admin-btndownload" data-toggle="tooltip" title="Download Template"><i class="fas fa-download"></i> Download Header</button>
+                                </div>
+                                <div class="col-lg-12 col-md-6 mt-2" style="font-size:12px !important">
+                                @if (message != "")
+                                {
+                                    @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
+                                    {
+                                     <div class="alert alert-warning">
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                           <strong>Warning!</strong> @message.Replace("Error: ", "")
+                                      </div>
+
+                                    }
+                                    else
+                                    {
+                                      <div class="alert alert-success">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          <strong>Success!</strong> @message
+                                      </div>
+                                    }
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@* Admin End Here *@
+
+@* Corporate *@
+            <div class="tab-pane" id="Corporate">
+                <br>
+               <div class="card-body ">
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="corporate-user-table" class="myTableMedium">
+                                          <thead>
+                                        <th>
+                                           <button class="register"  style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add-corporate-user"><i class="fas fa-user-plus"></i>Add New</button>
+                                        </th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Company Name</th>
+                                        <th>Position</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-6">
+                                    <hr>
+                                    <div>
+                                              @using (Html.BeginForm("CorporateIndex", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {     <label>Import Excel File:</label>
+
+                                            <input id="corpupload-excel" type="file" size="1" name="file" accept="excel/*" class="form-control-sm mb-1">
+                                            <button type="submit" class="btn btn-success btn-block mb-1" id="corpbtnimport" data-toggle="tooltip" title="Import Excel"><i class="fas fa-upload"></i> Upload</button>
+                                    }
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6">
+                                    <button type="button" class="btn btn-info btn-block" id="corp-btndownload" data-toggle="tooltip" title="Download Header"><i class="fas fa-download"></i> Download Header</button>
+                                </div>
+                                <div class="col-lg-12 col-md-6 mt-2" style="font-size:12px !important">
+                                @if (message != "")
+                                {
+                                    @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
+                                    {
+                                        <div class="alert alert-warning">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          <strong style="width:100%">Warning!</strong> @message.Replace("Error: ", "")
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                      <div class="alert alert-success">
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Success!</strong> @message
+                                      </div>
+                                    }
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+@* Corporate Emd here *@
+@* 
+End here *@
+@* User Registration modal *@
+  <div class="modal fade" id="registermodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">User Registration Form </h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+                    <form action="" class="mod-form">
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+
+              <div class="upload-image-preview" id="upload-image-preview" style="background-color: gainsboro;">
+                <img
+                  width="100%"
+                  src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="input-container-whole upload" >
+              <label for="img">Upload Image</label>
+              <input
+                type="file"
+                value=""
+                id="img"
+                class="mod-input img-choose"
+                name="uploadimg" accept="image/*"
+              />
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="employeeID">Employee ID</label>
+              <input type="text" value="" id="empid" class="mod-input" required />
+            </div>
+            <div class="input-container-whole">
+              <label for="email">Email</label>
+              <input type="email" value="" id="email" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="fname">First Name</label>
+              <input type="text" value="" id="fname" class="mod-input" required/>
+            </div>
+            <div class="input-container-whole">
+              <label for="lname">Last Name</label>
+              <input type="text" value="" id="lname" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> Username</label>
+              <input type="text" value="" id="user"  class="mod-input" required/>
+            </div>
+             <div class="input-container-whole">
+              <label for="position"> Positon</label>
+               <select id="user-position" class="mod-input">
+                  <option required value="" disabled selected>Select your option</option>
+               </select>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="vipStatus">VIP Status</label>
+              <select id="vip-option"  class="mod-input" required>
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>            
+              </select>
+            </div>
+            <div class="input-container-whole">
+              <label for="gender">Gender</label>
+               <select id="gender" class="mod-input" required>
+                  <option value="" disabled selected>Select your option</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole" required>
+              <label for="corporateName">Corporate Name</label>
+                <select id="user-corporate-option" class="mod-input" >
+                     <option value="" disabled selected>Select your option</option>
+                </select>
+            </div>
+          <div class="input-container-whole" required>
+              <label for="membershipTier">Membership Tier</label>
+             <select id="mem-option" class="mod-input" disabled>
+                 <option value=""  selected>Select your option</option>
+             </select>
+          </div>
+          </div>
+          <div class="actions">
+            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="button" value="Submit" id="btn-register"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* corporate *@
+    <div class="modal fade" id="corporatemodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Corporate Admin Registration Form </h4>
+                    <button type="button" id="corp-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+    <form action="" class="mod-form" id="corp_adminform">
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+
+              <div class="upload-image-preview" id="upload-image-preview">
+                <img
+                  width="100%"
+                  src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="input-container-whole upload" >
+              <label for="img">Upload Image</label>
+              <input
+                type="file"
+                value=""
+                id="corp-img"
+                class="mod-input img-choose"
+                name="uploadimg" accept="image/*"
+              />
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="employeeID">Employee ID</label>
+              <input type="text" value="" id="corp-empid" class="mod-input" required />
+            </div>
+            <div class="input-container-whole">
+              <label for="email">Email</label>
+              <input type="text" value="" id="corp-email" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="fname">First Name</label>
+              <input type="text" value="" id="corp-fname" class="mod-input" required/>
+            </div>
+            <div class="input-container-whole">
+              <label for="lname">Last Name</label>
+              <input type="text" value="" id="corp-lname" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> Username</label>
+              <input type="text" value="" id="corp-user"  class="mod-input" required/>
+            </div>
+           <div class="input-container-whole">
+              <label for="position"> Positon</label>
+               <select id="corp-position" class="mod-input" required>
+                  <option required value="" disabled selected>Select your option</option>
+               </select>
+            </div>
+          </div>
+          <div class="mod-form-row">
+              <div class="input-container-whole" required>
+              <label for="corporateName">Corporate Name</label>
+                <select id="corp-corporate-option" class="mod-input" required >
+                     <option value="" disabled selected>Select your option</option>
+                </select>
+            </div>
+            <div class="input-container-whole">
+              <label for="gender">Gender</label>
+               <select id="corp-gender" class="mod-input" required>
+                  <option value="" disabled selected>Select your option</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+          </div>
+          
+          <div class="actions">
+            <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="submit" value="Submit" id="btn-register-corporate"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* Oyster Administrator *@
+     <div class="modal fade" id="oysteradminmodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Oyster Admin Registration Form </h4>
+                    <button type="button" id="admin-h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+                    <form action="" class="mod-form">
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+
+              <div class="upload-image-preview" id="upload-image-preview">
+                <img
+                  width="100%"
+                  src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="input-container-whole upload" >
+              <label for="img">Upload Iamge</label>
+              <input
+                type="file"
+                value=""
+                id="admin-img"
+                class="mod-input img-choose"
+                name="uploadimg" accept="image/*"
+              />
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="employeeID">Employee ID</label>
+              <input type="text" value="" id="admin-empid" class="mod-input" required />
+            </div>
+            <div class="input-container-whole">
+              <label for="email">Email</label>
+              <input type="text" value="" id="admin-email" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="fname">First Name</label>
+              <input type="text" value="" id="admin-fname" class="mod-input" required/>
+            </div>
+            <div class="input-container-whole">
+              <label for="lname">Last Name</label>
+              <input type="text" value="" id="admin-lname" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> Username</label>
+              <input type="text" value="" id="admin-user"  class="mod-input" required/>
+            </div>
+           @* <div class="input-container-whole">
+              <label for="gender">Gender</label>
+               <select id="admin-gender" class="mod-input" required>
+                  <option value="" disabled selected>Select your option</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div> *@
+             <div class="input-container-whole">
+              <label for="username"> Admin Password</label>
+              <input type="password" value="" id="admin-password"  class="mod-input" required/>
+            </div>
+          </div>
+         
+          <div class="actions">
+            <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="button" value="Submit" id="btn-register-admin"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="useruploadModal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+
+        <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">upload Excel File</h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <form asp-controller="CMS" class="register-actions" asp-action="Index" method="post"
+                    enctype="multipart/form-data">
+                    <div class="file-upload" style="width:100%">
+                        <div class="file-select">
+                            <div class="file-select-button" id="fileName">Choose File</div>
+                            <div class="file-select-name" id="noFile">No file chosen...</div>
+                            <input id="chooseFile" type="file" size="1" name="file" accept="excel/*"
+                                class="form-control-sm mb-1">
+                        </div>
+                    </div>
+                    <button type="submit" class="upload-register" id="btnimport" data-toggle="tooltip"
+                        title="Import Excel">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+@* End Here *@
+@section Scripts{
+<script>
+  var i_id = "";
+  var img_edit="";
+    $(document).ready(function () {
+
+      dbtable = $('#register-table').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "stripeClasses": [],
+        "ordering": false,
+        "ordering": false,
+        "info": false,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "bLengthChange": false, 
+        "oLanguage": { "sZeroRecords": "", "sEmptyTable": ""
+      }});
+
+      adminusertable = $('#adminuser-table').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "stripeClasses": [],
+        "ordering": false,
+        "ordering": false,
+        "info": false,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "bLengthChange": false, 
+        "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+      });
+      corusertable = $('#corporate-user-table').DataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "stripeClasses": [],
+        "ordering": false,
+        "ordering": false,
+        "info": false,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "bLengthChange": false, 
+        "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+      });
+
+      $("input[name=uploadimg]").change(function () {
+        if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+        var img = $('<img>').attr('src', e.target.result);
+        img.attr('height', '120px');
+        img.attr('width', '120px');
+        $('.upload-image-preview').html(img);};
+        reader.readAsDataURL(this.files[0]);
+      }});
+      CorpShowCorporateOption();
+       UserShowPositionName();
+       ShowUserDetails();
+       ShowUserType(); 
+       ShowCorporateOption();
+       ShowMembershipOption();
+       ShowUserCorporateList();
+       ShowUserAdminList();
+       ShowPositionName();
+       });
+
+ 
+                    $('#corp-corporate-option').change(function () {
+                        var data = {};
+                        data.Id = $('#corp-corporate-option').val();
+                         
+                        
+                        $.ajax({
+                            url: '/Register/CorporateFilterMembership',
+                            data: {
+                                data: data,
+                            },
+                            type: "POST",
+                            datatype: "json",
+                            success: function (response) {
+                            console.log(response);
+                            $('#corp-mem-option').val(response.stats);
+                        }
+                        });
+
+                     });
+                    $('#user-corporate-option').change(function () {
+                        var data = {};
+                        data.Id = $('#user-corporate-option').val();
+                        @*   *@
+                        
+                        $.ajax({
+                            url: '/Register/CorporateFilterMembership',
+                            data: {
+                                data: data,
+                            },
+                            type: "POST",
+                            datatype: "json",
+                            success: function (response) {
+                            console.log(response.stats);
+                            $('#mem-option').val(response.stats);
+                        }
+                        });
+
+                 });
+@* User Register Send Email *@
+                    $('#register-table').on('click', '.tbl-sendemail', function () {
+                    
+                        var data = {};
+                        data.fname = $(this).data("fname");
+                        data.lname = $(this).data("lname");
+                        data.email = $(this).data("sentemail");
+                                     
+                       var id=  $(this).data("id");
+           
+                       console.log(id);
+                       if($(this).data("emailstatus") =="REGISTERED")
+                       {
+                          notifyMsg('Warning!', 'User Already Verified.', 'yellow', 'fas fa-exclamation-triangle');
+                       }
+                       else
+                       {
+                          iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to Send Email?',
+                          position: 'center',
+                          buttons: [
+                          
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+
+                                    
+                                       url: '/Register/UpdateUserStatus',
+                                    data: {
+                                        data:id
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (response) {
+                     
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/Register/Sendemail',
+                                        data: {
+                                            data: data
+                                        },
+                                        dataType: 'json',
+                                        success: function (response) {
+
+                                     
+                                        }
+                                    });
+                                   
+                                   notifyMsg('Success!', 'Email Successfully Sent!','green', 'fas fa-check');
+
+                                    ShowUserDetails();
+                                  $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+                       }
+                         
+
+                    });
+@* User Register Send Email End Here *@
+@* User Register Send Email *@
+                    $('#corporate-user-table').on('click', '.corp-tbl-sendemail', function () {
+                    
+                        var data = {};
+                        data.fname = $(this).data("fname");
+                        data.lname = $(this).data("lname");
+                        data.email = $(this).data("corpemail");
+     
+                       var id=  $(this).data("corporateid");
+                         
+                       if($(this).data("corpstatus") =="REGISTERED")
+                       {
+                          notifyMsg('Warning!', 'User Already Verified.', 'yellow', 'fas fa-exclamation-triangle');
+                       }
+                       else
+                       {
+                          iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to Send Email?',
+                          position: 'center',
+                          buttons: [
+                          
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+
+                                    
+                                       url: '/Register/UpdateUserStatus',
+                                    data: {
+                                        data:id
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (response) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/Register/Sendemail',
+                                        data: {
+                                            data: data
+                                        },
+                                        dataType: 'json',
+                                        success: function (response) {
+                                      
+
+                                        }
+                                    });
+                                      notifyMsg('Success!', 'Email Successfully Sent!', 'green', 'fas fa-check');
+                                      
+                                    ShowUserCorporateList();
+                                  $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+                       }
+                         
+
+                    });
+@* User Register Send Email End Here *@
+
+@* User register edit *@
+                    $('#register-table').on('click', '.tbl-edit', function () {
+                      i_id = $(this).data("id");
+                      uname = $(this).data("username");
+                      empid = $(this).data("employeeid");
+                      fname = $(this).data("fname");
+                      lname = $(this).data("lname");
+                      email = $(this).data("email");
+                      gender = $(this).data("gender");
+                      positionID = $(this).data("pos");
+                      corpid = $(this).data("usercorpid");
+                      utype = $(this).data("utype");
+                      vipstats = $(this).data("vipstats");
+                      displayimg = $(this).data("displayimg");
+                      console.log(vipstats);
+                      if (displayimg != null) {
+                      var img = $('<img>').attr('src', displayimg);
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      } 
+                      else {
+                          document.getElementById("upload-image-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+                      }
+                      $("#user").val(uname);
+                      $("#empid").val(empid);
+                      $("#fname").val(fname);
+                      $("#lname").val(lname);
+                      $("#email").val(email);
+                      $("#gender").val(gender);
+                      $("#user-position").val(positionID);
+                      $("#user-corporate-option").val(corpid);
+                      $("#usertype-option").val(utype);
+                      $("#vip-option").val(vipstats);
+                        var data = {};
+                        data.Id = $('#user-corporate-option').val();
+                         
+                        
+                        $.ajax({
+                            url: '/Register/CorporateFilterMembership',
+                            data: {
+                                data: data,
+                            },
+                            type: "POST",
+                            datatype: "json",
+                            success: function (response) {
+                            console.log(response);
+                            $('#mem-option').val(response.stats);
+                          }
+                        });
+                       img_edit= displayimg.split('/')[5];
+                      document.getElementById("btn-register").innerHTML = 'Update';
+                      $('#registermodal').modal('show');
+                      $(".alert-warning").hide();
+
+                    });
+@* User Register Edit End Here*@
+
+@* Corporate User Edit  *@
+                    $('#corporate-user-table').on('click', '.corp-tbl-edit', function () {
+
+                      document.getElementById("btn-register-corporate").innerHTML = 'Update';
+                      $('#corporatemodal').modal('show');
+                      i_id = $(this).data("id");
+                      uname = $(this).data("username");
+                      empid = $(this).data("employeeid");
+                      fname = $(this).data("fname");
+                      lname = $(this).data("lname");
+                      email = $(this).data("email");
+                      gender = $(this).data("corporategender");
+                      positionID = $(this).data("corporateposition");
+                      corpid = $(this).data("corporateid");
+                      displayimg = $(this).data("corpdisplayimg");
+                      $("#corp-user").val(uname);
+                      $("#corp-empid").val(empid);
+                      $("#corp-fname").val(fname);
+                      $("#corp-lname").val(lname);
+                      $("#corp-email").val(email);
+                      $("#corp-gender").val(gender);
+                      $("#corp-position").val(positionID);
+                      $("#corp-corporate-option").val(corpid);
+                      if (displayimg != null) {
+                      var img = $('<img>').attr('src', displayimg);
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      } 
+                      else {
+                          document.getElementById("upload-image-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+                      
+                      } 
+                     img_edit= displayimg.split('/')[5];
+                     console.log(img_edit);
+                     console.log(displayimg);
+                    });
+@* Corporate User Edit End Here*@
+
+@* Admin User Edit  *@
+                    $('#adminuser-table').on('click', '.admin-tbl-edit', function () {
+
+                      document.getElementById("btn-register-admin").innerHTML = 'Update';
+                     $('#oysteradminmodal').modal('show');
+                      i_id = $(this).data("adminid");
+                      uname = $(this).data("adminusername");
+                      empid = $(this).data("adminemployeeid");
+                      fname = $(this).data("adminfname");
+                      lname = $(this).data("adminlname");
+                      email = $(this).data("adminemail");
+                      gender = $(this).data("admingender");
+                      positionID = $(this).data("adminpos");
+                      corpid = $(this).data("adminusercorpid");
+                      utype = $(this).data("adminutype");
+                      displayimg = $(this).data("admindisplayimg");
+                      $("#admin-user").val(uname);
+                      $("#admin-empid").val(empid);
+                      $("#admin-fname").val(fname);
+                      $("#admin-lname").val(lname);
+                      $("#admin-email").val(email);
+                      $("#admin-gender").val(gender);
+                      $(".alert-warning").hide();
+                       if (displayimg != null) {
+                      var img = $('<img>').attr('src', displayimg);
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      } 
+                      else {
+                          document.getElementById("upload-image-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+                      }
+                           img_edit= displayimg.split('/')[5];
+                    });
+@* Admin User Edit End Here*@
+
+
+@* User Register Delete *@
+                    $('#register-table').on('click', '.tbl-delete', function () {
+                      var data = {};
+                      data.id = $(this).data("id");
+                      data.employeeID = $(this).data("employeeid");
+                      data.Fname = $(this).data("fname");
+                      data.Lname = $(this).data("lname");
+                      data.Username = $(this).data("username");
+                      data.password = "n/a";
+                      data.gender = $(this).data("gender");
+                      data.Email = $(this).data("email");
+                      data.positionID = $(this).data("pos");
+                      data.CorporateID = "1";
+                      data.Active = "6";
+                      data.Type = "3";
+                        
+                      iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Register/DeleteUserInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', 'Successfully Deleted!', 'green', 'fas fa-check');
+                                            var type = "Tax";
+                                            ShowUserDetails();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+
+                    });
+@* User Delete End Here*@
+
+@* Corporate Delete User Profile *@
+                      $('#corporate-user-table').on('click', '.corp-tbl-delete', function () {
+
+                          var data = {};
+                      data.id = $(this).data("id");
+                     iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Register/DeleteUserInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', 'Successfully Deleted!', 'green', 'fas fa-check');
+                                            var type = "Tax";
+                                             ShowUserCorporateList();
+                                  $(".alert-warning").hide();
+
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+                    });
+@* Corporate Delete User End Here*@
+
+@* Admin Delete User Profile *@
+                      $('#adminuser-table').on('click', '.admin-tbl-delete', function () {
+
+                          var data = {};
+                          data.id = $(this).data("id");
+                          if( $(this).data("id") == 1)
+                          {
+                            notifyMsg('Warning!', 'This Administrator Cannot be Deleted', 'yellow', 'fas fa-exclamation-triangle');
+                          }
+                          else
+                          {
+
+                       
+                          iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Register/DeleteUserInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', 'Successfully Deleted!', 'green', 'fas fa-check');
+                                      
+                                      ShowUserAdminList();
+                                
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+                         }
+                    });
+@* Admin Delete User End Here*@
+
+@* Function Clear *@
+                    function clear()
+                    {
+                      $('input[type="text"]').val("");
+                      $('input[type="email"]').val("");
+                      $('input[type="password"]').val("");
+                      $('#position').prop('selectedIndex', 0);
+                      $('#gender').prop('selectedIndex', 0);
+                      $('#usertype-options').prop('selectedIndex', 0);
+                      $('#vip-option').prop('selectedIndex', 0);
+                      $('#mem-option').prop('selectedIndex', 0);
+                    }
+@* Clear End Here*@
+
+@* User Register Add new User *@
+                    $('#add-newuser').click(function () {
+                      i_id = 0;
+                      var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      $(".upload-image-preview").attr("src", );
+                      $('input[type="text"]').val("");
+                      $('input[type="email"]').val("");
+                      $('input[type="password"]').val("");
+                      $('#position').prop('selectedIndex', 0);
+                      $('#gender').prop('selectedIndex', 0);
+                      $('#registermodal').modal('show');
+
+                    });
+@* User Register Add new User End Here*@
+
+@* Admin Add New User *@
+                     $('#btn-add-admin').click(function () {
+                      i_id = 0;
+                      var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      $(".upload-image-preview").attr("src", );
+                      $('input[type="text"]').val("");
+                      $('input[type="email"]').val("");
+                      $('input[type="password"]').val("");
+                      $('#position').prop('selectedIndex', 0);
+                      $('#gender').prop('selectedIndex', 0);
+                      $('#oysteradminmodal').modal('show');
+
+                    });
+@* Admin Add New User End Here*@
+
+@* Corporate Add New User *@
+                     $('#add-corporate-user').click(function () {
+                      i_id = 0;
+                      var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+                      img.attr('height', '120px');
+                      img.attr('width', '120px');
+                      $('.upload-image-preview').html(img);
+                      $(".upload-image-preview").attr("src", );
+                      $('input[type="text"]').val("");
+                      $('input[type="email"]').val("");
+                      $('input[type="password"]').val("");
+                      $('#position').prop('selectedIndex', 0);
+                      $('#corporatemodal').modal('show');
+
+                    });
+@* Admin Add New User End Here*@
+
+@* Corporate Modal  *@
+                    $('#btn-add-corporate').click(function () {
+                      i_id = 0;
+                      $(".upload-image-preview").attr("src", "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+                      $('input[type="text"]').val("");
+                      $('input[type="email"]').val("");
+                      $('input[type="password"]').val("");
+                      $('#position').prop('selectedIndex', 0);
+                      $('#corporatemodal').modal('show');
+
+                    });  
+@* Corporate Modal End Here *@
+
+ @* Corporate Download Here *@
+                    $('#corp-btndownload').click(function () {
+                      location.replace('../Register/CorporateDownloadHeader');
+
+                    });
+                    $('#admin-btndownload').click(function () {
+                      location.replace('../Register/AdminDownloadHeader');
+
+                    });
+@* Corporate Download Header End Here *@
+
+@* User Download Here *@
+                    $('#btn-download-user').click(function () {
+                      location.replace('../Register/DownloadHeader');
+                    });
+@* User Download Here *@
+
+@* User Register Add Function *@
+                    $('#btn-register').click(function () {
+
+                    var filename = $("#img").val().replace(/.*(\/|\\)/, '');
+                    var data = {};
+                     console.log(filename);
+                    if(filename =="" || filename == null)
+                    {
+                      filename = img_edit;
+                    }
+                    data.id = i_id;
+                    data.EmployeeID = $('#empid').val();
+                    data.Fname = $('#fname').val();
+                    data.Lname = $('#lname').val();
+                    data.Username = $('#user').val();
+                    data.gender = $('#gender').val();
+                    data.Email = $('#email').val();
+                    data.positionID = $('#user-position').val();
+                    data.CorporateID =  $('#user-corporate-option').val();
+                    data.Active = "2";
+                    data.Type=  3;
+                    data.FilePath=filename;
+                    data.isVIP = $('#vip-option').val();
+                    let valid = true;
+                     
+                    
+                      var fileUpload = $("#img").get(0);
+                      var files = fileUpload.files;
+                      var formData = new FormData();
+                      formData.append('file', files[0]);
+                      var fileUpload = $("#upload-img").get(0);
+
+         
+                      console.log(formData);
+                    if ($('#empid').val() == '' || $('#fname').val() == '' ||  $('#lname').val() == '' || $('#email').val() == '' ||  $('#gender').prop('selectedIndex') == 0  ||   $('#user-position').prop('selectedIndex') == 0
+                    ||   $('#user-corporate-option').prop('selectedIndex') == 0 ||   $('#vip-option').prop('selectedIndex') == 0  ) 
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+                            $("#vip-option").focus();
+                    }
+                    else
+
+                    {
+                         if (files.length > 0) 
+                         {
+                                  if (files[0].size > 500000) {
+                                      notifyMsg('Warning!', 'Uploaded image reached the maximum file size. Image size should be maximum of 500 KB.', 'yellow', 'fas fa-exclamation-triangle');
+                                      return false;
+                                  }
+                            }
+                            iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new User?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Register/SaveUserInfo',
+                                        data: {
+                                            data: data
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                        if(response.stats == "Error in Registration")
+                                        {
+                                          notifyMsg('Warning!', response.stats, 'yellow', 'fas fa-exclamation-triangle');
+                                          $("#empid").focus();
+                                        }
+                                        else
+                                        {
+                                           $.ajax({
+                                            url: '/Register/UploadFile',
+                                            type: 'POST',
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (result) {
+                                            }
+                                            });
+                                            notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                            ShowUserDetails();
+                                            clear();
+                                            $("#h-close").click();
+                                       
+                                        } 
+                                     
+                                        $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                    }   
+                    });
+@* User Register Add Function End Here*@
+
+@* Admin Add new Register Function *@
+                $('#btn-register-admin').click(function () {
+
+                    var filename = $("#img").val().replace(/.*(\/|\\)/, '');
+                    console.log(filename);
+                    if(filename =="" || filename == null)
+                    {
+                      filename = img_edit;
+                    }
+                    var data = {};
+                    data.id = i_id;
+                    data.EmployeeID = $('#admin-empid').val();
+                    data.Fname = $('#admin-fname').val();
+                    data.Lname = $('#admin-lname').val();
+                    data.Username = $('#admin-user').val();
+                    data.password = $('#admin-password').val();
+                    data.gender = $('#admin-gender').val();
+                    data.Email = $('#admin-email').val();
+                    data.positionID =1004;
+                    data.CorporateID = 1;
+                    data.Active = 1;
+                    data.Type= 1;
+                    data.FilePath=filename;
+                    data.isVIP = 0;
+                    let valid = true;
+                     
+                    if ($('#admin-empid').val() == '' || $('#admin-#fname').val() == '' ||  $('#admin-lname').val() == '' || $('#admin-email').val() == '') 
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+                    }
+                    else
+
+                    {
+                            iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new User?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Register/SaveUserInfo',
+                                        data: {
+                                            data: data,
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                        if(response.stats == "Error in Registration")
+                                        {
+                                          notifyMsg('Warning!', response.stats, 'yellow', 'fas fa-exclamation-triangle');
+                                          $("#admin-empid").focus();
+                                        }
+                                        else
+                                        {
+                                           notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                           ShowUserAdminList();
+                                           clear();
+                                           $("#admin-h-close").click();
+                                       
+                                        } $.unblockUI();
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                    }
+                        
+                    });
+@* Admin Add new Register Function End Here*@
+
+@* Corporate Add new Register Function *@
+  $('#corp_adminform').submit(function(e){
+        e.preventDefault();
+
+                   filename=$("#img").val().replace(/.*(\/|\\)/, ''); 
+                    console.log(filename);
+                    if(filename =="" || filename == null)
+                    {
+                      filename = img_edit;
+                    }
+                    var data = {};
+                    data.id =i_id;
+                    data.EmployeeID = $('#corp-empid').val();
+                    data.Fname = $('#corp-fname').val();
+                    data.Lname = $('#corp-lname').val();
+                    data.Username = $('#corp-user').val();
+                    data.gender = $('#corp-gender').val();
+                    data.Email = $('#corp-email').val();
+                    data.positionID = $('#corp-position').val();
+                    data.CorporateID =  $('#corp-corporate-option').val();
+                    data.Active = 2;
+                    data.Type= 2;
+                    data.FilePath=filename;
+                    data.isVIP = 0;
+                    let valid = true;
+                     
+                    if ($('#corp-empid').val() == '' || $('#corp-fname').val() == '' ||  $('#corp-lname').val() == '' || $('#ecorp-mail').val() == '' || $('#corp-corporate-option').prop('selectedIndex') == 0 ||
+                    $('#corp-position').prop('selectedIndex') == 0 ||  $('#corp-gender').prop('selectedIndex') == 0 )  
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+                    }
+                    else
+
+                    {
+                            iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new User?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Register/SaveUserInfo',
+                                        data: {
+                                            data: data,
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                         if(response.stats == "Error in Registration")
+                                        {
+                                          notifyMsg('Warning!', response.stats, 'yellow', 'fas fa-exclamation-triangle');
+                                          $("#admin-empid").focus();
+                                        }
+                                        else
+                                        {
+                                           notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                          ShowUserCorporateList();
+                                          clear();
+                                          $("#corp-close").click();
+                                       
+                                        } $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+                    }
+                        
+                    });
+@* Corporate Add new Register Function End Here*@
+
+
+ 
+
+</script>
+}

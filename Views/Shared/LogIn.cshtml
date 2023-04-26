@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+        <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="icon" type="image/x-icon" href="~/image/favicon.ico" />
+    <title>AOPC LOG IN</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/site.css" />
+  </head>
+  <body>
+    @RenderBody();
+    <div class="hero">
+      <div class="form-container">
+        @* <div class="bg-blur"></div> *@
+        <div class="login-logo-conctainer">
+          <img src="/img/AOPCWHITEPNG.png" alt="AOPC" width="100%" />
+        </div>
+        <h1>Content Management System</h1>
+        <form class="form">
+          <input type="text" placeholder="Username" id="username" required/>
+          <input type="password" placeholder="Password" id="password" required/>
+          <a href="https://www.alfardanoysterprivilegeclub.com/forgot-password">Forgot Password?</a>
+          <button type="button" value="Save" class="btn-save" id="save" onclick="Login()">Submit</button>
+
+        </form>
+      </div>
+    </div>
+
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/js/jquery-ui-1.12.1.min.js"></script>
+
+    <footer class="border-top footer text-muted">
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  @RenderSection("Scripts", required: false)
+    <script src="" async defer></script>
+  </body>
+</html>
+    <script>
+var input = document.getElementById("password");
+var u_input = document.getElementById("username");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("save").click();
+  }
+});
+u_input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("save").click();
+  }
+});
+
+function Login() {
+                      if ( $('#username').val() == '' || $('#password').val() == ''  ) 
+                    {
+                        notifyMsg('Warning!', 'Please fill up all required fields.', 'red', 'fas fa-exclamation-triangle');
+                            $("#username").focus();
+                    }
+                    else
+                    {
+                          var data = {};
+                  
+                          data.Username = $('#username').val();
+                          data.password = $('#password').val();
+                           
+                          
+                          $.ajax({
+                              url: '/LogIn/LoginUser',
+                              data: {
+                                  data: data,
+                              },
+                              type: "POST",
+                              datatype: "json",
+                            success: function (response) {
+                              console.log(response);
+                              if(response.stats != null) {
+                      
+                              notifyMsg('Error!', response.stats, 'red', 'fas fa-ban');
+                              }
+                            else
+                            {
+                                window.location.href = response.redirectToUrl;
+                            } 
+                        
+                        
+                          }
+                          });
+                    }
+   
+}
+</script>

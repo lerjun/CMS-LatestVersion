@@ -1,0 +1,535 @@
+﻿@{
+    ViewData["Title"] = "Vendor Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+<div class="register-main-container">
+    <div class="business-data">
+        <div class="list-title">
+            <h3>Vendor Maintenance</h3>
+        </div>
+        <div class="card-body ">
+                    <div class="row">
+
+                        <div class="col-lg-10">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                 
+                             <table class="myTableLarge" id="vendor-table">
+                                <thead>
+                                    <th>
+                                     <button class="register"  style ="margin-bottom: 5px;font-size: 13px; width: 100px;   padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add-newuvendor"><i class="fas fa-user-plus"></i>Add New</button>
+                                
+                                    </th>
+                                    <th>Description</th>
+                                    <th>Services</th>
+                                    <th>Webiste URL</th>
+                                    <th>Email</th>
+                                    <th>Business Name</th>
+                                    <th>Business Address</th>
+                                    @* <th>Featured Image</th> *@
+                                    <th>Status</th>
+                                    <th>Date Created</th>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="row">
+                                <div class="col-lg-11">
+                                    <hr>
+                                    <div>
+                                    @using (Html.BeginForm("Index", "Vendor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                                                <label>Import Excel File:</label>
+                                                                <input id="upload-excel" type="file" size="1" name="file" accept="excel/*" class="form-control-sm mb-1">
+                                                                <button type="submit" class="btn btn-success btn-block mb-1" id="btnimport" data-toggle="tooltip" title="Import Excel"><i class="fas fa-upload"></i> Upload</button>
+                                    }
+                                    </div>
+                                </div>
+                                <div class="col-lg-11">
+                                    <button type="button" class="btn btn-info btn-block" id="btn-download" data-toggle="tooltip" title="Download Template"><i class="fas fa-download"></i> Download Template</button>
+                                </div>
+                                <div style="font-size:12px !important;margin-left:10px">
+                                @if (message != "")
+                                {
+
+                                    @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
+                                    {
+                                     <div class="alert alert-warning" style="height: 80px;width: 150px;">
+                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong id="blink">Warning! @message.Replace(" Error: ", "")</strong>
+                                      </div>
+
+                                      <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+
+                                    }
+                                    else
+                                    {
+                                     <div class="alert alert-success" style="height: 80px;width: 150px;">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          <strong id="blink">Success!@message</strong>
+                                      </div>
+                                        <script>
+                                              window.addEventListener("load", function () {
+                                              var b = document.getElementById('blink');
+                                              setInterval(function () {
+                                              b.style.display = (b.style.display == 'none' ? '' : 'none');}, 500); }, false);
+                                      </script>
+                                    }
+                                }
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+       <div class="modal fade" id="vendormodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+
+         <div class="modal-dialog modal-error-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-name">Oyster Admin Registration Form </h4>
+                    <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+                </div>
+                <div class="col-lg-12" style="margin:10px">
+
+       <form action="" class="mod-form" id="submitvendor">
+
+           <div class="mod-form-row">
+             <div class="input-container-halfs  ">
+
+                 <div class="upload-image-preview" id="upload-image-preview" style="background-color: gainsboro;">
+                <img
+                  width="100%"
+                  src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="input-container-whole upload" >
+              <label for="img">Upload Featured Image</label>
+              <input
+                type="file"
+                value=""
+                id="img"
+                class="mod-input img-choose"
+                name="uploadimg" accept="image/*"
+              />
+            </div>
+                   <div class="input-container-halfs ">
+
+                    <div class="upload-logo-preview" id="upload-logo-preview">
+                        <img
+                        width="100%"
+                        src="https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png"
+                        alt=""
+                        />
+                    </div>
+            </div>
+            <div class="input-container-halfs upload" >
+              <label for="logo-img">Upload Logo</label>
+             <input
+                type="file"
+                value=""
+                id="logo-img"
+                class="mod-input img-choose"
+                name="uploadlogo" accept="image/*"
+              />
+            </div>
+          </div>  
+          
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="employeeID">Vendor Name <span class="req" >*</span></label>
+              <input type="text" value="" id="vendorname" class="mod-input" required />
+            </div>
+            <div class="input-container-whole">
+              <label for="email">Description <span class="req" >*</span></label>
+              <input type="text" value="" id="description" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="fname">Services </label>
+              <input type="text" value="" id="services" class="mod-input" />
+            </div>
+            <div class="input-container-whole">
+              <label for="lname">Website URL <span class="req" >*</span></label>
+              <input type="text" value="" id="wURL" class="mod-input" required/>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="username"> Contact Number <span class="req" >*</span></label>
+              <input type="text" value="" id="Cno"  class="mod-input" required/>
+            </div>
+           
+            <div class="input-container-whole">
+              <label for="fname">Email <span class="req" >*</span></label>
+              <input type="email" value="" id="email" class="mod-input" />
+            </div>
+            
+          </div>
+           
+          <div class="mod-form-row">
+             <div class="input-container-whole">
+                <label for="btype-option">Business Type <span class="req" >*</span></label>
+                  <select id="btype-option" class="mod-input" required style="width:100%"> 
+                        <option value="" disabled selected>Select your option</option>
+                  </select>
+            </div>
+             <div class="input-container-whole">
+                <label for="b-option">Hotel Business Address <span class="req" >*</span></label>
+                  <select id="b-option" class="mod-input" required style="width:100%"> 
+                        <option value="" disabled selected>Select your option</option>
+                  </select>
+            </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+              <label for="lname">Address <span class="req" >*</span></label>
+              <input type="text" value="" id="address"  class="mod-input" required/>
+            </div>
+            <div class="input-container-whole">
+              <label for="lname">Map</label>
+              <input type="text" value="" id="Map"  class="mod-input" />
+            </div>
+          </div>
+         
+          <div class="actions">
+            <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+            <input type="submit" value="Submit" id="btn-vendor"/>
+          </div>
+        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+    @section Scripts{
+    <script>
+      //how to create a pdf file viewer jquery?
+        var i_id = "";
+        var img_edit="";      
+        var img_logo_edit="";      
+        $(document).ready(function () {
+
+
+                vbtable = $('#vendor-table').DataTable({
+                     "columnDefs": [
+
+                        { "width": "80px", "targets": 0 },
+                        { "width": "150px", "targets": 1 },
+                        {  "width": "150px", "targets": 2 },
+                        { "width": "70px", "targets": 3 },
+                        { "width": "70px", "targets": 4 },
+                        { "width": "70px", "targets": 5 },
+                        { "width": "70px", "targets": 6 },
+                        { "width": "70px", "targets": 7 },
+                        { "width": "70px", "targets": 8 },
+                       // { "width": "70px", "targets": 9 }
+                      ],
+                "bPaginate": false,
+                "bFilter": false,
+                "stripeClasses": [],
+                "ordering": false,
+                "ordering": false,
+                "info": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "bLengthChange": false,
+                "paging": true,
+                      "aLengthMenu": [10],
+                      "searching": true
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+            });
+              $("input[name=uploadimg]").change(function () {
+              if (this.files && this.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+              var img = $('<img>').attr('src', e.target.result);
+              img.attr('height', '120px');
+              img.attr('width', '120px');
+              $('.upload-image-preview').html(img);};
+              reader.readAsDataURL(this.files[0]);
+            }});
+                  $("input[name=uploadlogo]").change(function () {
+              if (this.files && this.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+              var img = $('<img>').attr('src', e.target.result);
+              img.attr('height', '120px');
+              img.attr('width', '120px');
+              $('.upload-logo-preview').html(img);};
+              reader.readAsDataURL(this.files[0]);
+            }});
+            ShowVendorDetails();
+            ShowBusinessAddress();
+             ShowOptBtype();
+        });
+   
+      
+
+       
+        $('#btn-download').click(function () {
+          location.replace('../Vendor/DownloadHeader');
+
+         });
+        $('#vendor-table').on('click', '.tbl-edit', function () {
+
+            i_id = $(this).data("id");
+            vendorName  = $(this).data("vendorname");
+            descript  = $(this).data("descript");
+            services  = $(this).data("serv");
+            websiteUrl  = $(this).data("weburl");
+            cno  = $(this).data("cno");
+            email  = $(this).data("email");
+            btypeID = $(this).data("btid");
+            address  = $(this).data("address");
+            map  = $(this).data("map");
+            bid  = $(this).data("bid");
+            fimage = $(this).data("image");
+            logo = $(this).data("logo");
+            console.log(logo);
+            $("#vendorname").val(vendorName);
+            $("#description").val(descript);
+            $("#services").val(services);
+            $("#wURL").val(websiteUrl);
+            $("#Cno").val(cno);
+            $("#email").val(email);
+            $("#btype-option").val(btypeID);
+            $("#address").val(address);
+            $("#Map").val(map);
+            $("#b-option").val(bid);
+             if (fimage != null) 
+              {
+                var img = $('<img>').attr('src', fimage);
+                img.attr('height', '120px');
+                img.attr('width', '120px');
+                $('.upload-image-preview').html(img);
+              } 
+              else {
+                document.getElementById("upload-image-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+              }
+              if (logo != null) 
+              {
+                var img = $('<img>').attr('src', logo);
+                img.attr('height', '120px');
+                img.attr('width', '120px');
+                $('.upload-logo-preview').html(img);
+              } 
+              else {
+                document.getElementById("upload-logo-preview").innerHTML = '<i class="fas fa-user-tie fa-5x" style="  margin-left: 25px;"></i><br>Photo Preview</div>';
+              }
+              img_edit= fimage.split('/')[5];
+              img_logo_edit= logo.split('/')[5];
+              console.log(img_edit);
+            document.getElementById("btn-vendor").innerHTML = 'Update';
+            $('#vendormodal').modal('show');
+            $(".alert-warning").hide();
+
+        });
+
+        $('#add-newuvendor').click(function () {
+            i_id = 0;
+            var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+            var img2 = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+            img.attr('height', '120px');
+            img.attr('width', '120px');
+            img2.attr('height', '120px');
+            img2.attr('width', '120px');
+            $('.upload-image-preview').html(img);
+            $('.upload-logo-preview').html(img2);
+            $('input[type="text"]').val("");
+            $('input[type="email"]').val("");
+            $('input[type="password"]').val("");
+            $('#b-option').prop('selectedIndex', 0);
+            $('#btype-option').prop('selectedIndex', 0);
+            $('#vendormodal').modal('show');
+
+        });
+        $('.upload-vendor').click(function () {
+
+            $('#uploaduser').modal('show');
+
+        });
+        $('#btnupload').click(function () {
+
+            $('#useruploadModal').modal('show');
+
+        });
+
+   
+      $('#submitvendor').submit(function(e){
+       e.preventDefault();
+        
+        filename=$("#img").val().replace(/.*(\/|\\)/, ''); 
+        console.log(filename);
+        if(filename =="" || filename == null)
+        {
+         filename = img_edit;
+        }
+        logofilename=$("#logo-img").val().replace(/.*(\/|\\)/, ''); 
+        console.log(logofilename);
+        if(logofilename =="" || logofilename == null)
+        {
+         logofilename = img_logo_edit;
+        }
+       var data={};
+       data.id=i_id;
+      data.VendorName = $("#vendorname").val();
+      data.Description = $("#description").val();
+      data.Services = $("#services").val();
+      data.WebsiteUrl = $("#wURL").val();
+      data.Cno = $("#Cno").val();
+      data.Email = $("#email").val();
+      data.Address = $("#address").val();
+      data.BusinessLocationID = $("#b-option").val();
+      data.BusinessTypeId = $("#btype-option").val();
+      data.FeatureImg=filename;
+      data.VendorLogo=logofilename;
+      data.Map= $("#Map").val();
+       
+
+                      var featuredupload = $("#img").get(0);
+                      var logoUpload = $("#logo-img").get(0);
+                      var fupload = featuredupload.files;
+                      var lupload = logoUpload.files;
+                      var formData = new FormData();
+                      formData.append('file', fupload[0]);
+                      formData.append('file', lupload[0]);
+                      console.log(formData);
+                        iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Add new User?',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Vendor/SaveVendorInfo',
+                                        data: {
+                                            data: data,
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (response) {
+                                      console.log(response.stats);
+                                      if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
+                                      {
+                                            $.ajax({
+                                              url: '/Vendor/UploadFile',
+                                              type: 'POST',
+                                              data: formData,
+                                              processData: false,
+                                              contentType: false,
+                                              success: function (result) {
+                                                  console.log(result);
+                                                
+                                              }
+                                          });
+                                          notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                                          $("#h-close").click();
+                                          ShowVendorDetails();
+                                      }
+                                      else
+                                      {
+                                         notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
+                                      }
+                                            
+                                         $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+       
+                          
+      });
+
+      $('#vendor-table').on('click', '.tbl-delete', function () {
+                      var data = {};
+                      data.id = $(this).data("id");
+                        
+                      iziToast.question({
+                          timeout: 20000,
+                          close: false,
+                          overlay: true,
+                          id: 'question',
+                          zindex: 999,
+                          title: 'Confirmation',
+                          message: 'Are you sure you want to delete?',
+                          position: 'center',
+                          buttons: [
+                              ['<button><b>YES</b></button>', function (instance, toast) {
+                                  $.blockUI(reloadLoading);
+                                  $.ajax({
+                                       url: '/Vendor/DeleteVendorInfo',
+                                    data: {
+                                           data: data,
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+
+                                      notifyMsg('Success!', 'Successfully Deleted!', 'green', 'fas fa-check');
+                                      $("#h-close").click();
+                                      ShowVendorDetails();
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }, true],
+                              ['<button>NO</button>', function (instance, toast) {
+
+                                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                              }],
+                          ]
+                      });
+
+
+                    });
+
+    </script>
+    }
+
+    

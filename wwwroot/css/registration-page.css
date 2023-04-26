@@ -1,0 +1,96 @@
+.register-main-container {
+  width: calc(100vw - var(--sidebarwidth));
+  height: calc(100vh - var(--topbarheight));
+  margin-left: var(--sidebarwidth);
+  margin-top: var(--topbarheight);
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+
+.list-title {
+  width: 100%;
+  background-color: var(--dark);
+  height: 40px;
+  color: var(--light);
+  padding: 10px;
+}
+.registerlist-actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-left: -221px;
+} 
+
+
+.list-head {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.corplist-head
+{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  flex-direction: row;
+  margin-right: 30px;
+
+}
+.list-head-start {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+}
+.corplist-head-start {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.list-actions {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 35px;
+} 
+.corplist-actions {
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-left: 35px;
+
+} 
+
+.register-actions {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-left: -15px;
+} 
+.corp-actions {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-left: -15px;
+  margin-right: 10px;
+} 
+.register-list-head-start {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+
+}
+.register-list-head {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  flex-direction: row;
+  margin-right: 30px;
+}

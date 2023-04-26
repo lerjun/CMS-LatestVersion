@@ -1,0 +1,123 @@
+.txt-right {
+  text-align: right;
+}
+
+.cb {
+  width: 100%;
+  position: relative;
+}
+
+.req {
+  color: red;
+  font-weight: 1000;
+}
+
+.cb:hover .checkmark {
+  background-color: var(--accent);
+}
+
+.cb .label {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  margin-left: 30px;
+  color: var(--accent);
+}
+
+.cb .label a {
+  color: var(--accent);
+}
+
+.cb .cl-checkbox {
+  display: none;
+}
+
+.cb .cl-checkbox:checked~.checkmark {
+  background-color: var(--accent);
+}
+
+.cb .cl-checkbox:checked~.checkmark:after {
+  display: block;
+}
+
+
+.cb .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.cb .checkmark::after {
+  top: 2px;
+  left: 6px;
+  width: 3px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+.cb .checkmark:hover {
+  background-color: var(--accent);
+}
+
+.checkmark {
+  height: 18px;
+  width: 18px;
+  background-color: var(--secondary-light);
+  position: absolute;
+  left: 0;
+}
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #c89328;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #c89328;
+  color: white;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-top: none;
+  height: 800px;
+}
+
+@font-face {
+  font-family: "Montserrat-Reg";
+  src: url("..#c89328/fonts/Montserrat/Montserrat-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../fonts/Montserrat/Montserrat-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat-SemiBold";
+  src: url("https://www.alfardanoysterprivilegeclub.com/");
+}

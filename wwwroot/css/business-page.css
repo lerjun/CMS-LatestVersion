@@ -1,0 +1,152 @@
+.business-main-container {
+  width: calc(100vw - var(--sidebarwidth));
+  height: calc(100vh - var(--topbarheight));
+  margin-left: var(--sidebarwidth);
+  margin-top: var(--topbarheight);
+  display: grid;
+  grid-template-areas:
+    "data1 data1 data1 data2 data2 data2"
+    "data1 data1 data1 data2 data2 data2"
+    "data1 data1 data1 data2 data2 data2"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3";
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.corporate-main-container {
+  width: calc(100vw - var(--sidebarwidth));
+  height: calc(100vh - var(--topbarheight));
+  margin-left: var(--sidebarwidth);
+  margin-top: var(--topbarheight);
+  display: grid;
+  grid-template-areas:
+    "data1 data1 data1 data1 data1 data1"
+    "data1 data1 data1 data1 data1 data1"
+    "data1 data1 data1 data1 data1 data1"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3";
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.companyregistration-main-container {
+  width: 100%;
+  height: calc(100vh - var(--topbarheight));
+  /* margin-left: var(--sidebarwidth); */
+  margin-top: var(--topbarheight);
+
+  display: grid;
+  grid-template-areas:
+    "data1 data1 data1 data1 data1 data1"
+    "data1 data1 data1 data1 data1 data1"
+    "data1 data1 data1 data1 data1 data1"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3"
+    "data3 data3 data3 data3 data3 data3";
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.register-main-container {
+  width: calc(100vw - var(--sidebarwidth));
+  height: calc(100vh - var(--topbarheight));
+  margin-left: var(--sidebarwidth);
+  margin-top: var(--topbarheight);
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.corporate-reg-data {
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.bloc-data {
+  grid-area: data1;
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.btype-data {
+  grid-area: data2;
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.business-data {
+  grid-area: data3;
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.corpreg-data-right {
+  grid-area: data1;
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.corpreg-data-left {
+  grid-area: data2;
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 5px 2px var(--shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+}
+
+.list-title {
+  width: 100%;
+  width: 100%;
+  background-color: var(--dark);
+  height: 40px;
+  color: var(--light);
+  padding: 10px;
+}

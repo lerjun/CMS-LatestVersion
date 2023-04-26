@@ -1,0 +1,330 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+@{
+    ViewData["Title"] = "Registration Maintenance";
+    Layout = "~/Views/Shared/RegistrationLayout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+}
+  <style>
+
+    body {
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .login-container {
+      background-image: url("../img/black-cover-pattern.jpg");
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    form {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 15px;
+    }
+    form h1 {
+      text-align: center;
+      color: #c89328;
+      font-family: "Montserrat-SemiBold";
+      font-size: clamp(1rem, 2vw, 1.5rem);
+    }
+    form .cl-input {
+      font-family: "Montserrat-Reg";
+      height: 30px;
+
+      border: none;
+      padding: 5px 10px;
+      box-shadow: inset 1px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+    }
+    form .pass-cont {
+      font-family: "Montserrat-Reg";
+      background-color: white;
+      display: flex;
+      box-shadow: inset 1px 2px 2px 1px rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    form .pass-cont > .cl-pass {
+      height: 30px;
+      background-color: transparent;
+      border: none;
+      padding: 5px 10px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      width: 90%;
+    }
+    .ln-generate {
+      color: #c89328;
+      font-family: "Montserrat-Reg";
+    }
+    form .pass-cont > #view-pass {
+      display: flex;
+      justify-content: center;
+      width: 10%;
+      align-items: center;
+      padding: 5px 10px;
+      box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.595);
+      background-color: #d7d2cb;
+      cursor: pointer;
+    }
+
+    .cb {
+      width: 100%;
+      position: relative;
+      font-family: "Montserrat-Reg";
+    }
+    .cb .label {
+      font-size: clamp(0.7rem, 2vw, 0.9em);
+      margin-left: 30px;
+      color: #c89328;
+    }
+    .cb .label a {
+      color: #c89328;
+    }
+    .cb:hover .checkmark {
+      background-color: #c89328;
+    }
+    .cb .cl-checkbox {
+      display: none;
+    }
+    .cb .cl-checkbox:checked ~ .checkmark {
+      background-color: #c89328;
+    }
+    .cb .cl-checkbox:checked ~ .checkmark:after {
+      display: block;
+    }
+    .cb .checkmark {
+      height: 18px;
+      width: 18px;
+      background-color: rgb(205, 205, 205);
+      position: absolute;
+      left: 0;
+      border-radius: 2px;
+    }
+    .cb .checkmark:hover {
+      background-color: #c89328;
+    }
+    .cb .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    .cb .checkmark:after {
+      top: 2px;
+      left: 6px;
+      width: 3px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+    .cl-submit {
+      background-color: #c89328;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      font-size: clamp(0.9rem, 2vw, 0.9em);
+    }
+    .ln-cancel {
+      color: #c89328;
+      text-align: center;
+      font-size: clamp(0.9rem, 2vw, 0.9em);
+      text-decoration: none;
+      font-family: "Montserrat-Reg";
+    }
+  </style>
+<div class="hero">
+    <div class="login-container">
+      <form id="registration">
+        <h1>User Registration</h1>
+        <input
+          type="text"
+          placeholder="First Name"
+          class="cl-input"
+          name="fname"
+          id="fname"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          class="cl-input"
+          name="lname"
+          id="lname"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Username"
+          class="cl-input"
+          name="username"
+          id="username"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Work Email"
+          class="cl-input"
+          name="email"
+          id="email"
+          required
+        />
+        <div class="pass-cont">
+          <input
+            type="password"
+            placeholder="Password"
+            class="cl-pass"
+            id="password"
+            name="password"
+            required
+          />
+          <span id="view-pass"><i class="fa fa-eye-slash"></i></span>
+        </div>
+        <a class="ln-generate" id="generate-pass">Generate Password</a>
+        <input
+          type="tel"
+          placeholder="Mobile Number"
+          class="cl-input"
+          name="mobile"
+          id="mobile"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Address"
+          class="cl-input"
+          name="address"
+          id="address"
+          required
+        />
+        <label class="cb" for="tnc">
+          <span class="label">
+            Agree to <a href="#">Terms and Conditions.</a></span
+          >
+          <input
+            type="checkbox"
+            name="tnc"
+            id="tnc"
+            class="cl-checkbox"
+            required
+          />
+          <span class="checkmark"></span>
+        </label>
+        <label class="cb" for="pnp">
+          <span class="label">
+            Agree to
+            <a
+              target="_blank"
+              href="https://www.alfardanoysterprivilegeclub.com/assets/files/Mobile%20App%20-%20Privacy%20Policy%20-%2012-12-2022.pdf"
+              >Privacy and Policy.</a
+            ></span
+          >
+          <input
+            type="checkbox"
+            name="pnp"
+            id="pnp"
+            class="cl-checkbox"
+            required
+          />
+          <span class="checkmark"></span>
+        </label>
+
+        <input type="submit" class="cl-submit" />
+        <a class="ln-cancel" href="/">CANCEL</a>
+      </form>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+   $(document).ready(function () {
+
+   });
+
+  $('#registration').submit(function(e){
+        e.preventDefault();
+   check = $("#pnp").prop("checked");
+   check2 = $("#tnc").prop("checked");
+    if(!check || !check2 || $('#fname').val() == ''  || $('#lname').val() == '' || $('#username').val() == '' || $('#email').val() == '' || $('#password').val() == ''
+   || $('#mobile').val() == '' || $('#address').val() == ''  ) 
+    {   
+       notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
+    } 
+    else 
+    {
+              var data={};
+              data.id =0;
+              data.fname = $('#fname').val();
+              data.lname =  $('#lname').val();
+              data.username =  $('#username').val();
+              data.email = $('#email').val();
+              data.password =  $('#password').val();
+              data.mobile = $('#mobile').val();
+              data.address = $('#address').val();
+              data.Active = "10";
+              data.Type=  3;
+              var emails= $('#email').val();
+       
+               
+                  iziToast.question({
+                            timeout: 20000,
+                            close: false,
+                            overlay: true,
+                            id: 'question',
+                            zindex: 999,
+                            title: 'Confirmation',
+                            message: 'Are you sure you want to Register ',
+                            position: 'center',
+                            buttons: [
+                                ['<button><b>YES</b></button>', function (instance, toast) {
+                                    $.blockUI(reloadLoading);
+                                    $.ajax({
+                                        url: '/Register/RegisterUser',
+                                        data: {
+                                            data: data
+                                        },
+                                        type: "POST",
+                                        datatype: "json",
+                                    }).done(function (data) {
+                                      console.log(data.stats);
+                                    if(data.stats == "Waiting for Verification")
+                                     {
+                                      window.location.replace("https://cms.alfardanoysterprivilegeclub.com/Register/OTPVerification");
+                                     }
+                                     else
+                                     {
+                                        notifyMsg('Warning!', data.stats, 'red', 'fas fa-exclamation-triangle');
+                                     }
+
+                                        $.unblockUI();
+
+                                    }).fail(function () {
+                                        alert("There was an Error When Loading Data...");
+                                    });
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }, true],
+                                ['<button>NO</button>', function (instance, toast) {
+
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                                }],
+                            ]
+                        });
+    }  
+                   
+});
+
+
+  </script>
+}

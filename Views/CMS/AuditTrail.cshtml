@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Audit Trail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = "";
+    if (ViewData["Message"] != null)
+    {
+        message = ViewData["Message"].ToString();
+    }
+
+}
+
+<div class="register-main-container">
+ 
+    <div class="card-header">
+        <div class="row">
+            <div class="list-title" style="border-radius:10px 10px 0px 0px">
+                <h4 style="font-size: 26px;" class="text-left"><i class="fas fa-list"></i> @ViewData["Title"].ToString()</h4>
+            </div>
+        </div>
+  
+
+</div>
+    <div class="tab-pane active " id="User">
+                <br>
+                <div class="card-body ">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <div class="row ">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+                                    <table id="audittrail-table" class="myTableMedium">
+                                         <thead>
+                                      
+                                        <th>Employee ID</th>
+                                        <th>Full Name</th>
+                                        <th>Actions</th>
+                                        <th>Module</th>
+                                        <th>Position Name</th>
+                                        <th>Corporate Name</th>
+                                        <th>User Type</th>
+                                        <th>Date Created</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    </table>
+                               </div>
+                            </div>
+                        </div>
+
+                      
+                       
+                    </div>
+                </div>
+            </div>
+    </div>
+@* End here *@
+        @section Scripts{
+        <script>
+          i_id=0;
+            $(document).ready(function () {
+               
+               audittrailtable = $('#audittrail-table').DataTable({
+                    columnDefs : [
+                    { type: 'time-date-sort', 
+                    targets: [7],
+                    } ],
+                    order: [[ 7, "desc" ]],
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false, 
+                     "paging": true,
+                      "aLengthMenu": [30],
+                      "searching": true,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": ""
+                }});
+               ShowAuditTrail();
+            });
+ function ShowAuditTrail() {
+   $.blockUI(reloadLoading);
+            setTimeout(function () {
+  $.ajax({
+      url: '/CMS/GetAuditTrailList',
+      data: {
+
+      },
+      type: "GET",
+      datatype: "json"
+  }).done(function (data) {
+       
+      audittrailtable.clear().draw();
+      for (var i = 0; i < data.length; i++) {
+
+                        $('#audittrail-table').dataTable().fnAddData([
+                     
+                            '<td>' + data[i].employeeID + '</td>',
+                            '<td>' + data[i].fullName + '</td>',
+                            '<td>' + data[i].actions + '</td>',
+                            '<td>' + data[i].module + '</td>',
+                            '<td>' + data[i].positionName + '</td>',
+                            '<td>' + data[i].corporateName + '</td>',
+                            '<td>' + data[i].userType + '</td>',
+                            '<td>' + data[i].dateCreated + '</td>',
+
+
+                        ]);
+      }
+ $.unblockUI();
+                }).fail(function () {
+                    alert("There was an Error When Loading Data...");
+                });
+
+            }, 100);
+
+}
+
+</script>
+}
+
+        
