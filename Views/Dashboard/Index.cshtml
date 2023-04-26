@@ -418,74 +418,7 @@
 <script src="
     https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js
     "></script>
-<script>
 
-   //       var now = new Date();
-   //         var dateString = new Date(now.getTime() - (now.getTimezoneOffset() * 60000))
-   //                 .toISOString()
-   //                 .split("T")[0];
-
-   //         var future = new Date(); // get today date
-   //         future.setDate(future.getDate() - 7); // add 7 days
-   //         var finalDate = future.getFullYear() + '-' + ((future.getMonth() + 1) < 10 ? '0' : '') + (future.getMonth() + 1) + '-' + future.getDate();
-   //        // console.log(finalDate);
-   //         var startDate = new Date(finalDate); //YYYY-MM-DD
-   //         var endDate = new Date(dateString) //YYYY-MM-DD
-     
-            //var getDateArray = function(start, end) {
-            //    var arr = new Array();
-            //    var dt = new Date(start);
-            //    while (dt <= end) {
-            //    arr.push(new Date(dt.setDate(dt.getDate() + 1)).getDate());
-            //    }
-            //    return arr;
-      
-            //}
-
-   // var dateArr = getDateArray(startDate, endDate);
-   // console.log(dateArr);
-   // var ctx = document.getElementById("myChart").getContext("2d");
-   //// console.log(dateArr)
-   // var chartData = {
-   //     labels: dateArr, // conditions to made
-   //     datasets: [
-   //         {
-   //             label: "",
-   //             data: [100, 330, 200, 250, 300, 350, 200,300], // create an aync ajax function
-   //             backgroundColor: "rgba(255, 99, 132, 0.2)",
-   //             borderColor: "rgba(255, 99, 132, 1)",
-   //             borderWidth: 1,
-   //         },
-   //     ],
-   // };
-   // var chartOptions = {
-   //     responsive: true,
-   //     maintainAspectRatio: false,
-
-   //     scales: {
-   //         yAxes: [
-   //             {
-   //                 ticks: {
-   //                     beginAtZero: true,
-   //                 },
-   //             },
-   //         ],
-   //     },
-   // };
-
-   // // Create the chart instance
-   // var myChart = new Chart(ctx, {
-   //     type: "line",
-   //     data: chartData,
-   //     options: chartOptions,
-   // });
-
-   // // Update the chart data
-   // setInterval(function () {
-
-   //     myChart.update();
-   // }, 5000);
-</script>
 
 @section Scripts{
     <script>
@@ -637,15 +570,76 @@
             $('#CallModal').modal('show');
         });
         $('#mcs_vm').click(function () {
-            ShowGetMostClickStoreAll();
+             var data = {};
+            data.day = $('#mcs').val();
+            $.ajax({
+                url: '/Dashboard/PostMostCickStore',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    mcstable.clear().draw();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#mcs_call").dataTable().fnAddData([
+                            "<td><p></p><p>" + data[i].business + "</p></td>",
+                            "<td><p>" + data[i].count + "</p></td>",
+                            "<td><p>" + data[i].total + "</p></td>",
+
+                        ]);
+                    }
+                }
+            });
             $('#MostClickStoreModal').modal('show');
         });
         $('#mch_vm').click(function () {
-            ShowShowGetMostClickModal();
+            var data = {};
+            data.day = $('#mch').val();
+            $.ajax({
+                url: '/Dashboard/PostMostClickedHospitality',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    mchtable.clear().draw();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#mch_call").dataTable().fnAddData([
+                            "<td><p></p><p>" + data[i].business + "</p></td>",
+                            "<td><p>" + data[i].count + "</p></td>",
+                            "<td><p>" + data[i].total + "</p></td>",
+
+                        ]);
+                    }
+                }
+            });
             $('#ShowGetMostClickModal').modal('show');
         });
         $('#mcr_vm').click(function () {
-            ShowMostClickRestaurantAllkModal();
+           
+            var data = {};
+            data.day = $('#mcr').val();
+            $.ajax({
+                url: '/Dashboard/PostMostClickRestaurant',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                      mcrtable.clear().draw();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#mcr_call").dataTable().fnAddData([
+                            "<td><p></p><p>" + data[i].business + "</p></td>",
+                            "<td><p>" + data[i].count + "</p></td>",
+                            "<td><p>" + data[i].total + "</p></td>",
+
+                        ]);
+                    }
+                }
+            });
             $('#ShowMostClickRestoModal').modal('show');
         });
 
