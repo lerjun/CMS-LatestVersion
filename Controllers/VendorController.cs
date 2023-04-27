@@ -61,9 +61,7 @@ namespace AOPC.Controllers
         {
             var url = DBConn.HttpString + "/api/ApiVendor/VendorList";
             HttpClient client = new HttpClient();
-            // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Bearer"));
-
-             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
             string response = await client.GetStringAsync(url);
             List<VendorVM> models = JsonConvert.DeserializeObject<List<VendorVM>>(response);
             return new(models);
@@ -75,8 +73,7 @@ namespace AOPC.Controllers
             {
                 HttpClient client = new HttpClient();
                 var url = DBConn.HttpString + "/api/ApiVendor/SaveVendor";
-                _global.Token = _global.GenerateToken("Token", _appSettings.Key.ToString());
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _global.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
                 StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 using (var response = await client.PostAsync(url, content))
                 {

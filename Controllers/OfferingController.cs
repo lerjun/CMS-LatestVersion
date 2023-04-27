@@ -66,15 +66,14 @@ namespace AOPC.Controllers
             public string Status { get; set; }
 
         }
-         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> SaveOffering(OfferingVM data)
         {
            try
             {
                 HttpClient client = new HttpClient();
                 var url =DBConn.HttpString + "/api/ApiOffering/SaveOffering";
-                _global.Token = _global.GenerateToken("Token", _appSettings.Key.ToString());
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _global.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
                 StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 using (var response = await client.PostAsync(url, content))
                 {
@@ -89,7 +88,42 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = status });
         }
-         public class DeleteOffer
+        [HttpPost]
+        public async Task<IActionResult> PostNotifications(NotificationInsertModel data)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiNotifcation/InsertNotifications";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+                StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    _global.Status = await response.Content.ReadAsStringAsync();
+                    status = JsonConvert.DeserializeObject<LoginStats>(_global.Status).Status;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(new { stats = status });
+        }
+        public class NotificationInsertModel
+        {
+
+            public string? Id { get; set; }
+            public string? EmployeeID { get; set; }
+            public string? Details { get; set; }
+            public string? Module { get; set; }
+            public string? ItemID { get; set; }
+            public int? isRead { get; set; }
+            public int? EmailStatus { get; set; }
+
+
+        }
+        public class DeleteOffer
         {
 
             public int Id { get; set; }
@@ -106,8 +140,7 @@ namespace AOPC.Controllers
             {
                 HttpClient client = new HttpClient();
                 var url = DBConn.HttpString + "/api/ApiOffering/DeleteOffering";
-                //  client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Bearer"));
-                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
 
                 StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 using (var response = await client.PostAsync(url, content))
