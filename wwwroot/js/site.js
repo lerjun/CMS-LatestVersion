@@ -145,7 +145,8 @@ async function ShowOfferingList() {
       // 
       for (var i = 0; i < data.length; i++) {
 
-        var tdbuttons = ' <div class="data-img">' +
+          var tdbuttons = '<label for="cb"><input type="checkbox"></label>' +
+              ' <div class="data-img">' +
           '<img src=' + data[i].imgUrl + ' alt=' + data[i].offeringName + ' width="100%" />' +
           '</div>' +
           '<div>' +
@@ -733,9 +734,10 @@ async function ShowGetCallToActions() {
     }, 100);
 }
 async function ShowGetLineGraphCountList() {
-    var ctx = document.getElementById("myChart").getContext("2d");
+    const ctx = document.getElementById("myChart").getContext("2d");
     const arrdate = new Array();
     const arrval = new Array();
+    console.log($('#nur').val());
     $.blockUI(reloadLoading);
     setTimeout(function () {
         $.ajax(
@@ -752,7 +754,7 @@ async function ShowGetLineGraphCountList() {
                     arrdate.push(data[i].dateCreated);
                     arrval.push(data[i].count);
                 }
-                //console.log(arrdate);
+                console.log(arrval);
                 var chartData = {
                     labels: arrdate, // conditions to made
                     datasets: [

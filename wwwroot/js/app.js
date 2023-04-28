@@ -71,7 +71,7 @@ async function ShowPiegraphMostClickRestaurant() {
                         let startingPoint = "";
                         const color = {
                             0: " var(--accent)",
-                            1: " var(--primary)",
+                            1: " var(--secondary-dark)",
                             2: " var(--secondary-brown)",
                             3: " var(--secondary-light)",
                         };
@@ -171,7 +171,7 @@ async function ShowPiegraphMostClickHospitality() {
                     let startingPoint = "";
                     const color = {
                         0: " var(--accent)",
-                        1: " var(--primary)",
+                        1: " var(--secondary-dark)",
                         2: " var(--secondary-brown)",
                         3: " var(--secondary-light)",
                     };
@@ -272,7 +272,7 @@ async function ShowPiegraphMostClickStore() {
                     let startingPoint = "";
                     const color = {
                         0: " var(--accent)",
-                        1: " var(--primary)",
+                        1: " var(--secondary-dark)",
                         2: " var(--secondary-brown)",
                         3: " var(--secondary-light)",
                     };

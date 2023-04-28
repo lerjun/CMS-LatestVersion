@@ -77,7 +77,7 @@
 }
 .info .name {
   font-size: clamp(0.3rem, 2vw, 1rem);
-  color: var(--primary);
+  color: var(--dark);
 }
 .info .role {
   font-size: clamp(0.3rem, 2vw, 0.7rem);

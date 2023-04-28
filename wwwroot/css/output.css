@@ -1534,12 +1534,14 @@ table.myTableLarge tbody tr:hover td:nth-child(1) p:nth-child(1) {
   gap: 20px;
   align-items: center;
 }
-
+.total-user-container  {
+    color: var(--dark);
+}
 .new-users .user-counter .count {
-  font-size: 65px;
-  font-family: "Montserrat-Bold";
-  color: var(--accent);
-  text-align: center;
+    font-size: 65px;
+    font-family: "Montserrat-Bold";
+    color: var(--accent);
+    text-align: center;
 }
 
 .new-users .user-counter .p {
@@ -1548,6 +1550,7 @@ table.myTableLarge tbody tr:hover td:nth-child(1) p:nth-child(1) {
 
 .nur-note {
   font-size: 13px;
+  color:var(--dark)
 }
 
 #percent-registered {
@@ -3345,7 +3348,7 @@ label[for="logo-img"]:hover {
 
 .info .name {
   font-size: clamp(0.3rem, 2vw, 1rem);
-  color: var(--primary);
+  color: var(--dark);
 }
 
 .info .role {

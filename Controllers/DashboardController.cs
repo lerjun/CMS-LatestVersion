@@ -16,6 +16,8 @@ using System;
 using AuthSystem.Manager;
 using _CMS.Manager;
 using ExcelDataReader;
+using System.Collections.Generic;
+
 namespace AOPC.Controllers
 {
     public class DashboardController : Controller
@@ -247,6 +249,7 @@ namespace AOPC.Controllers
         {
 
             string result = "";
+            var list = new List<Usertotalcount>();
             try
             {
                 HttpClient client = new HttpClient();
@@ -256,7 +259,7 @@ namespace AOPC.Controllers
                 using (var response = await client.PostAsync(url, content))
                 {
                     string res = await response.Content.ReadAsStringAsync();
-                    status = JsonConvert.DeserializeObject<Usertotalcount>(res).count;
+                    list = JsonConvert.DeserializeObject<List<Usertotalcount>>(res);
 
                 }
             }
@@ -265,7 +268,7 @@ namespace AOPC.Controllers
             {
                 string status = ex.GetBaseException().ToString();
             }
-            return Json(new { stats = status });
+            return Json(list);
         }
         [HttpPost]
         public async Task<IActionResult> PostMostClickRestaurant(UserFilterday data)
@@ -384,7 +387,9 @@ namespace AOPC.Controllers
         }
         public class Usertotalcount
         {
-            public string count { get; set; }
+            public int count { get; set; }
+            public int graph_count { get; set; }
+            public string Date { get; set; }
 
         }
         public class UserFilterday

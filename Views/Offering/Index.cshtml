@@ -20,7 +20,16 @@
                                     <table id="offering-table" class="myTableLarge">
                                          <thead>
                                         <th>
+                                <input type="checkbox" class="check-all" id="checkall" />
+                                <labebl id="checkers" style="text-align:center"></labebl> 
                                            <button class="register"  style ="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New Offering" id="add-offering"><i class="fas fa-user-plus"></i>Add New</button>
+                                <select id="offeringopt" class="register" style="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" hidden>
+                                                <option value="">Select Opt </option>
+                                                <option value="0">Delete All</option>
+                                                <option value="1">Send Email</option>
+
+                                            </select>
+
                                         </th>
                                         <th>Promo Description</th>
                                         @* <th>Promo Release Text</th> *@
@@ -229,8 +238,55 @@
          ShowVendorOpt();
          ShowprivOpt();
        });
+        $("#checkall").click(function () {
+            $("input:checkbox").not(this).prop("checked", this.checked);
+            if ($(this).prop("checked") == true) {
+                $("#checkers").html("");
+                 $('#offeringopt').removeAttr('hidden');
+               console.log("checkall");
+            } else {
+                $("#checkers").html("");
+                console.log("uncheckall");
+                $('#offeringopt').attr("hidden", true);
+            }
+        });
+        $("#checkAll").click(function () {
+            $("input:checkbox").not(this).prop("checked", this.checked);
+        });
 
+        $('#offeringopt').change(function () {
+            if($('#offeringopt').val() == 0)
+            {
+                console.log("Deleteall");
+                iziToast.question({
+                    timeout: 20000,
+                    close: false,
+                    overlay: true,
+                    id: 'question',
+                    zindex: 999,
+                    title: 'Confirmation',
+                    message: 'Are you sure you want to delete all selected items?',
+                    position: 'center',
+                    buttons: [
+                        ['<button><b>YES</b></button>', function (instance, toast) {
+                            
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
+                        }, true],
+                        ['<button>NO</button>', function (instance, toast) {
+
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        }],
+                    ]
+                });
+            }
+            else
+            {
+                console.log("Send Email");
+            }
+
+        });
  $('#add-offering').click(function () {
                       i_id = 0;
                       var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/nophotos.JPG");

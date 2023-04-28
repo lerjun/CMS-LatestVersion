@@ -31,7 +31,7 @@
                 <div class="user-counter">
                     <div id="new-registered">
                         <p class="count" id="new_user"></p>
-                        <p>New User</p>
+                        <p class="total-user-container">New User</p>
                     </div>
                     <svg* width="150"
                           height="60"
@@ -43,7 +43,7 @@
                     </svg*>
                     <div >
                         <p class="count" id="all-user">65</p>
-                        <p>Total User</p>
+                        <p class="total-user-container">Total User</p>
                     </div>
                 </div>
                 <p class="nur-note">
@@ -79,9 +79,9 @@
                     </div>
                     <div class="data">
                         <span class="data-label"
-                              style="background-color: var(--primary)"></span>
-                        <span class="data-name" style="color: var(--primary)" id="mcr_top2">Business1</span>
-                        <span class="data-value" style="color: var(--primary)" id="mcr_perc2">30%</span>
+                              style="background-color: var(--secondary-dark)"></span>
+                        <span class="data-name" style="color: var(--secondary-dark)" id="mcr_top2">Business1</span>
+                        <span class="data-value" style="color: var(--secondary-dark)" id="mcr_perc2">30%</span>
                     </div>
                     <div class="data">
                         <span class="data-label"
@@ -127,9 +127,9 @@
                     </div>
                     <div class="data">
                         <span class="data-label"
-                              style="background-color: var(--primary)"></span>
-                        <span class="data-name" style="color: var(--primary)" id="mch_top2">John Doe</span>
-                        <span class="data-value" style="color: var(--primary)" id="mch_perc2">30%</span>
+                              style="background-color: var(--secondary-dark)"></span>
+                        <span class="data-name" style="color: var(--secondary-dark)" id="mch_top2">John Doe</span>
+                        <span class="data-value" style="color: var(--secondary-dark)" id="mch_perc2">30%</span>
                     </div>
                     <div class="data">
                         <span class="data-label"
@@ -174,9 +174,9 @@
                     </div>
                     <div class="data">
                         <span class="data-label"
-                              style="background-color: var(--primary)"></span>
-                        <span class="data-name" style="color: var(--primary)" id="mcs_top2">John Doe</span>
-                        <span class="data-value" style="color: var(--primary)" id="mcs_perc2">30%</span>
+                              style="background-color: var(--secondary-dark)"></span>
+                        <span class="data-name" style="color: var(--secondary-dark)" id="mcs_top2">John Doe</span>
+                        <span class="data-value" style="color: var(--secondary-dark)" id="mcs_perc2">30%</span>
                     </div>
                     <div class="data">
                         <span class="data-label"
@@ -629,6 +629,7 @@
                 type: "POST",
                 datatype: "json",
                 success: function (data) {
+              
                       mcrtable.clear().draw();
                     for (var i = 0; i < data.length; i++) {
                         $("#mcr_call").dataTable().fnAddData([
@@ -645,6 +646,10 @@
 
 
         $('#nur').change(function () {
+
+            const ctx = document.getElementById("myChart").getContext("2d");
+            const arrdate = new Array();
+            const arrval = new Array();
             var data = {};
             data.day = $('#nur').val();
             //console.log(data);
@@ -657,10 +662,59 @@
                 type: "POST",
                 datatype: "json",
                 success: function (response) {
-                    //console.log(response.stats);
-                    document.getElementById("new_user").innerHTML = response.stats;
+                     console.log(response);
+              
+                      for (var i = 0; i < response.length; i++) {
+                        arrdate.push(response[i].date);
+                        arrval.push(response[i].graph_count);
+                        document.getElementById("new_user").innerHTML = response[0].count;
+                      }
+                    console.log(arrval);
+                    var chartData = {
+                        labels: arrdate, // conditions to made
+                        datasets: [
+                            {
+                                label: "",
+                                data: arrval,
+                                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                                borderColor: "rgba(255, 99, 132, 1)",
+                                borderWidth: 1,
+                            },
+                        ],
+                    };
+
+                    var chartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true,
+                                    },
+                                },
+                            ],
+                        },
+                    };
+
+                    // Create the chart instance
+                   
+                    var myChart = new Chart(ctx, {
+                        type: "line",
+                        data: chartData,
+                        options: chartOptions,
+                    });
+              
+                    // Update the chart data
+                    setInterval(function () {
+
+                        myChart.update();
+                    }, 5000);
+
                 }
             });
+         
 
         });
         $('#mcs').change(function () {
