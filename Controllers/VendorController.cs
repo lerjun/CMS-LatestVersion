@@ -83,7 +83,7 @@ namespace AOPC.Controllers
 
             catch (Exception ex)
             {
-                string status = ex.GetBaseException().ToString();
+                string status = ex.GetBaseException().ToString();//
             }
             return Json(new { stats = _global.Status });
         }
