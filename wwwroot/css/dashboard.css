@@ -38,13 +38,15 @@
     gap: 10px;
 }
 
-.row-group1 .inner-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 4;
-  height: 100%;
-}
+    .row-group1 .inner-group {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        box-shadow: 1px 1px 5px 2px var(--shadow);
+        border-radius: 10px;
+        /*padding: 15px;*/
+    }
 
 /**
 * SECTION - New User Module
@@ -271,14 +273,23 @@
 }
 
 .top-corp-user {
-  height: 100%;
-  flex: 6;
-  box-shadow: 1px 1px 5px 2px var(--shadow);
-  border-radius: 10px;
-  padding: 10px;
-  overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    /*box-shadow: 1px 1px 5px 2px var(--shadow);*/
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
-
+.row-group1 .chart-class {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    box-shadow: 1px 1px 5px 2px var(--shadow);
+    border-radius: 10px;
+    padding: 15px;
+}
 .tr-pie-graph-info .data span:nth-child(1) {
   height: 15px;
   width: 15px;
@@ -812,15 +823,14 @@
 * SECTION - News feed table
 **/
 .news-feed {
-  flex: 4;
-  width: 100%;
-  box-shadow: 1px 1px 5px 2px var(--dark);
-  border-radius: 10px;
-  padding: 10px;
-  padding: 15px;
-
-  display: flex;
-  flex-direction: column;
+    flex: 4;
+    width: 100%;
+    box-shadow: 1px 1px 5px 2px var(--shadow);
+    border-radius: 10px;
+    padding: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .news-feed .controls h4 {

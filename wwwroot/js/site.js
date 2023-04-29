@@ -635,9 +635,10 @@ async function ShowFilteredNewRegistered() {
                 type: "GET",
                 datatype: "json"
             }).done(function (data) {
-                // 
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     document.getElementById("new_user").innerHTML = data[i].count;
+                    document.getElementById("percent-registered").innerHTML = data[i].percentage.toFixed(2) + " %";
                 }
                 $.unblockUI();
             }).fail(function () {
@@ -734,6 +735,7 @@ async function ShowGetCallToActions() {
     }, 100);
 }
 async function ShowGetLineGraphCountList() {
+
     const ctx = document.getElementById("myChart").getContext("2d");
     const arrdate = new Array();
     const arrval = new Array();
@@ -754,7 +756,7 @@ async function ShowGetLineGraphCountList() {
                     arrdate.push(data[i].dateCreated);
                     arrval.push(data[i].count);
                 }
-                console.log(arrval);
+                //console.log(arrval);
                 var chartData = {
                     labels: arrdate, // conditions to made
                     datasets: [
@@ -768,23 +770,29 @@ async function ShowGetLineGraphCountList() {
                     ],
                 };
                
-                    var chartOptions = {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                var chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
 
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        beginAtZero: true,
-                                    },
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true,
                                 },
-                            ],
-                        },
-                    };
+                            },
+                        ],
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
 
+                };
                     // Create the chart instance
-                    var myChart = new Chart(ctx, {
+                    myChart.destroy();
+                    myChart = new Chart(ctx, {
                         type: "line",
                         data: chartData,
                         options: chartOptions,

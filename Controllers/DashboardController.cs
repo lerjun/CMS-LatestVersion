@@ -60,7 +60,7 @@ namespace AOPC.Controllers
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
             string response = await client.GetStringAsync(url);
-            List<NewRegCount> models = JsonConvert.DeserializeObject<List<NewRegCount>>(response);
+            List<Usertotalcount> models = JsonConvert.DeserializeObject<List<Usertotalcount>>(response);
             return new(models);
         }  
         [HttpGet]
@@ -271,6 +271,32 @@ namespace AOPC.Controllers
             return Json(list);
         }
         [HttpPost]
+        public async Task<IActionResult> PostCallToActions(UserFilterday data)
+        {
+
+            string result = "";
+            var list = new List<CallToActionsModel>();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiSupport/PostCallToActionsList";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token_.GetValue());
+                StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    string res = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<CallToActionsModel>>(res);
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(list);
+        }
+        [HttpPost]
         public async Task<IActionResult> PostMostClickRestaurant(UserFilterday data)
         {
 
@@ -364,6 +390,12 @@ namespace AOPC.Controllers
             public double Total { get; set; }
 
         }
+        public class UserFilterCatday
+        {
+            public int day { get; set; }
+            public string category { get; set; }
+
+        }
         public class MostClickHospitalityModel
         {
             public string Actions { get; set; }
@@ -389,13 +421,14 @@ namespace AOPC.Controllers
         {
             public int count { get; set; }
             public int graph_count { get; set; }
+            public double percentage { get; set; }
             public string Date { get; set; }
 
         }
         public class UserFilterday
         {
             public int day { get; set; }
-
+            public string category { get; set; }
         }        
   
         public class NewRegCount

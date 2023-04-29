@@ -13,9 +13,14 @@
     <!-- Top Corp User  -->
 
     <div class="row-group1">
-        <div class="top-corp-user">
-            <canvas id="myChart"></canvas>
+        <div class="chart-class">
+         <h4 style="color:#c89328">Total User</h4>
+                <div class="top-corp-user">
+   
+                    <canvas id="myChart" style="width:1000px"></canvas>
+                </div>
         </div>
+       
         <div class="inner-group">
             <div class="new-users">
                 <div class="controls">
@@ -24,7 +29,7 @@
                         <option value="7">Last 7 Days</option>
                         <option value="15">Last 15 Days</option>
                         <option value="30">Last 30 Days</option>
-                        <option value="1">Last 1 Year</option>
+                        <option value="1">Last 12 Months</option>
                         
                     </select>
                 </div>
@@ -214,11 +219,13 @@
             <div class="controls">
                 <h4>Call to Actions</h4>
                 <div class="filters">
-                    <select id="user-position" class="option-filters">
-                        <option value="7">Restaurant</option>
-                        <option value="15">Hotel</option>
+                    <select id="cta-opt" class="option-filters">
+                        <option value="0" style="color:gray">Select all Category</option>
+                        <option value="Food & Beverage">Restaurant</option>
+                        <option value="Hotel">Hotel</option>
                     </select>
-                    <select id="user-position" class="option-filters">
+                    <select id="cta-day" class="option-filters">
+                        <option value="0" style="color:gray">Select All</option>
                         <option value="7">Last 7 Days</option>
                         <option value="15">Last 15 Days</option>
                         <option value="30">Last 30 Days</option>
@@ -422,6 +429,7 @@
 
 @section Scripts{
     <script>
+        let myChart = new Chart();
         $(document).ready(function () {
             nbtable = $('#n_clicktbl').DataTable({
                          
@@ -643,10 +651,93 @@
             });
             $('#ShowMostClickRestoModal').modal('show');
         });
+        $('#cta-opt').change(function () {
+            var data = {};
+            var cat = "";
+            var day = "";
+            if ($(this).val() === '0' && $('#cta-day').val() === '0')  
+            {
+               cat = "0";
+                day = "0";
+            }
+            else
+            {
+                cat = $('#cta-opt').val();
+                day = $('#cta-day').val();
+            }
+           
+            data.day = day;
+            data.category=cat;
+            console.log(data);
+            $.ajax({
+                url: '/Dashboard/PostCallToActions',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    console.log(data);
+                    cAbtable.clear().draw();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#cAction_table").dataTable().fnAddData([
+                            "<td><p></p><p>" + data[i].business + "</p></td>",
+                            "<td><p>" + data[i].category + "</p></td>",
+                            "<td><p>" + data[i].callCount + "</p></td>",
+                            "<td><p>" + data[i].emailCount + "</p></td>",
+                            "<td><p>" + data[i].bookCount + "</p></td>",
 
+                        ]);
+                    }
+
+                }
+            });
+        });
+        $('#cta-day').change(function () {
+            var data = {};
+            var cat = "";
+            var day = "";
+            if ($(this).val() === '0' && $('#cta-opt').val() === '0') {
+                cat = "0";
+                day = "0";
+            }
+            else {
+                cat = $('#cta-opt').val();
+                day = $('#cta-day').val();
+            }
+
+            
+            data.day = day
+            data.category=cat;
+            console.log(data);
+            $.ajax({
+                url: '/Dashboard/PostCallToActions',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    console.log(data);
+                    cAbtable.clear().draw();
+                    for (var i = 0; i < data.length; i++) {
+                    $("#cAction_table").dataTable().fnAddData([
+                        "<td><p></p><p>" + data[i].business + "</p></td>",
+                        "<td><p>" + data[i].category + "</p></td>",
+                        "<td><p>" + data[i].callCount + "</p></td>",
+                        "<td><p>" + data[i].emailCount + "</p></td>",
+                        "<td><p>" + data[i].bookCount + "</p></td>",
+
+                    ]);
+                }
+                    
+                }
+            });
+
+        });
 
         $('#nur').change(function () {
-
+  
             const ctx = document.getElementById("myChart").getContext("2d");
             const arrdate = new Array();
             const arrval = new Array();
@@ -662,22 +753,23 @@
                 type: "POST",
                 datatype: "json",
                 success: function (response) {
-                     console.log(response);
+                     //console.log(response);
               
                       for (var i = 0; i < response.length; i++) {
                         arrdate.push(response[i].date);
                         arrval.push(response[i].graph_count);
                         document.getElementById("new_user").innerHTML = response[0].count;
+                        document.getElementById("percent-registered").innerHTML = response[0].percentage.toFixed(2) + " %";
                       }
-                    console.log(arrval);
+                    //console.log(arrval);
                     var chartData = {
                         labels: arrdate, // conditions to made
                         datasets: [
                             {
                                 label: "",
                                 data: arrval,
-                                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                                borderColor: "rgba(255, 99, 132, 1)",
+                                backgroundColor: ['rgb(0,0,0)'],
+                                borderColor: ['rgb(200, 147, 40)'],
                                 borderWidth: 1,
                             },
                         ],
@@ -691,27 +783,34 @@
                             yAxes: [
                                 {
                                     ticks: {
-                                        beginAtZero: true,
+                                        beginAtZero: false,
                                     },
                                 },
                             ],
                         },
+                              plugins: {
+                                 legend: {
+                                    display: false
+                                 }
+                              }
+                            
                     };
 
-                    // Create the chart instance
+                      myChart.destroy();
+                       myChart = new Chart(ctx, {
+                            type: "line",
+                            data: chartData,
+                        options: chartOptions
+                        });
+                      
+                
                    
-                    var myChart = new Chart(ctx, {
-                        type: "line",
-                        data: chartData,
-                        options: chartOptions,
-                    });
-              
                     // Update the chart data
                     setInterval(function () {
 
                         myChart.update();
                     }, 5000);
-
+           
                 }
             });
          
@@ -776,7 +875,7 @@
                         let startingPoint = "";
                         const color = {
                             0: " var(--accent)",
-                            1: " var(--primary)",
+                            1: " var(--secondary-dark)",
                             2: " var(--secondary-brown)",
                             3: " var(--secondary-light)",
                         };
@@ -884,7 +983,7 @@
                         let startingPoint = "";
                         const color = {
                             0: " var(--accent)",
-                            1: " var(--primary)",
+                            1: " var(--secondary-dark)",
                             2: " var(--secondary-brown)",
                             3: " var(--secondary-light)",
                         };
@@ -997,7 +1096,7 @@
                         let startingPoint = "";
                         const color = {
                             0: " var(--accent)",
-                            1: " var(--primary)",
+                            1: " var(--secondary-dark)",
                             2: " var(--secondary-brown)",
                             3: " var(--secondary-light)",
                         };
