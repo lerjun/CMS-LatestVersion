@@ -10,13 +10,13 @@ toggle.addEventListener("click", function () {
     darkmode = localStorage.getItem("darkmode");
     if (darkmode !== "true") {
         document.body.classList.add("darkmode");
-        document.getElementById("logo").src = "/img/AOPC-White.png";
+        document.getElementById("logo").src = "/img/AOPCWHITEPNG.png";
         window.localStorage.setItem("darkmode", "true");
         toggle.innerText = "Light";
     } else {
         document.body.classList.remove("darkmode");
         window.localStorage.setItem("darkmode", "false");
-        document.getElementById("logo").src = "/img/AOPC-Black.png";
+        document.getElementById("logo").src = "/img/AOPCBlack.jpg";
         toggle.innerText = "Dark";
     }
 });

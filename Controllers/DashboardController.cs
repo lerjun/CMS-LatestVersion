@@ -113,6 +113,16 @@ namespace AOPC.Controllers
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
             string response = await client.GetStringAsync(url);
             List<CallToActionsModel> models = JsonConvert.DeserializeObject<List<CallToActionsModel>>(response);
+            return new(models.ToList().Take(5));
+        }    
+        [HttpGet]
+        public async Task<JsonResult> GetCallToActionModal()
+        {
+            var url = DBConn.HttpString + "/api/ApiSupport/GetCallToActionsList ";
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+            string response = await client.GetStringAsync(url);
+            List<CallToActionsModel> models = JsonConvert.DeserializeObject<List<CallToActionsModel>>(response);
             return new(models);
         }
            

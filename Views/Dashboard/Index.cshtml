@@ -220,12 +220,12 @@
                 <h4>Call to Actions</h4>
                 <div class="filters">
                     <select id="cta-opt" class="option-filters">
-                        <option value="0" style="color:gray">Select all Category</option>
+                        <option value="0" style="color:gray" hidden>Select Category</option>
                         <option value="Food & Beverage">Restaurant</option>
                         <option value="Hotel">Hotel</option>
                     </select>
                     <select id="cta-day" class="option-filters">
-                        <option value="0" style="color:gray">Select All</option>
+                        <option value="0" style="color:gray" hidden>Filter Date</option>
                         <option value="7">Last 7 Days</option>
                         <option value="15">Last 15 Days</option>
                         <option value="30">Last 30 Days</option>
@@ -310,7 +310,7 @@
             <div style="margin:10px">
 
 
-                <table class="myTableMedium" id="n_call">
+                <table class="myTableMedium" id="n_call" >
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -555,7 +555,7 @@
                     "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               });
-              ShowGetLineGraphCountList();
+            ShowGetLineGraphCountList();
             ShowPiegraphMostClickStore();
             ShowPiegraphMostClickHospitality();
             ShowPiegraphMostClickRestaurant();

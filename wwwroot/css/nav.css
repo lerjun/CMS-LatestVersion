@@ -5998,11 +5998,12 @@ div.dataTables_wrapper div.dataTables_filter {
   text-align: right
 }
 
-div.dataTables_wrapper div.dataTables_filter label {
-  font-weight: normal;
-  white-space: nowrap;
-  text-align: left
-}
+    div.dataTables_wrapper div.dataTables_filter label {
+        font-weight: normal;
+        white-space: nowrap;
+        text-align: left;
+        color: var(--dark);
+    }
 
 div.dataTables_wrapper div.dataTables_filter input {
   height: 30px;

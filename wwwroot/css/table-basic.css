@@ -1,9 +1,11 @@
 table.myTable {
-  width: 100%;
-  margin-top: 5px;
-  border-radius: 10px;
-  overflow: hidden;
-  -webkit-border-horizontal-spacing: 0;
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    -webkit-border-horizontal-spacing: 0;
+    background-color: var(--light);
+    color: var(--dark);
 }
 table.myTable thead {
   background-color: var(--dark);

@@ -1,11 +1,13 @@
 /* Table with buttons and image*/
 
 table.myTableLarge {
-  width: 95%;
-  margin-top: 5px;
-  border-radius: 10px;
-  -webkit-border-horizontal-spacing: 0;
-  margin: 0 auto;
+    width: 95%;
+    margin-top: 5px;
+    border-radius: 10px;
+    -webkit-border-horizontal-spacing: 0;
+    margin: 0 auto;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
 table.myTableLarge thead {

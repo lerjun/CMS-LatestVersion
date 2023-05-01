@@ -1051,11 +1051,13 @@ table.myTable tbody tr td:nth-child(1) p:nth-child(1) {
 /* Table with button */
 
 table.myTableMedium {
-  width: 95%;
-  margin-top: 5px;
-  border-radius: 10px;
-  -webkit-border-horizontal-spacing: 0;
-  margin: 0 auto;
+    width: 95%;
+    margin-top: 5px;
+    border-radius: 10px;
+    -webkit-border-horizontal-spacing: 0;
+    margin: 0 auto;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
 table.privTable {
@@ -1246,11 +1248,13 @@ table.privTable tbody tr:hover td:nth-child(1) p:nth-child(1) {
 /* Table with buttons and image*/
 
 table.myTableLarge {
-  width: 95%;
-  margin-top: 5px;
-  border-radius: 10px;
-  -webkit-border-horizontal-spacing: 0;
-  margin: 0 auto;
+    width: 95%;
+    margin-top: 5px;
+    border-radius: 10px;
+    -webkit-border-horizontal-spacing: 0;
+    margin: 0 auto;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
 table.myTableLarge thead {
@@ -2482,11 +2486,13 @@ table.myTableLarge tbody tr:hover td:nth-child(1) p:nth-child(1) {
 }
 
 table.myTable {
-  width: 100%;
-  margin-top: 5px;
-  border-radius: 10px;
-  overflow: hidden;
-  -webkit-border-horizontal-spacing: 0;
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    -webkit-border-horizontal-spacing: 0;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
 table.myTable thead {
@@ -2669,16 +2675,18 @@ table.myTable tbody tr td:nth-child(1) p:nth-child(1) {
 }
 
 .modal-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  pointer-events: auto;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem;
-  outline: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid var(--dark);
+    border-radius: 0.3rem;
+    outline: 0;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
 .modal-backdrop {
@@ -9047,7 +9055,8 @@ div.dataTables_wrapper div.dataTables_filter {
 div.dataTables_wrapper div.dataTables_filter label {
   font-weight: normal;
   white-space: nowrap;
-  text-align: left
+  text-align: left;
+  color: var(--dark);
 }
 
 div.dataTables_wrapper div.dataTables_filter input {

@@ -348,7 +348,7 @@ async function ShowGetCallToActionsModal() {
     setTimeout(function () {
         $.ajax(
             {
-                url: "/Dashboard/GetCallToAction",
+                url: "/Dashboard/GetCallToActionModal",
                 data: {
 
                 },
