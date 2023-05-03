@@ -289,16 +289,19 @@ body {
 }
 
 .register {
-  font-size: clamp(0.5rem, 2vw, 0.8rem);
-  /* margin: 11px 11px 12px 10px; */
-  background-color: var(--accent);
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 1px 1px 2px 2px var(--shade);
-  cursor: pointer;
-  color: var(--light);
-  width: 35%;
-  border: 1px solid #c89328;
+    background-color: var(--accent);
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 2px var(--shade);
+    cursor: pointer;
+    color: var(--light);
+    width: 35%;
+    border: 1px solid #c89328;
+    font-size: 3vw;
+    margin-bottom: 5px;
+    padding: 5px 15px 5px 5px;
+    height: 25px;
+    font-size: 0.6vw;
 }
 
 .btn-success

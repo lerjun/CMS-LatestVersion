@@ -17,8 +17,8 @@
 
                         <div class="col-lg-10">
 
-                            <div class="row ">
-                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
+
+                    <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%;overflow-x:auto;">
                                  
                              <table class="myTableLarge" id="vendor-table">
                                 <thead>
@@ -41,12 +41,12 @@
                                 </tbody>
                             </table>
                                </div>
-                            </div>
+                      
                         </div>
 
                         <div class="col-lg-2">
-                            <div class="row">
-                                <div class="col-lg-11">
+
+                    <div class="col-sm-12">
                                     <hr>
                                     <div>
                                     @using (Html.BeginForm("Index", "Vendor", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -57,7 +57,7 @@
                                     }
                                     </div>
                                 </div>
-                                <div class="col-lg-11">
+                    <div class="col">
                                     <button type="button" class="btn btn-info btn-block" id="btn-download" data-toggle="tooltip" title="Download Template"><i class="fas fa-download"></i> Download Template</button>
                                 </div>
                                 <div style="font-size:12px !important;margin-left:10px">
@@ -94,9 +94,10 @@
                                     }
                                 }
                               </div>
-                            </div>
+                         
                         </div>
                     </div>
+        </div>
         </div>
     </div>
        <div class="modal fade" id="vendormodal" tabindex="-1" role="dialog" aria-labelledby="modal-title"
@@ -105,7 +106,7 @@
          <div class="modal-dialog modal-error-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modal-name">Oyster Admin Registration Form </h4>
+                    <h4 class="modal-title" id="modal-name">Vendor Registration Form</h4>
                     <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
                 </div>
                 <div class="col-lg-12" style="margin:10px">
@@ -154,16 +155,31 @@
               />
             </div>
           </div>  
-          
-          <div class="mod-form-row">
+           <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="employeeID">Vendor Name <span class="req" >*</span></label>
               <input type="text" value="" id="vendorname" class="mod-input" required />
             </div>
+                        <div class="input-container-whole">
+                            <label for="username"> Contact Number <span class="req">*</span></label>
+                            <input type="text" value="" id="Cno" class="mod-input" required />
+                        </div>
+          </div>
+          <div class="mod-form-row">
+  
             <div class="input-container-whole">
-              <label for="email">Description <span class="req" >*</span></label>
-              <input type="text" value="" id="description" class="mod-input" required/>
+              <label for="description">Description <span class="req" >*</span></label>
+              @*<input type="text" value="" id="description" class="mod-input" required/>*@
+              <textarea  id="description" name="Description" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
             </div>
+          </div>
+          <div class="mod-form-row">
+            <div class="input-container-whole">
+                            <label for="address">Address <span class="req">*</span></label>
+        @*      <input type="text" value="" id="address"  class="mod-input" required/>*@
+        <textarea   id="address" name="address" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+            </div>
+         
           </div>
           <div class="mod-form-row">
             <div class="input-container-whole">
@@ -176,16 +192,15 @@
             </div>
           </div>
           <div class="mod-form-row">
-            <div class="input-container-whole">
-              <label for="username"> Contact Number <span class="req" >*</span></label>
-              <input type="text" value="" id="Cno"  class="mod-input" required/>
-            </div>
-           
+         
             <div class="input-container-whole">
               <label for="fname">Email <span class="req" >*</span></label>
               <input type="email" value="" id="email" class="mod-input" />
             </div>
-            
+                        <div class="input-container-whole">
+                            <label for="lname">Map</label>
+                            <input type="text" value="" id="Map" class="mod-input" />
+                        </div>
           </div>
            
           <div class="mod-form-row">
@@ -202,7 +217,7 @@
                   </select>
             </div>
           </div>
-          <div class="mod-form-row">
+        @*  <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="lname">Address <span class="req" >*</span></label>
               <input type="text" value="" id="address"  class="mod-input" required/>
@@ -211,7 +226,7 @@
               <label for="lname">Map</label>
               <input type="text" value="" id="Map"  class="mod-input" />
             </div>
-          </div>
+          </div>*@
          
           <div class="actions">
             <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>

@@ -40,9 +40,9 @@ namespace AuthSystem.Manager
 
        // cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Database=AOPCDB;User ID=test;Password=1234";
             //cnnstr = "Data Source=EC2AMAZ-AN808JE\\MSSQLSERVER01;Initial Catalog=AOPCDB;User ID=test;Password=1234";
-          cnnstr = "Data Source=LERJUN-PC;Initial Catalog=AOPCDB;User ID=test;Password=1234";
+         cnnstr = "Data Source=LERJUN-PC;Initial Catalog=AOPCDB;User ID=test;Password=1234";
      //    cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB_DEV;User ID=test;Password=1234";
-       //  cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB;User ID=test;Password=1234";
+     //   cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB;User ID=test;Password=1234";
            // cnnstr = "Data Source=EC2AMAZ-AN808JE\\MSSQLSERVER01;Initial Catalog=AOPCDB;User ID=test;Password=1234"; // LIVE
             conn = new SqlConnection(cnnstr);
         }

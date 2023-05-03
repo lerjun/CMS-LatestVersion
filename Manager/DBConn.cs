@@ -19,7 +19,7 @@
             // return "https://43.204.237.103"; // live ALFARDAN 
             //  return "http://192.168.100.90"; // local 
            
-          return "https://localhost:7110"; // local live
+         return "https://localhost:7110"; // local live
         }
 
         public static string ConnectionString
