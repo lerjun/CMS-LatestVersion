@@ -739,7 +739,7 @@ function ShowprivilegeListModal(id) {
             stats="unchecked";
           }
                   $('#privilegelist-table').dataTable().fnAddData([
-          '<td>' + '<label for="cb' + data[i].privilegeID + '"><input type="checkbox" id="cb' + data[i].privilegeID + '" class="check-all" data-id="' + data[i].privilegeID +
+                            '<td>' + '<label for="cb' + data[i].privilegeID + '"><input type="checkbox" id="cb' + data[i].privilegeID + '" class="check-all" data-id="' + data[i].privilegeID +
                             '" data-title="' + data[i].title + '" data-status="' + data[i].status + '"  data-usercount="' + data[i].userCount + '"  data-vipcount="' + data[i].vipCount +
                             '"   data-membershipid="' + data[i].membershipID + '" ' + stats + '/>' +
                             '<div>' +

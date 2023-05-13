@@ -18,8 +18,9 @@ namespace AuthSystem.Models
         [Column(TypeName = "varchar(MAX)")]
         public string? PositionID { get; set; }
 
-        [Column(TypeName = "datetime")]
-        public DateTime? DateCreated { get; set; }
+
+        [Column(TypeName = "varchar(MAX)")]
+        public string? DateCreated { get; set; }
 
         [Column(TypeName = "varchar(MAX)")]
         public string? Status { get; set; }

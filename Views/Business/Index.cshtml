@@ -177,14 +177,14 @@
           <div class="mod-form-row">
            <div class="input-container-whole">
              <label for="employeeID">Description<span class="req" >*</span></label>
-              <input type="text" value="" id="description"  class="mod-input"  placeholder="Description" required />
+              <input type="text" value="" id="description"  class="mod-input"  placeholder="Description"  />
             </div>
                
           </div>
           <div class="mod-form-row">
           <div class="input-container-whole">
               <label for="employeeID">Promo Text<span class="req" >*</span></label>
-               <input type="text" value="" id="promoT"  class="mod-input"  placeholder="Description" required />
+                            <input type="text" value="" id="promoT" class="mod-input" placeholder="Promo Text" required />
             </div>
          
           </div>
@@ -234,7 +234,7 @@
               </div>
             </div>
             <div class="input-container-whole upload" >
-              <label for="img">Upload Iamge</label>
+              <label for="img">Upload Image</label>
               <input
                 type="file"
                 value=""
@@ -474,7 +474,7 @@
                       '<td><p>'+data[i].cno+'</p></td>',
                       '<td><p>'+data[i].email+'</p></td>',
                       '<td><p>'+data[i].url+'</p></td>',
-                      '<td><p>' + data[i].dateCreated + '</p><p>'+data[i].dateCreated +'</p></td>',
+                      '<td><p>' + data[i].dateCreated + '</p></td>',
 
 
 
@@ -789,7 +789,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to Add new User?',
+                            message: 'Are you sure you want to add new business location?',
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {
@@ -858,7 +858,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to Add new User?',
+                            message: 'Are you sure you want to add new business type?',
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {
@@ -924,7 +924,11 @@
               data.services   = $("#services").val();
               data.map   = $("#Map").val();
               data.featureImg=filename;
-               
+            var fileUpload = $("#img").get(0);
+            var files = fileUpload.files;
+            var formData = new FormData();
+            formData.append('file', files[0]);
+            var fileUpload = $("#upload-img").get(0);
             iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -932,7 +936,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to Add new User?',
+                            message: 'Are you sure you want to Add new business?',
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {
@@ -947,9 +951,19 @@
                                     }).done(function (response) {
                                       console.log(response.stats);
                                       if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
-                                      {
-                                          
+                                      {   
+                                          $.ajax({
+                                                url: '/Business/UploadFile',
+                                                type: 'POST',
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                                success: function (result) {
+                                                }
+                                            });
+                                         
                                           notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
+                            
                                           $("#bh-close").click();
                                            ShowBusinessList();
                                       }

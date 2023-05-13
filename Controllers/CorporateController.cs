@@ -329,7 +329,6 @@ namespace AOPC.Controllers
                 ws.Cells["D1"].Value = "Email Address";
                 ws.Cells["E1"].Value = "Description";
                 ws.Cells["F1"].Value = "Tier";
-                ws.Cells["G1"].Value = "Address";
 
                 ws.Cells["I1"].Style.Font.Italic = true;
                 ws.Cells["I1"].Style.Font.Color.SetColor(Color.Red);

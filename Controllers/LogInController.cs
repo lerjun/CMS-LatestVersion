@@ -94,6 +94,7 @@ namespace AOPC.Controllers
             string result = "";
             try
             {
+                //var pass3 = Cryptography.Decrypt("8UFD7eD4sGtZ9r7Y1QXOc5qaxX7LBbkxTOEXLSlAZj0=");
                 string sql = $@"SELECT        UsersModel.Id, UsersModel.Username, UsersModel.Password, UsersModel.Fname, UsersModel.Lname, UsersModel.Active, tbl_UserTypeModel.UserType, tbl_CorporateModel.CorporateName, 
                          tbl_PositionModel.Name AS PositionName, UsersModel.JWToken, UsersModel.FilePath, UsersModel.CorporateID, tbl_MembershipModel.Name as MembershipName
 FROM            UsersModel INNER JOIN

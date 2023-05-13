@@ -29,7 +29,9 @@ namespace AOPC.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private IConfiguration _configuration;
         private string apiUrl = "http://";
-        public BusinessController(IOptions<AppSettings> appSettings, GlobalService globalService,
+
+        private IWebHostEnvironment Environment;
+        public BusinessController(IOptions<AppSettings> appSettings, GlobalService globalService, IWebHostEnvironment _environment,
                   UserManager<ApplicationUser> userManager, QueryValueService _token,
                   IHttpContextAccessor contextAccessor,
                   IConfiguration configuration)
@@ -39,6 +41,7 @@ namespace AOPC.Controllers
             _configuration = configuration;
             apiUrl = _configuration.GetValue<string>("AppSettings:WebApiURL");
             _appSettings = appSettings.Value;
+            Environment = _environment;
         }    
         [HttpGet]
         public async Task<JsonResult> GetBusLoc()
@@ -210,6 +213,55 @@ namespace AOPC.Controllers
                 string status = ex.GetBaseException().ToString();
             }
             return Json(new { stats = _global.Status });
+        }
+        public JsonResult UploadFile(List<IFormFile> postedFiles)
+        {
+            int i;
+            string wwwPath = this.Environment.WebRootPath;
+            string contentPath = this.Environment.ContentRootPath;
+            for (i = 0; i < Request.Form.Files.Count; i++)
+            {
+                if (Request.Form.Files[i].Length > 0)
+                {
+                    try
+                    {
+                        //var filePath = "C:\\Files\\";
+                        var filePath = "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
+                        //var filePath = Environment.WebRootPath + "\\uploads\\";
+                        if (!Directory.Exists(filePath))
+                        {
+                            Directory.CreateDirectory(filePath);
+                        }
+                        List<string> uploadedFiles = new List<string>();
+
+
+                        Guid guid = Guid.NewGuid();
+                        string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
+                        string MyUserDetailsIWantToAdd = "EMP-01" + getextension;
+                        string file = Path.Combine(filePath, Request.Form.Files[i].FileName);
+
+                        var stream = new FileStream(file, FileMode.Create);
+                        Request.Form.Files[i].CopyToAsync(stream);
+                        //status = "https://www.alfardanoysterprivilegeclub.com/assets/img/" + MyUserDetailsIWantToAdd;
+                        foreach (IFormFile postedFile in postedFiles)
+                        {
+                            string fileName = Path.GetFileName(postedFile.FileName);
+                            using (FileStream streams = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
+                            {
+                                postedFile.CopyTo(streams);
+                                uploadedFiles.Add(fileName);
+                                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = "Error! " + ex.GetBaseException().ToString();
+                    }
+                }
+            }
+            if (Request.Form.Files.Count == 0) { status = "Error"; }
+            return Json(new { stats = status });
         }
         public IActionResult Index()
         {

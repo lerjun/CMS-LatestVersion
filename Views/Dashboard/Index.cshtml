@@ -255,7 +255,7 @@
             <div class="controls">
                 <h4>News Feed Clicks</h4>
                 <div class="filters">
-                    <select id="user-position" class="option-filters">
+                    <select id="cnt-opt" class="option-filters">
                         <option value="7">Last 7 Days</option>
                         <option value="15">Last 15 Days</option>
                         <option value="30">Last 30 Days</option>
@@ -443,7 +443,10 @@
                     "bAutoWidth": false,
                     "bLengthChange": false,
                     "searching": false,
-                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+                "paging": true,
+                "aLengthMenu": [10],
+                "searching": false
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               }); 
               nctable = $('#n_call').DataTable({
@@ -465,7 +468,10 @@
                     "bAutoWidth": false,
                     "bLengthChange": false,
                     "searching": false,
-                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+                 "paging": true,
+                      "aLengthMenu": [10],
+                "searching": false
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               });      
               mcstable = $('#mcs_call ').DataTable({
@@ -486,7 +492,10 @@
                     "bAutoWidth": false,
                     "bLengthChange": false,
                     "searching": false,
-                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+                "paging": true,
+                "aLengthMenu": [10],
+                "searching": false
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               });
             mchtable = $('#mch_call').DataTable({
@@ -495,6 +504,26 @@
                     { "width": "150px", "targets": 0 },
                     { "width": "100px", "targets": 1 },
                     { "width": "100px", "targets": 2 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                "bPaginate": false,
+                    "bFilter": false,
+                    "stripeClasses": [],
+                    "ordering": false,
+                    "ordering": false,
+                    "info": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+              });   
+              tbl_cnttable = $('#tbl_cnt').DataTable({
+                "columnDefs": [
+
+                    { "width": "200px", "targets": 0 },
+                    { "width": "50px", "targets": 1 },
                     // { "width": "70px", "targets": 9 }
                 ],
                 "bPaginate": false,
@@ -529,7 +558,13 @@
                 "bAutoWidth": false,
                 "bLengthChange": false,
                 "searching": false,
-                "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+                "paging": true,
+                "aLengthMenu": [10],
+                "searching": true,
+                 "paging": true,
+                                      "aLengthMenu": [10],
+                                      "searching": true
+                                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
             });
             cAbtable = $('#cAction_table').DataTable({
@@ -693,6 +728,7 @@
                 }
             });
         });
+   
         $('#cta-day').change(function () {
             var data = {};
             var cat = "";
@@ -735,7 +771,7 @@
             });
 
         });
-
+   
         $('#nur').change(function () {
   
             const ctx = document.getElementById("myChart").getContext("2d");
@@ -816,6 +852,34 @@
          
 
         });
+        $('#cnt-opt').change(function () {
+            var data = {};
+            data.day = $('#cnt-opt').val();
+            console.log(data);
+
+            $.ajax({
+                url: '/Dashboard/PostClickCountAll',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                //console.log(data);
+                tbl_cnttable.clear().draw();
+               for (var i = 0; i < data.length; i++) {
+
+                    $("#tbl_cnt tbody").append([
+                        "<tr>" +
+                        "<td>" + data[i].module + "</td>" +
+                        "<td>" + data[i].count + "</td>", + "</tr>"
+                    ]);
+
+                }
+            }
+            });
+
+        });
         $('#mcs').change(function () {
             var data = {};
             data.day = $('#mcs').val();
@@ -829,7 +893,7 @@
                 type: "POST",
                 datatype: "json",
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                  var sum = 0;
                 for (var x = 3; x < data.length; x++) {
                     sum += data[x].total;
@@ -868,7 +932,7 @@
                         },
                     ];
                 }
-
+         
                     const pieGraphMovement = (elementContainer, data) => {
                         let oldValue = 0;
                         let styleString = "";
@@ -919,7 +983,7 @@
                             }
                         });
                     };
-
+                    console.log(topBusinesOutlet);
                     pieGraphMovement("#ts-pie-graph", topBusinesOutlet);
                 }
             });
@@ -1146,6 +1210,7 @@
             });
 
         });
+
     </script>
 }
 

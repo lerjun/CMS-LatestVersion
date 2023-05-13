@@ -22,6 +22,7 @@ using System.Xml;
 using System.Drawing;
 using AuthSystem.Manager;
 using _CMS.Manager;
+using System.Drawing.Imaging;
 
 namespace AOPC.Controllers
 {
@@ -120,7 +121,7 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = _global.Status });
         }
-         public JsonResult UploadFile()
+        public JsonResult UploadFile(List<IFormFile> postedFiles)
         {
             int i;
             string wwwPath = this.Environment.WebRootPath;
@@ -131,20 +132,26 @@ namespace AOPC.Controllers
                 {
                     try
                     {
-
-                        // var filePath = "C:\\Files\\";
-                        var filePath = "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
-                        string FileName = Request.Form.Files[i].FileName;
-                        var FileName1 = Request.Form.Files[i];
-                        string getextension = Path.GetExtension(FileName);
-                        string MyUserDetailsIWantToAdd = "EMP-00" + getextension;
-                        string files = Path.Combine(filePath, FileName);
-                        var imagePath = Path.Combine(filePath, FileName);
-                        using (FileStream streams = new FileStream(Path.Combine(filePath, FileName), FileMode.Create))
+                        var uploadsFolder = DBConn.Path;
+                        if (!Directory.Exists(uploadsFolder))
                         {
-                            FileName1.CopyTo(streams);
+                            Directory.CreateDirectory(uploadsFolder);
                         }
-                      
+                        List<string> uploadedFiles = new List<string>();
+
+
+
+                        var image = System.Drawing.Image.FromStream(Request.Form.Files[i].OpenReadStream());
+                        var resized = new Bitmap(image, new System.Drawing.Size(400, 400));
+
+                        using var imageStream = new MemoryStream();
+                        resized.Save(imageStream, ImageFormat.Jpeg);
+                        var imageBytes = imageStream;
+
+                        string file = Path.Combine(uploadsFolder, Request.Form.Files[i].FileName);
+                        var stream = new FileStream(file, FileMode.Create);
+                        Request.Form.Files[i].CopyToAsync(stream);
+
                     }
                     catch (Exception ex)
                     {
@@ -294,11 +301,11 @@ namespace AOPC.Controllers
         
         public IActionResult Index()
         {
-            // string  token = HttpContext.Session.GetString("Bearer");
-            // if (token == null)
-            // {
-            //     return RedirectToAction("Index", "LogIn");
-            // }
+            string token = token_.GetValue();
+            if (token == null)
+            {
+                return RedirectToAction("Index", "LogIn");
+            }
             return View();
         }
 

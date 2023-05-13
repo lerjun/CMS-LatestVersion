@@ -281,6 +281,32 @@ namespace AOPC.Controllers
             return Json(list);
         }
         [HttpPost]
+        public async Task<IActionResult> PostClickCountAll(UserFilterday data)
+        {
+
+            string result = "";
+            var list = new List<ClicCountModel>();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiSupport/PostClickCountsListAll ";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token_.GetValue());
+                StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    string res = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<ClicCountModel>>(res);
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(list.Take(4));
+        }
+        [HttpPost]
         public async Task<IActionResult> PostCallToActions(UserFilterday data)
         {
 
@@ -476,7 +502,6 @@ namespace AOPC.Controllers
 
         public class QrTrailVM
         {
-
             public int Id { get; set; }
             public string EmployeeID { get; set; }
             public string Longtitude { get; set; }

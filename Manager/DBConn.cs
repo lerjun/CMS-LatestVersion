@@ -21,12 +21,25 @@
            
          return "https://localhost:7110"; // local live
         }
+         
+        private static string GetPath()
+        {
+            return    "C:\\Files\\";
+           // return "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
+        }
 
         public static string ConnectionString
         {
             get
             {
                 return GetConnectionString();
+            }
+        }
+        public static string Path
+        {
+            get
+            {
+                return GetPath();
             }
         }
         public static string HttpString

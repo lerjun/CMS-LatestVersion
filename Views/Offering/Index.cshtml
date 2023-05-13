@@ -26,12 +26,8 @@
                                 <input type="checkbox" class="check-all" id="checkall" />
                                 <labebl id="checkers" style="text-align:center"></labebl> 
                                            <button class="register"  style ="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New Offering" id="add-offering"><i class="fas fa-user-plus"></i>Add New</button>
-                                <select id="offeringopt" class="register" style="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" hidden>
-                                                <option value="">Select Opt </option>
-                                                <option value="0">Delete All</option>
-                                                <option value="1">Send Email</option>
-
-                                            </select>
+                                    <button class="register" style="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Delete Offering" id="offeringopt" hidden><i class="fas fa-user-plus"></i>Delete All</button>
+    
 
                                         </th>
                                         <th>Promo Description</th>
@@ -39,12 +35,7 @@
                                         <th>Vendor Name</th>
                                         <th>Business Type Name</th>
                                         <th>Membership Tier</th>
-                                        <th>Url</th>
-                                        <th>Offer Days</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>From Time</th>
-                                        <th>To Time</th>
+                                      
                                         <th>Date Created</th>
                                     </thead>
                                     <tbody>
@@ -190,28 +181,51 @@
         </div>
 
     </div>
+<div class="modal fade" id="Showuserlist" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+     aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-error-dialog" style="max-width: 600px;margin: 1.75rem auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select user to Send Email</h4>
+                <button type="button" id="hsl-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
+            </div>
+            <div style="margin:10px">
 
+
+                <table   class="myTableMedium" id="oul_call">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="check-all" id="checkalls" />
+                                <labebl id="checkers" style="text-align:center">Select All</labebl>
+                                <button class="register" style="margin-bottom: 5px;font-size: 13px;      width: 100px;  padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Delete Offering" id="offeringopt" hidden><i class="fas fa-user-plus"></i>Delete All</button>
+
+                            </th>
+                            <th>Email Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <br />
+
+               <div class="actions" style="align-items: center;">
+
+                    <button type="submit" value="Send Email" id="btn-sendemail" style="width:100%" class="register"><i class="fas fa-envelope"></i>Send Email</button>
+          </div>
+            </div>
+        </div>
+    </div>
+</div>
       @* modal end here *@
 @section Scripts{
 <script>
     var i_id = "";
-    var img_edit="";      
+    var img_edit=""; 
+    var oferid="";
  $(document).ready(function () {
                  offeringtable = $('#offering-table').DataTable({
-                     "columnDefs": [
 
-                        { "width": "80px", "targets": 0 },
-                        { "width": "150px", "targets": 1 },
-                        {  "width": "70px", "targets": 2 },
-                        { "width": "70px", "targets": 3 },
-                        { "width": "70px", "targets": 4 },
-                        { "width": "70px", "targets": 5 },
-                        { "width": "70px", "targets": 6 },
-                        { "width": "70px", "targets": 7 },
-                        { "width": "70px", "targets": 8 },
-                        { "width": "70px", "targets": 9 }
-                      ],
-                    order: [[ 7, "desc" ]],
                     "bPaginate": false,
                     "bFilter": false,
                     "stripeClasses": [],
@@ -226,7 +240,30 @@
                     "oLanguage": { "sZeroRecords": "", "sEmptyTable": "",
                     
                 }});
-                   $("input[name=uploadimg]").change(function () {
+            oul_table = $('#oul_call').DataTable({
+                "columnDefs": [
+
+                    { "width": "50px", "targets": 0 },
+                    { "width": "100px", "targets": 1 },
+                    // { "width": "70px", "targets": 9 }
+                ],
+                "bPaginate": false,
+                "bFilter": false,
+                "stripeClasses": [],
+                "ordering": false,
+                "ordering": false,
+                "info": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "bLengthChange": false,
+                "searching": false,
+                "paging": true,
+                "aLengthMenu": [10],
+                "searching": false
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+            });
+            $("input[name=uploadimg]").change(function () {
                     if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -242,25 +279,96 @@
          ShowVendorOpt();
          ShowprivOpt();
        });
+        function CheckedRows() {
+            IdList = [];
+            $('.cbox:checked').each(function (id, item) {
+                var id = $(item).data('id');
+                IdList.push({
+                    id: id
+                });
+            });
+            return IdList;
+        }
+        function CheckedRowsUser() {
+            IdList = [];
+            $('.cbox1:checked').each(function (id, item) {
+                var id = $(item).data('email');
+                IdList.push({
+                    email: id,
+                    offerid: offerid
+
+                });
+            });
+            return IdList;
+        }
         $("#checkall").click(function () {
             $("input:checkbox").not(this).prop("checked", this.checked);
             if ($(this).prop("checked") == true) {
                 $("#checkers").html("");
                  $('#offeringopt').removeAttr('hidden');
+                $("input:checkbox").removeAttr('hidden');
                console.log("checkall");
             } else {
                 $("#checkers").html("");
                 console.log("uncheckall");
+                $("#checkall").attr("hidden", false);
+                $(".cbox").attr("hidden", true);
                 $('#offeringopt').attr("hidden", true);
+            }
+        }); 
+        $("#checkalls").click(function () {
+          
+            if ($(this).prop("checked") == true) {
+                $("#checkers").html("");
+                $(".cbox1").not(this).prop("checked", this.checked);
+               console.log("checkalls");
+            } else {
+                $(".cbox1").not(this).prop("checked",false);
+                console.log("uncheckall");
             }
         });
         $("#checkAll").click(function () {
-            $("input:checkbox").not(this).prop("checked", this.checked);
-        });
+            $(".cbox").not(this).prop("checked", this.checked);
 
-        $('#offeringopt').change(function () {
-            if($('#offeringopt').val() == 0)
-            {
+        });  
+        $("#checkAlls").click(function () {
+            $(".cbox1").not(this).prop("checked", this.checked);
+
+        });
+        $('#offering-table').on('click', '.tbl-sendemail', function () {
+                  offerid = $(this).data("id");
+                        console.log(offerid);
+                iziToast.question({
+                    timeout: 20000,
+                    close: false,
+                    overlay: true,
+                    id: 'question',
+                    zindex: 999,
+                    title: 'Confirmation',
+                    message: 'Are you sure you want to Send Email?',
+                    position: 'center',
+                    buttons: [
+
+                        ['<button><b>YES</b></button>', function (instance, toast) {
+                         
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  
+                        $('#Showuserlist').modal('show');
+                        ShowUserListModal();
+                        }, true],
+                        ['<button>NO</button>', function (instance, toast) {
+
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        }],
+                    ]
+                });
+            
+
+
+        });
+        $('#offeringopt').click(function () {
+   
                 console.log("Deleteall");
                 iziToast.question({
                     timeout: 20000,
@@ -275,6 +383,29 @@
                         ['<button><b>YES</b></button>', function (instance, toast) {
                             
                             instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        var data = {};
+                        data.IdList = CheckedRows();
+                        console.log(data);
+
+                         $.blockUI(reloadLoading);
+                                  $.ajax({
+                            url: '/Offering/DeleteOfferingInfolist',
+                                    data: {
+                                     IdList: CheckedRows(),
+                                      },
+                                      type: "POST",
+                                      datatype: "json"
+                                  }).done(function (data) {
+                                      console.log(data);
+                                      notifyMsg('Success!', data.stats, 'green', 'fas fa-check');
+                                      $("#h-close").click();
+                                      ShowOfferingList();
+                                     $("input:checkbox").not(this).prop("checked", false);
+                                      $.unblockUI();
+
+                                  }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
 
                         }, true],
                         ['<button>NO</button>', function (instance, toast) {
@@ -284,11 +415,7 @@
                         }],
                     ]
                 });
-            }
-            else
-            {
-                console.log("Send Email");
-            }
+     
 
         });
  $('#add-offering').click(function () {
@@ -328,10 +455,19 @@
       data.ToTime  =$('#totime').val();
       data.Offerdays  =$('#offerdays').val();
       data.ImgUrl = filename;
-             
 
 
-                       iziToast.question({
+
+            var fileUpload = $("#img").get(0);
+            var files = fileUpload.files;
+            var formData = new FormData();
+            formData.append('file', files[0]);
+            formData.append('id', i_id);
+            var fileUpload = $("#upload-img").get(0);
+
+
+            console.log(formData);
+              iziToast.question({
                             timeout: 20000,
                             close: false,
                             overlay: true,
@@ -372,6 +508,15 @@
                                                   console.log(data);
                                                 }
                                             });
+                                            $.ajax({
+                                            url: '/Offering/UploadFile',
+                                            type: 'POST',
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (result) {
+                                            }
+                                            });
                                           $("#h-close").click();
                                       }
                                       else
@@ -398,6 +543,58 @@
 
 
     });
+
+        $('#btn-sendemail').click(function (e) {
+ 
+            iziToast.question({
+                timeout: 20000,
+                close: false,
+                overlay: true,
+                id: 'question',
+                zindex: 999,
+                title: 'Confirmation',
+                message: 'Are you sure you want to Send Email?',
+                position: 'center',
+                buttons: [
+                    ['<button><b>YES</b></button>', function (instance, toast) {
+                        var data = {};
+               
+                        data.IdList = CheckedRowsUser();
+                        console.log(data);
+                        $.blockUI(reloadLoading);
+                        $.ajax({
+                            url: '/Offering/UserSendEmail',
+                            data: {
+                                IdList: CheckedRowsUser(),
+                            },
+                            type: "POST",
+                            datatype: "json"
+                        }).done(function (data) {
+                            console.log(data);
+
+                            notifyMsg('Success!', "Email Sent", 'green', 'fas fa-check');
+                            $("#hsl-close").click();
+                            $("input:checkbox .cbox1").not(this).prop("checked", false);
+                            $.unblockUI();
+
+                        }).fail(function () {
+                            alert("There was an Error When Loading Data...");
+                        });
+                    
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+
+                    }, true],
+                    ['<button>NO</button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }],
+                ]
+            });
+
+
+        });
     $('#offering-table').on('click', '.tbl-delete', function () {
                       var data = {};
                       data.id = $(this).data("id");
@@ -415,7 +612,7 @@
                               ['<button><b>YES</b></button>', function (instance, toast) {
                                   $.blockUI(reloadLoading);
                                   $.ajax({
-                                       url: '/Offering/DeleteOfferingInfo',
+                            url: '/Offering/DeleteOffering',
                                     data: {
                                            data: data,
                                       },

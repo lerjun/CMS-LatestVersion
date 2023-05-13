@@ -161,11 +161,11 @@
           <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="username"> User Count</label>
-              <input type="number" value="" id="usercount"  class="mod-input" required />
+              <input type="number" value="" id="usercount" class="mod-input" disabled />
             </div>
               <div class="input-container-whole">
               <label for="email">VIP Count</label>
-              <input type="number" value="" id="vipcount" class="mod-input" required />
+              <input type="number" value="" id="vipcount" class="mod-input" disabled />
             </div>
           </div>
           <div class="actions">
@@ -378,20 +378,20 @@
                                     }).done(function (response) {
 
                                          notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
-                                            $.ajax({
-                                            url: '/Corporate/SaveMembershipPrivilegeCount',
-                                                data: {
-                                                    data: data,
-                                                },
-                                                type: "POST",
-                                                datatype: "json",
-                                                success: function (response) {
-                                                    if(response.stats != "Success")
-                                                    {
-                                                     notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
-                                                    }
-                                                }
-                                            });
+                                            //$.ajax({
+                                            //url: '/Corporate/SaveMembershipPrivilegeCount',
+                                            //    data: {
+                                            //        data: data,
+                                            //    },
+                                            //    type: "POST",
+                                            //    datatype: "json",
+                                            //    success: function (response) {
+                                            //        if(response.stats != "Success")
+                                            //        {
+                                            //         notifyMsg('Warning!', response.stats, 'red', 'fas fa-exclamation-triangle');
+                                            //        }
+                                            //    }
+                                            //});
                              
                                             ShowCorporateDetails();
                                             $(".cancel").click();

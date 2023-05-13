@@ -31,6 +31,8 @@ using System.Collections;
 using NPOI.POIFS.Properties;
 using System.Linq;
 using _CMS.Manager;
+using static AOPC.Controllers.OfferingController;
+
 namespace AOPC.Controllers
 {
     public class MembershipPrivilegeController : Controller
@@ -159,7 +161,44 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = status });
         }
-          public class PrivMemListItem
+
+        [HttpPost]
+        public async Task<IActionResult> Saveprivlist(List<DeleteOffer> IdList)
+        {
+            string status = "";
+            try
+            {
+                // HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiPrivilege/SavePrivilegeList";
+                // // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Bearer"));
+                //  client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+
+                // StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                // using (var response = await client.PostAsync(url, content))
+                // {
+                //     _global.Status = await response.Content.ReadAsStringAsync();
+                //     status = JsonConvert.DeserializeObject<LoginStats>(_global.Status).Status;
+
+                // }
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(IdList), Encoding.UTF8, "application/json");
+                    using (var response = await client.PostAsync(url, content))
+                    {
+                        status = await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                status = ex.GetBaseException().ToString();
+            }
+            return Json(new { stats = status });
+        }
+        public class PrivMemListItem
         {
             public string Id { get; set; }
             public string Title { get; set; }

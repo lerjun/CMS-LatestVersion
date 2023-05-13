@@ -6,6 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>AOPC_CMSv2</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\d3w0qyvn.rjn~" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Offering\mjp4ilcg.0ya~" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="excellupload" Version="1.0.0" />

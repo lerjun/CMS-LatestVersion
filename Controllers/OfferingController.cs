@@ -20,6 +20,9 @@ using MailKit.Net.Smtp;
 using OfficeOpenXml;
 using _CMS.Manager;
 using System.Drawing;
+using System.Drawing.Imaging;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+
 namespace AOPC.Controllers
 {
     public class OfferingController : Controller
@@ -66,6 +69,25 @@ namespace AOPC.Controllers
             public string Status { get; set; }
 
         }
+        public class Userlist
+        {
+            public string Fullname { get; set; }
+            public string Email { get; set; }
+
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetUserList()
+        {
+            var url = DBConn.HttpString + "/api/ApiOffering/UserListEmail";
+            HttpClient client = new HttpClient();
+           // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Bearer"));
+
+           client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+            string response = await client.GetStringAsync(url);
+            List<Userlist> models = JsonConvert.DeserializeObject<List<Userlist>>(response);
+            return new(models);
+        }
+     
         [HttpPost]
         public async Task<IActionResult> SaveOffering(OfferingVM data)
         {
@@ -127,6 +149,12 @@ namespace AOPC.Controllers
         {
 
             public int Id { get; set; }
+        }   
+        public class UserEmail
+        {
+
+            public string email { get; set; }
+            public string offerid { get; set; }
         }
         public class Registerstats
         {
@@ -134,7 +162,54 @@ namespace AOPC.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteOfferingInfo(DeleteOffer data)
+        public async Task<IActionResult> DeleteOfferingInfolist(List<DeleteOffer> IdList)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiOffering/DeleteOfferingList";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(IdList), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    _global.Status = await response.Content.ReadAsStringAsync();
+                      status = JsonConvert.DeserializeObject<LoginStats>(_global.Status).Status;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(new { stats = status });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserSendEmail(List<UserEmail> IdList)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiOffering/SendEmail";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token_.GetValue());
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(IdList), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    _global.Status = await response.Content.ReadAsStringAsync();
+                    status = JsonConvert.DeserializeObject<LoginStats>(_global.Status).Status;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(new { stats = status });
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteOffering(DeleteOffer data)
         {
             try
             {
@@ -154,6 +229,67 @@ namespace AOPC.Controllers
             {
                 string status = ex.GetBaseException().ToString();
             }
+            return Json(new { stats = status });
+        }
+        public JsonResult UploadFile(List<IFormFile> postedFiles, int id)
+        {
+            int i;
+            string wwwPath = this.Environment.WebRootPath;
+            string contentPath = this.Environment.ContentRootPath;
+            for (i = 0; i < Request.Form.Files.Count; i++)
+            {
+                if (Request.Form.Files[i].Length > 0)
+                {
+                    try
+                    {
+                        //  string uploadsFolder = @"C:\\Files\\";
+                        var uploadsFolder = DBConn.Path;
+                        //var filePath = Environment.WebRootPath + "\\uploads\\";
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+                        List<string> uploadedFiles = new List<string>();
+
+                 
+
+                        var image = System.Drawing.Image.FromStream(Request.Form.Files[i].OpenReadStream());
+                        var resized = new Bitmap(image, new System.Drawing.Size(400, 400));
+
+                        using var imageStream = new MemoryStream();
+                        resized.Save(imageStream, ImageFormat.Jpeg);
+                        var imageBytes = imageStream;
+                        string sql = "";
+                
+                        if (id != 0)
+                        {
+                            sql += $@"select Top(1) OfferingID from tbl_OfferingModel where StatusID =5 and id='"+ id + "' order by id desc  ";
+
+                        }
+                        else
+                        {
+                            sql += $@"select Top(1) OfferingID from tbl_OfferingModel where StatusID =5  order by id desc  ";
+                        }
+                     
+                        DataTable table = db.SelectDb(sql).Tables[0];
+                    
+                        //var id = table.Rows[0]["OfferingID"].ToString();
+                        string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
+                        string MyUserDetailsIWantToAdd = table.Rows[0]["OfferingID"].ToString() + getextension;
+
+
+                        string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
+                        var stream = new FileStream(file, FileMode.Create);
+                        Request.Form.Files[i].CopyToAsync(stream);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        status = "Error! " + ex.GetBaseException().ToString();
+                    }
+                }
+            }
+            if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });
         }
         public IActionResult Index()
