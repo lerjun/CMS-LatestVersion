@@ -10,6 +10,16 @@
   padding: 10px;
 }
 
+.register-main-container_2 {
+    width: 100%;
+    height: calc(100vh - var(--topbarheight));
+    margin-left: 0px;
+    margin-top: var(--topbarheight);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+}
 
 .list-title {
   width: 100%;

@@ -29,7 +29,7 @@
 
                         <div class="col-lg-10">
 
-                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%;overflow-x:auto;">
+                                <div id="register-table_wrapper" class="dataTables_wrapper no-footer" style="width:100%">
                                     <table id="_corporate-table" class="myTableMedium">
                                          <thead>
                                         <th>
@@ -69,13 +69,13 @@
                                 <div class="col">
                                     <button type="button" class="btn btn-info btn-block" id="btn-download-corporate" data-toggle="tooltip" title="Download Header"><i class="fas fa-download"></i> Download Template</button>
                                 </div>
-                                <div style="font-size:12px !important;margin-left:10px">
+                                <div  class="col-sm-12" style="font-size:12px !important;margin-left:10px">
                                 @if (message != "")
                                 {
 
                                     @if (message.Contains("Error") || message.Contains("Duplicate Entry."))
                                     {
-                                     <div class="alert alert-warning" style="height: 80px;width: 150px;">
+                                     <div class="alert alert-warning" style="height: 80px;width: 95%;">
                                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                             <strong id="blink">Warning! @message.Replace(" Error: ", "")</strong>
                                       </div>
@@ -161,11 +161,11 @@
           <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="username"> User Count</label>
-              <input type="number" value="" id="usercount" class="mod-input" disabled />
+              <input type="number" value="" id="usercount" class="mod-input"  />
             </div>
               <div class="input-container-whole">
               <label for="email">VIP Count</label>
-              <input type="number" value="" id="vipcount" class="mod-input" disabled />
+              <input type="number" value="" id="vipcount" class="mod-input"  />
             </div>
           </div>
           <div class="actions">

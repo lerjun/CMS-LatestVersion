@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Manager\DBConn.cs~RF850d86f.TMP" />
+    <None Remove="Views\Corporate\umrvfngk.03w~" />
     <None Remove="Views\Offering\mjp4ilcg.0ya~" />
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,10 @@ using _CMS.Manager;
 using System.Drawing;
 using OfficeOpenXml;
 using ExcelDataReader;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace AOPC.Controllers
 {
     public class CorporateController : Controller
@@ -165,7 +169,23 @@ namespace AOPC.Controllers
             List<MembershipVM> model = JsonConvert.DeserializeObject<List<MembershipVM>>(response);
             return new(model);
         }
-     
+
+        public class CorporateModel
+        {
+        
+            public int Id { get; set; }
+            public int Count { get; set; }
+            public int VipCount { get; set; }
+
+            public string CorporateName { get; set; }
+            public string? Address { get; set; }
+            public string? CNo { get; set; }
+            public string? EmailAddress { get; set; }
+            public string? Description { get; set; }
+            public string? MembershipID { get; set; }
+            public int? Status { get; set; }
+
+        }
         [HttpPost]
         public async Task<IActionResult> SaveCorporate(CorporateModel data)
         {

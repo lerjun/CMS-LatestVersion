@@ -2420,6 +2420,16 @@ table.myTableLarge tbody tr:hover td:nth-child(1) p:nth-child(1) {
   gap: 10px;
   padding: 10px;
 }
+.register-main-container_2 {
+    width: 100%;
+    height: calc(100vh - var(--topbarheight));
+    margin-left: 0px;
+    margin-top: var(--topbarheight);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+}
 
 .corporate-reg-data {
   height: 100%;
@@ -8412,6 +8422,8 @@ a.badge-dark.focus {
 }
 
 .alert {
+    width:100%;
+    margin-left:0px;
   position: relative;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;

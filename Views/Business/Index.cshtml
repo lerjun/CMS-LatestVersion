@@ -285,21 +285,21 @@
             </div>
             <div class="input-container-whole">
              <label for="fname">Map <span class="req" >*</span></label>
-              <input type="text" value="" id="Map" class="mod-input" required/>
+              <input type="text" value="" id="Map" class="mod-input" required />
             </div>
           </div>
           <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="btype-option"> Business Type <span class="req" >*</span></label>
                 <select id="btype-option" class="mod-input" required >
-                     <option value="" disabled selected>Select your option</option>
+
                 </select>
                  
             </div>
              <div class="input-container-whole">
               <label for="username">Business Location <span class="req" >*</span></label>
                <select id="bloc-option" class="mod-input" required >
-                     <option value="" disabled selected>Select your option</option>
+
                 </select>
             </div>
           </div>
@@ -924,10 +924,11 @@
               data.services   = $("#services").val();
               data.map   = $("#Map").val();
               data.featureImg=filename;
-            var fileUpload = $("#img").get(0);
+          var fileUpload = $("#img").get(0);
             var files = fileUpload.files;
             var formData = new FormData();
             formData.append('file', files[0]);
+            formData.append('id', i_id);
             var fileUpload = $("#upload-img").get(0);
             iziToast.question({
                             timeout: 20000,
@@ -953,12 +954,12 @@
                                       if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
                                       {   
                                           $.ajax({
-                                                url: '/Business/UploadFile',
+                                    url: '/Business/UploadFile',
                                                 type: 'POST',
                                                 data: formData,
                                                 processData: false,
                                                 contentType: false,
-                                                success: function (result) {
+                                                success: function (result) {   
                                                 }
                                             });
                                          
@@ -966,6 +967,7 @@
                             
                                           $("#bh-close").click();
                                            ShowBusinessList();
+                                            window.location.reload();
                                       }
                                       else
                                       {

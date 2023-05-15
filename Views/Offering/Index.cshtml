@@ -490,24 +490,24 @@
                                       if(response.stats == "Successfully Added" || response.stats == "Successfully Updated" )
                                       {
                                           notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
-                                          ShowOfferingList();
+                                   
                                             var data = {};
                                             data.Details = "Has new Offering " + $('#offeringname').val() ;
                                             data.isRead = "0";
                                             data.Module = "Offering";
                                             data.EmailStatus = 15;
 
-                                            $.ajax({
-                                                url: '/Offering/PostNotifications',
-                                                data: {
-                                                    data: data,
-                                                },
-                                                type: "POST",
-                                                datatype: "json",
-                                                success: function (data) {
-                                                  console.log(data);
-                                                }
-                                            });
+                                            //$.ajax({
+                                            //    url: '/Offering/PostNotifications',
+                                            //    data: {
+                                            //        data: data,
+                                            //    },
+                                            //    type: "POST",
+                                            //    datatype: "json",
+                                            //    success: function (data) {
+                                            //      console.log(data);
+                                            //    }
+                                            //});
                                             $.ajax({
                                             url: '/Offering/UploadFile',
                                             type: 'POST',
@@ -518,6 +518,7 @@
                                             }
                                             });
                                           $("#h-close").click();
+                                ShowOfferingList();
                                       }
                                       else
                                       {

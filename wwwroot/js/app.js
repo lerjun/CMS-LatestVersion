@@ -435,8 +435,8 @@ async function _ShowMembershipOption() {
     $.ajax({ url: "/Corporate/GetMembershipList", data: {}, type: "GET", datatype: "json" }).done(function (data) {
       // 
       $("#memtier-option").empty();
-      $("#memtier-option").append('<option value="0">-Select Tier-</option>');
-      // $("#memtier-option").append('<option value="ALL">-Select All-</option>');
+      $("#memtier-option").append('<option value="0" disabled>-Select Tier-</option>');
+       $("#memtier-option").append('<option value="ALL">-ALL TIERS-</option>');
       for (var i = 0; i < data.length; i++) {
         $("#memtier-option").append('<option value="' + data[i].id + '">' + data[i].membershipName + "</option>");
       }
