@@ -18,6 +18,7 @@ using _CMS.Manager;
 using ExcelDataReader;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.IO;
 
 namespace AOPC.Controllers
 {
@@ -217,61 +218,16 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = _global.Status });
         }
-        //public JsonResult UploadFile(List<IFormFile> postedFiles)
-        //{
-        //    int i;
-        //    string wwwPath = this.Environment.WebRootPath;
-        //    string contentPath = this.Environment.ContentRootPath;
-        //    for (i = 0; i < Request.Form.Files.Count; i++)
-        //    {
-        //        if (Request.Form.Files[i].Length > 0)
-        //        {
-        //            try
-        //            {
-        //                //var filePath = "C:\\Files\\";
-        //                var filePath = "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
-        //                //var filePath = Environment.WebRootPath + "\\uploads\\";
-        //                if (!Directory.Exists(filePath))
-        //                {
-        //                    Directory.CreateDirectory(filePath);
-        //                }
-        //                List<string> uploadedFiles = new List<string>();
-
-
-        //                Guid guid = Guid.NewGuid();
-        //                string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
-        //                string MyUserDetailsIWantToAdd = "EMP-01" + getextension;
-        //                string file = Path.Combine(filePath, Request.Form.Files[i].FileName);
-
-        //                var stream = new FileStream(file, FileMode.Create);
-        //                Request.Form.Files[i].CopyToAsync(stream);
-        //                //status = "https://www.alfardanoysterprivilegeclub.com/assets/img/" + MyUserDetailsIWantToAdd;
-        //                foreach (IFormFile postedFile in postedFiles)
-        //                {
-        //                    string fileName = Path.GetFileName(postedFile.FileName);
-        //                    using (FileStream streams = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
-        //                    {
-        //                        postedFile.CopyTo(streams);
-        //                        uploadedFiles.Add(fileName);
-        //                        ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                status = "Error! " + ex.GetBaseException().ToString();
-        //            }
-        //        }
-        //    }
-        //    if (Request.Form.Files.Count == 0) { status = "Error"; }
-        //    return Json(new { stats = status });
-        //}
+ 
 
         public async Task<IActionResult> UploadFile(List<IFormFile> postedFiles, int id)
         {
             int i;
+            var stream = (dynamic)null;
             string wwwPath = this.Environment.WebRootPath;
             string contentPath = this.Environment.ContentRootPath;
+            int ctr = 0;
+            string img = "";
             for (i = 0; i < Request.Form.Files.Count; i++)
             {
                 if (Request.Form.Files[i].Length > 0)
@@ -306,14 +262,22 @@ namespace AOPC.Controllers
                         {
                             sql += $@"select Top(1) BusinessID from tbl_BusinessModel where Active =5   order by id desc   ";
                         }
-
+                        string ext = "";
+                        if(ctr == 0)
+                        {
+                            ext ="";
+                        }
+                        else
+                        {
+                            ext = "(" + ctr + ")";
+                        }
                         DataTable table = db.SelectDb(sql).Tables[0];
-                        string str = table.Rows[0]["BusinessID"].ToString();
+                        string str = table.Rows[0]["BusinessID"].ToString() + ext;
                         //var id = table.Rows[0]["OfferingID"].ToString();
                         string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
                         string MyUserDetailsIWantToAdd = str + getextension;
 
-
+                        img += MyUserDetailsIWantToAdd + ";";
 
                         string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
                         FileInfo f1 = new FileInfo(file);
@@ -321,10 +285,9 @@ namespace AOPC.Controllers
                         {
                             f1.Delete();
                         }
-                   
-                        var stream = new FileStream(file, FileMode.Create);
+
+                        stream = new FileStream(file, FileMode.Create);
                         await  Request.Form.Files[i].CopyToAsync(stream);
-                        stream.Close();
                         //if (!System.IO.File.Exists(file))
                         //{
                         //    System.IO.FileStream f = System.IO.File.Create(file);
@@ -335,7 +298,11 @@ namespace AOPC.Controllers
                     {
                         status = "Error! " + ex.GetBaseException().ToString();
                     }
+             
                 }
+          
+                ctr++;
+                stream.Close();
             }
             if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });

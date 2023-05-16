@@ -246,6 +246,12 @@
           </div>
           <div class="mod-form-row">
             <div class="input-container-whole">
+                            <input type="file"
+                                   value=""
+                                   id="fileUpload" accept="image/*" multiple/>
+            </div>
+          </div> <div class="mod-form-row">
+            <div class="input-container-whole">
               <label for="employeeID">Hotel Name <span class="req" >*</span></label>
              <input type="text" id="hotelname" class="mod-input" required />
             </div>
@@ -910,7 +916,7 @@
               {
               filename = img_edit;
               }
-
+                var input = document.getElementById('fileUpload');
               var data = {};
               data.id = i_id;
               data.businessName  = $("#hotelname").val();
@@ -924,9 +930,13 @@
               data.services   = $("#services").val();
               data.map   = $("#Map").val();
               data.featureImg=filename;
-          var fileUpload = $("#img").get(0);
+                let formData = new FormData();
+            var fileUpload = $("#img").get(0);
             var files = fileUpload.files;
-            var formData = new FormData();
+            var m_files = input.files;
+            for (var i = 0; i != m_files.length; i++) {
+                formData.append("file", m_files[i]); //loop through all files and append
+            }
             formData.append('file', files[0]);
             formData.append('id', i_id);
             var fileUpload = $("#upload-img").get(0);
@@ -954,7 +964,7 @@
                                       if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
                                       {   
                                           $.ajax({
-                                    url: '/Business/UploadFile',
+                                            url: '/Business/UploadFile',
                                                 type: 'POST',
                                                 data: formData,
                                                 processData: false,
@@ -967,7 +977,7 @@
                             
                                           $("#bh-close").click();
                                            ShowBusinessList();
-                                            window.location.reload();
+                                            //window.location.reload();
                                       }
                                       else
                                       {
