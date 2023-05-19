@@ -22,6 +22,7 @@ using _CMS.Manager;
 using System.Drawing;
 using System.Drawing.Imaging;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.IO;
 
 namespace AOPC.Controllers
 {
@@ -234,6 +235,7 @@ namespace AOPC.Controllers
         public JsonResult UploadFile(List<IFormFile> postedFiles, int id)
         {
             int i;
+            var stream = (dynamic)null;
             string wwwPath = this.Environment.WebRootPath;
             string contentPath = this.Environment.ContentRootPath;
             for (i = 0; i < Request.Form.Files.Count; i++)
@@ -279,7 +281,7 @@ namespace AOPC.Controllers
 
 
                         string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
-                        var stream = new FileStream(file, FileMode.Create);
+                        stream = new FileStream(file, FileMode.Create);
                         Request.Form.Files[i].CopyToAsync(stream);
 
                     }
@@ -287,8 +289,10 @@ namespace AOPC.Controllers
                     {
                         status = "Error! " + ex.GetBaseException().ToString();
                     }
+
                 }
             }
+            stream.Close();
             if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });
         }

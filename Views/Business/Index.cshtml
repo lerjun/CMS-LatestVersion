@@ -232,24 +232,32 @@
                   alt=""
                 />
               </div>
+                            <div class="input-container-whole upload">
+                                <label for="img">Upload Profile</label>
+                                <input type="file"
+                                       value=""
+                                       id="admin-img"
+                                       class="mod-input img-choose"
+                                       name="uploadimg" accept="image/*" />
+                            </div>
             </div>
-            <div class="input-container-whole upload" >
-              <label for="img">Upload Image</label>
-              <input
-                type="file"
-                value=""
-                id="admin-img"
-                class="mod-input img-choose"
-                name="uploadimg" accept="image/*"
-              />
-            </div>
+             <div class="input-container-whole ">
+                            <div class="input-gallery" id="upload-image-preview_multiple">
+                    
+                               
+                            </div>
+                 <div class="input-container-whole">
+                
+                    <label for="fileUpload">Upload Images</label>
+                   <input type="file"
+                   value=""
+                   class="mod-input img-choose"
+                   id="fileUpload" 
+                   accept="image/*"
+                  name="mul_upload"  multiple/>
+                 </div>
           </div>
-          <div class="mod-form-row">
-            <div class="input-container-whole">
-                            <input type="file"
-                                   value=""
-                                   id="fileUpload" accept="image/*" multiple/>
-            </div>
+ 
           </div> <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="employeeID">Hotel Name <span class="req" >*</span></label>
@@ -348,6 +356,7 @@
         var img_edit="";     
           $(document).ready(function () {
               $("input[name=uploadimg]").change(function () {
+          
               if (this.files && this.files[0]) {
                   var reader = new FileReader();
 
@@ -359,7 +368,51 @@
                   };
                   reader.readAsDataURL(this.files[0]);
               }
-          });
+          });    
+          //$("input[name=mul_upload]").change(function (e) {
+          //      var total_file = document.getElementById("fileUpload").files.length;
+          //      var files = e.target.files,
+          //          filesLength = files.length;
+          //      for (var i = 0; i < filesLength; i++) {
+          //          var f = files[i]
+          //          var fileReader = new FileReader();
+          //          fileReader.onload = (function (e) {
+          //              var file = e.target;
+          //              $('#upload-image-preview_multiple').append("<img class=galley-imgs src=" + e.target.result + " title=" + file.name + "/>");
+          //          });
+          //          fileReader.readAsDataURL(f);
+          //      }
+  
+                
+          //});
+            $("#fileUpload").on("change", function (e) {
+            var files = e.target.files,
+            filesLength = files.length;
+          for (var i = 0; i < filesLength; i++) {
+            var f = files[i]
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+              var file = e.target;
+                     $('#upload-image-preview_multiple').append("<span class=\"pip\">" +
+                "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><span class=\"remove\">Remove</span>" +
+                            "</span>");
+              $(".remove").click(function(){
+                $(this).parent(".pip").remove();
+              });
+          
+              // Old code here
+              /*$("<img></img>", {
+                class: "imageThumb",
+                src: e.target.result,
+                title: file.name + " | Click to remove"
+              }).insertAfter("#files").click(function(){$(this).remove();});*/
+          
+            });
+            fileReader.readAsDataURL(f);
+          }
+          console.log(files);
+        });
           dbtable = $('#businessloc-table').DataTable({
                          
                     "bPaginate": false,
@@ -428,7 +481,7 @@
                       type: "GET",
                       datatype: "json"
                   }).done(function (data) {
-                        
+                        console.log(data);
                       btable.clear().draw();
                       for (var i = 0; i < data.length; i++) {
 
@@ -449,6 +502,7 @@
                           + '" data-cno="' + data[i].cno
                           + '" data-email="' + data[i].email
                           + '" data-url="' + data[i].url
+                          + '" data-map="' + data[i].map
                           + '" data-fimg="' + data[i].featureImg
                           + '" data-services="' + data[i].services + '">'+
           '<svg width="11" height="11" viewBox="0 0 11 11" fill="none"xmlns="http://www.w3.org/2000/svg">' +
@@ -520,6 +574,7 @@
                   Url  = $(this).data("url");
                   Services  = $(this).data("services");
                   FeatureImg   = $(this).data("fimg");
+                  Map   = $(this).data("map");
                   console.log(Services);
 
                   $('#hotelname').val(BusinessName);
@@ -531,6 +586,7 @@
                   $('#email').val(Email);
                   $('#Url').val(Url);
                   $('#Services').val(Services);
+                  $('#Map').val(Map);
 
                   if (FeatureImg != null) 
                   {
@@ -761,9 +817,11 @@
            $('#add-business').click(function () {
                 i_id=0;
                 var img = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
+            var img2 = $('<img>').attr('src', "https://www.alfardanoysterprivilegeclub.com/assets/img/defaultavatar.png");
                 img.attr('height', '120px');
                 img.attr('width', '120px');
                 $('.upload-image-preview').html(img);
+                $(".pip").empty();
                 $('input[type="text"]').val("");
                 $('input[type="email"]').val("");
                 $('#btype-option').prop('selectedIndex', 0);
@@ -927,7 +985,7 @@
               data.Cno  = $("#cno").val();
               data.email  = $("#email").val();
               data.url  = $("#Url").val();
-              data.services   = $("#services").val();
+              data.Services   = $('#Services').val();
               data.map   = $("#Map").val();
               data.featureImg=filename;
                 let formData = new FormData();

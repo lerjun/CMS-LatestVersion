@@ -19,6 +19,9 @@ using ExcelDataReader;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.IO;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.WebRequestMethods;
 
 namespace AOPC.Controllers
 {
@@ -276,8 +279,8 @@ namespace AOPC.Controllers
                         //var id = table.Rows[0]["OfferingID"].ToString();
                         string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
                         string MyUserDetailsIWantToAdd = str + getextension;
-
-                        img += MyUserDetailsIWantToAdd + ";";
+                       
+                        img += "https://www.alfardanoysterprivilegeclub.com/assets/img/"+MyUserDetailsIWantToAdd + ";";
 
                         string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
                         FileInfo f1 = new FileInfo(file);
@@ -300,9 +303,14 @@ namespace AOPC.Controllers
                     }
              
                 }
-          
-                ctr++;
-                stream.Close();
+            
+                //stream.Close();
+            }
+            ctr++;
+            if (id != 0)
+            {
+               string query = $@"update  tbl_BusinessModel set Gallery ='" + img + "'  where  Id='" + id+ "' ";
+                db.AUIDB_WithParam(query);
             }
             if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });

@@ -40,9 +40,9 @@ namespace AuthSystem.Manager
 
        // cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Database=AOPCDB;User ID=test;Password=1234";
             //cnnstr = "Data Source=EC2AMAZ-AN808JE\\MSSQLSERVER01;Initial Catalog=AOPCDB;User ID=test;Password=1234";
-       cnnstr = "Data Source=LERJUN-PC;Initial Catalog=AOPCDB;User ID=test;Password=1234";
-     //  cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB_DEV;User ID=test;Password=1234";
-    // cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB;User ID=test;Password=1234";
+      // cnnstr = "Data Source=LERJUN-PC;Initial Catalog=AOPCDB;User ID=test;Password=1234";
+     // cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB_DEV;User ID=test;Password=1234";
+    cnnstr = "Data Source=EC2AMAZ-2PRMHQI;Initial Catalog=AOPCDB;User ID=test;Password=1234";
            // cnnstr = "Data Source=EC2AMAZ-AN808JE\\MSSQLSERVER01;Initial Catalog=AOPCDB;User ID=test;Password=1234"; // LIVE
             conn = new SqlConnection(cnnstr);
         }
@@ -163,6 +163,33 @@ namespace AuthSystem.Manager
             conn.Close();
             return ds;
         }
+        public string AUIDB_WithParam(string strSql, params IDataParameter[] sqlParams)
+        {
+            try
+            {
+                ConnectioStr();
+                SqlCommand cmd = new SqlCommand(strSql, conn);
 
+                conn.Open();
+
+                cmd.Connection = conn;
+                cmd.CommandTimeout = 0;
+                cmd.CommandType = CommandType.Text;
+                if (sqlParams != null)
+                {
+                    foreach (IDataParameter para in sqlParams)
+                    {
+                        cmd.Parameters.Add(para);
+                    }
+                }
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message + "!";
+            }
+        }
     }
 }
