@@ -22,6 +22,7 @@ using System.IO;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Net.WebRequestMethods;
+using static AOPC.Controllers.DashboardController;
 
 namespace AOPC.Controllers
 {
@@ -72,6 +73,14 @@ namespace AOPC.Controllers
             List<BusinessTypeVM> models = JsonConvert.DeserializeObject<List<BusinessTypeVM>>(response);
             return new(models);
         }
+        public class BusinessArray
+        {
+           
+            public string Id { get; set; }
+            public string Gallery { get; set; }
+
+        }
+     
         [HttpGet]
         public async Task<JsonResult> GetBusinessList()
         {
@@ -91,6 +100,33 @@ namespace AOPC.Controllers
         {
             public string Status { get; set; }
 
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> GetBusinessGalArray(Deletebloc data)
+        {
+
+            string result = "";
+            var list = new List<BusinessArray>();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiBusiness/BusinessArrray";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token_.GetValue());
+                StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    string res = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<BusinessArray>>(res);
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(list);
         }
         [HttpPost]
         public async Task<IActionResult> DeleteBusinessLocInfo(Deletebloc data)
@@ -237,9 +273,7 @@ namespace AOPC.Controllers
                 {
                     try
                     {
-                        //  string uploadsFolder = @"C:\\Files\\";
                         var uploadsFolder = DBConn.Path;
-                        //var filePath = Environment.WebRootPath + "\\uploads\\";
                         if (!Directory.Exists(uploadsFolder))
                         {
                             Directory.CreateDirectory(uploadsFolder);
@@ -278,11 +312,12 @@ namespace AOPC.Controllers
                         string str = table.Rows[0]["BusinessID"].ToString() + ext;
                         //var id = table.Rows[0]["OfferingID"].ToString();
                         string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
-                        string MyUserDetailsIWantToAdd = str + getextension;
-                       
-                        img += "https://www.alfardanoysterprivilegeclub.com/assets/img/"+MyUserDetailsIWantToAdd + ";";
+                        string MyUserDetailsIWantToAdd = str + ".jpg";
+    
 
-                        string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
+                        img += "https://www.alfardanoysterprivilegeclub.com/assets/img/"+ Request.Form.Files[i].FileName + ";";
+
+                        string file = Path.Combine(uploadsFolder, Request.Form.Files[i].FileName.Trim());
                         FileInfo f1 = new FileInfo(file);
                         if(f1.Exists)
                         {
@@ -303,11 +338,12 @@ namespace AOPC.Controllers
                     }
              
                 }
-            
-                //stream.Close();
+                ctr++;
+                stream.Close();
+                stream.Dispose();
             }
-            ctr++;
-            if (id != 0)
+        
+            if (id != 0 && Request.Form.Files.Count != 0)
             {
                string query = $@"update  tbl_BusinessModel set Gallery ='" + img + "'  where  Id='" + id+ "' ";
                 db.AUIDB_WithParam(query);

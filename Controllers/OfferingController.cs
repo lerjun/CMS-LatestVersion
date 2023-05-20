@@ -232,12 +232,15 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = status });
         }
-        public JsonResult UploadFile(List<IFormFile> postedFiles, int id)
+        public async Task<IActionResult> UploadFile(List<IFormFile> postedFiles, int id)
         {
+
             int i;
             var stream = (dynamic)null;
             string wwwPath = this.Environment.WebRootPath;
             string contentPath = this.Environment.ContentRootPath;
+            int ctr = 0;
+            string img = "";
             for (i = 0; i < Request.Form.Files.Count; i++)
             {
                 if (Request.Form.Files[i].Length > 0)
@@ -253,7 +256,7 @@ namespace AOPC.Controllers
                         }
                         List<string> uploadedFiles = new List<string>();
 
-                 
+
 
                         var image = System.Drawing.Image.FromStream(Request.Form.Files[i].OpenReadStream());
                         var resized = new Bitmap(image, new System.Drawing.Size(400, 400));
@@ -262,28 +265,47 @@ namespace AOPC.Controllers
                         resized.Save(imageStream, ImageFormat.Jpeg);
                         var imageBytes = imageStream;
                         string sql = "";
-                
+
                         if (id != 0)
                         {
-                            sql += $@"select Top(1) OfferingID from tbl_OfferingModel where StatusID =5 and id='"+ id + "' order by id desc  ";
+                            sql += $@"select Top(1) OfferingID from tbl_OfferingModel where StatusID =5 and id='" + id + "' order by id desc  ";
 
                         }
                         else
                         {
                             sql += $@"select Top(1) OfferingID from tbl_OfferingModel where StatusID =5  order by id desc  ";
                         }
-                     
+                        string ext = "";
+                        if (ctr == 0)
+                        {
+                            ext = "";
+                        }
+                        else
+                        {
+                            ext = "(" + ctr + ")";
+                        }
                         DataTable table = db.SelectDb(sql).Tables[0];
-                    
+                        string str = table.Rows[0]["OfferingID"].ToString() + ext;
                         //var id = table.Rows[0]["OfferingID"].ToString();
                         string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
-                        string MyUserDetailsIWantToAdd = table.Rows[0]["OfferingID"].ToString() + getextension;
+                        string MyUserDetailsIWantToAdd = str + getextension;
 
+                        img += "https://www.alfardanoysterprivilegeclub.com/assets/img/" + MyUserDetailsIWantToAdd + ";";
 
                         string file = Path.Combine(uploadsFolder, MyUserDetailsIWantToAdd);
-                        stream = new FileStream(file, FileMode.Create);
-                        Request.Form.Files[i].CopyToAsync(stream);
+                        FileInfo f1 = new FileInfo(file);
+                        if (f1.Exists)
+                        {
+                            f1.Delete();
+                        }
 
+                        stream = new FileStream(file, FileMode.Create);
+                        await Request.Form.Files[i].CopyToAsync(stream);
+                        //if (!System.IO.File.Exists(file))
+                        //{
+                        //    System.IO.FileStream f = System.IO.File.Create(file);
+                        //    f.Close();
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -291,19 +313,21 @@ namespace AOPC.Controllers
                     }
 
                 }
+
+                stream.Close();
+                stream.Dispose();
             }
-            stream.Close();
+          
             if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });
         }
         public IActionResult Index()
         {
-            string  token = HttpContext.Session.GetString("Bearer");
-          if (token == "")
+            string token = HttpContext.Session.GetString("Bearer");
+            if (token == null)
             {
                 return RedirectToAction("Index", "LogIn");
             }
-           
             return View();
         }
         

@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Business\_Index.cshtml" />
     <Content Remove="wwwroot\js\d3w0qyvn.rjn~" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Controllers\BusinessController.cs~RF3993a79.TMP" />
+    <None Remove="Controllers\j4ceuz2q.4y4~" />
     <None Remove="Manager\DBConn.cs~RF850d86f.TMP" />
     <None Remove="Views\Corporate\umrvfngk.03w~" />
     <None Remove="Views\Offering\mjp4ilcg.0ya~" />

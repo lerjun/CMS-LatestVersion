@@ -1,4 +1,4 @@
-﻿@{
+@{
   ViewData["Title"] = "User Maintenance";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -31,14 +31,14 @@
           <table class="myTableMedium" id="businessloc-table">
             <thead>
               <th>
-                  <button class="register" title="Add New" id="add-bloc"><i class="fas fa-map-marker-alt"></i>Add New</button>
+                  <button class="register" title="Add New" id="add-bloc"><i class="fas fa-map-marker-alt" ></i>Add New</button>
          
               </th>
               <th>Postal Code</th>
               <th>Country</th>
               <th>Date Created</th>
             </thead>
-            <tbody style="height: 130px;">
+            <tbody >
 
             </tbody>
           </table>
@@ -53,7 +53,6 @@
               <th>
                 <button class="register" title="Add New" id="add-business"><i class="fas fa-plus-circle"></i>Add New</button>
               </th>
-              <th>Description</th>
               <th>Location</th>
               <th>Address</th>
               <th>Contact No.</th>
@@ -385,7 +384,7 @@
   
                 
           //});
-            $("#fileUpload").on("change", function (e) {
+        $("#fileUpload").on("change", function (e) {
             var files = e.target.files,
             filesLength = files.length;
           for (var i = 0; i < filesLength; i++) {
@@ -395,18 +394,11 @@
               var file = e.target;
                      $('#upload-image-preview_multiple').append("<span class=\"pip\">" +
                 "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                            "<br/><span class=\"remove\">Remove</span>" +
+                            "<br/><span class=\"remove\">x</span>" +
                             "</span>");
               $(".remove").click(function(){
                 $(this).parent(".pip").remove();
               });
-          
-              // Old code here
-              /*$("<img></img>", {
-                class: "imageThumb",
-                src: e.target.result,
-                title: file.name + " | Click to remove"
-              }).insertAfter("#files").click(function(){$(this).remove();});*/
           
             });
             fileReader.readAsDataURL(f);
@@ -528,7 +520,6 @@
         $('#b-table').dataTable().fnAddData([
 
           '<td>' + tdbuttons + '</td>',
-          '<td><p>'+data[i].description+'</p></td>',
                       '<td><p>' + data[i].city + ', '+data[i].country +' </p></td>',
                       '<td><p>'+data[i].address+'</p></td>',
                       '<td><p>'+data[i].cno+'</p></td>',
@@ -559,10 +550,12 @@
                     $('#city').val(city);
                   document.getElementById("modal-name").innerHTML= 'Edit Business Location';
                   document.getElementById("btn-save").innerHTML= 'Update';
+
+
                   $('#blocmodal').modal('show');
           });
           $('#b-table').on('click', '.tbl-edit', function () {
-
+                    
                   i_id = $(this).data("id");
                   BusinessName  = $(this).data("hotelname");
                   TypeId  = $(this).data("btypeid");
@@ -601,8 +594,43 @@
                    img_edit= FeatureImg.split('/')[5];
                   document.getElementById("bmodal-name").innerHTML= 'Edit Business Location';
                   document.getElementById("btn-save").innerHTML= 'Update';
+
+                   var data = {};
+                    data.id = i_id;
+                        $.ajax({
+                            url: '/Business/GetBusinessGalArray',
+                            data: {
+                                data: data,
+                            },
+                            type: "POST",
+                            datatype: "json",
+                            success: function (data) {
+                                var container =  $('#upload-image-preview_multiple');     
+                                container.empty();
+                                for (var i = 0; i < data.length; i++) {
+                                    console.log( data[i].gallery)
+                                        var img = $('<img>').attr('src', data[i].gallery);
+                                        var span = $('<span>').attr('class', "remove");
+                                        var div = $('<span>').attr('class', "pip");
+                                        img.attr('height', '50px');
+                                        img.attr('width', '50px');
+                                        img.attr('id', data[i].id);
+                                        img.attr('class',"imageThumb");
+                                        span.text("x");
+                                        span.attr("onclick", "removegallerydata()");
+                                        div.append(img);
+                                        div.append(span);
+                                        container.append(div);
+                                }
+                    }
+            });
                   $('#bmodal').modal('show');
           });
+              
+    function removegallerydata(e)
+    {
+        $(this).parent().remove();
+    }
             $('#btype-table').on('click', '.tbl-edit', function () {
 
                     i_id = $(this).data("id");
@@ -1020,22 +1048,26 @@
                                     }).done(function (response) {
                                       console.log(response.stats);
                                       if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
-                                      {   
+                                      {       $.blockUI(reloadLoading);
                                           $.ajax({
                                             url: '/Business/UploadFile',
                                                 type: 'POST',
                                                 data: formData,
                                                 processData: false,
                                                 contentType: false,
+
                                                 success: function (result) {   
+                                                window.location.reload();
                                                 }
-                                            });
+                                               }).fail(function () {
+                                      alert("There was an Error When Loading Data...");
+                                  });
                                          
                                           notifyMsg('Success!', response.stats, 'green', 'fas fa-check');
                             
                                           $("#bh-close").click();
                                            ShowBusinessList();
-                                            //window.location.reload();
+                               
                                       }
                                       else
                                       {
