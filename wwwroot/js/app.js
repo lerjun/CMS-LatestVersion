@@ -647,7 +647,7 @@ async function ShowCorporateDetails() {
   $.blockUI(reloadLoading);
   setTimeout(function () {
     $.ajax({ url: "/Corporate/GetCorporateList", data: {}, type: "GET", datatype: "json" }).done(function (data) {
-        console.log(data);
+        //console.log(data);
       corptable.clear().draw();
       for (var i = 0; i < data.length; i++) {
         $("#_corporate-table tbody").append([

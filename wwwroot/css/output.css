@@ -912,13 +912,16 @@ input.input-search:focus-within .search-form {
   width: 70%;
   margin: 10px auto;
 }
+.dataTables_paginate span .paginate_button{ 
+    padding:10px !important;
+}
 
 .sidebar .sidenav {
-  height: 400px;
-  position: relative;
-  display: flex;
-  flex-direction: start;
-  width: 100%;
+    height: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: start;
+    width: 100%;
 }
 
 .sidebar .sidenav ul {
@@ -1120,7 +1123,7 @@ table.privTable tbody {
 
 table.myTableMedium tbody tr {
     transition: all 0.5s ease-in-out;
-    height: 50px;
+    height: 50px !important;
 }
 
 table.privTable tbody tr {
@@ -1139,19 +1142,39 @@ table.myTableMedium td {
   font-size: clamp(0.5rem, 2vw, 0.7rem);
   color: var(--dark);
 }
-
+    table.myTableMedium td:nth-child(2) {
+        max-width: 100px;
+    }
+table.myTableMedium td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 table.privTable td {
   font-size: clamp(0.5rem, 2vw, 0.7rem);
   color: var(--dark);
 }
 
 table.myTableMedium tbody tr td:nth-child(1) {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    text-overflow: ellipsis;
 }
-
+table.myTableMedium tbody tr td:nth-child(1) p:nth-child(2) {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    table.myTableMedium tbody tr td:nth-child(1) p:nth-child(1) {
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
 table.privTable tbody tr td:nth-child(1) {
   display: flex;
   justify-content: start;
@@ -1182,6 +1205,14 @@ table.myTableMedium tbody tr td:nth-child(1) .actions {
   height: 0;
   transition: all 0.3s ease-in;
   display: flex;
+}
+table.myTableMedium tbody tr td:nth-child(1) .actions_  {
+    font-size: clamp(0.3rem, 2vw, 0.5rem);
+    /* color: var(--shade); */
+    opacity: 0;
+    height: 0;
+    transition: all 0.3s ease-in;
+    display: flex;
 }
 
 table.privTable tbody tr td:nth-child(1) .actions {
@@ -1229,6 +1260,9 @@ table.privTable tbody tr:hover {
 }
 
 table.myTableMedium tbody tr:hover td:nth-child(1) .actions {
+  opacity: 1;
+  height: 20px;
+}table.myTableMedium tbody tr:hover td:nth-child(1) .actions_ {
   opacity: 1;
   height: 20px;
 }
@@ -2904,6 +2938,11 @@ body {
   flex-direction: column;
   width: 100%;
 }
+.input-container-whole_ {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 .input-container-halfs {
   display: flex;
@@ -2945,6 +2984,14 @@ label {
   justify-content: end;
   align-items: center;
   gap: 20px;
+}
+.actions_ {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-direction: row-reverse;
+    align-items: center;
 }
 
 .actionss {
@@ -9610,4 +9657,118 @@ table.dataTable.dtr-inline.collapsed.table-sm>tbody>tr>th:first-child:before {
 body {
   background-color: var(--light);
   font-family: "Montserrat-Reg";
+}
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid grey;
+    /*width: fit-content;*/
+    width:100%;
+    border-radius:10px;
+    padding: 10px;
+}
+.TermsAndConditions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid grey;
+    /*width: fit-content;*/
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.textCont {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.parentTextContainer {
+    display: flex;
+    gap: 5px;
+}
+
+    .parentTextContainer textarea {
+        height: 40px;
+        font-size: 1rem;
+        padding: 0 10px;
+        border: 0;
+        box-shadow: inset 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        width:100%;
+    }
+
+    .parentTextContainer .btnAddParentText {
+        border: none;
+        background-color: #c89328;
+        color: white;
+        height: 40px;
+        width: 40px;
+        border-radius: 10px;
+        transition: all ease-in;
+    }
+
+        .parentTextContainer .btnAddParentText:hover {
+            border: 2px solid #c89328;
+            color: #c89328;
+            background-color: white;
+        }
+
+.childTextContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    gap: 10px;
+}
+
+.childTextItem {
+    display: flex;
+    gap: 10px;
+}
+
+.childTextContainer textarea {
+    height: 40px;
+    font-size: 1rem;
+    padding: 0 10px;
+    border: 0;
+    box-shadow: inset 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width:100%;
+}
+
+.childTextContainer .btnAddChildText {
+    border: none;
+    background-color: #c89328;
+    color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+}
+
+    .childTextContainer .btnAddChildText:hover {
+        border: 2px solid #c89328;
+        color: #c89328;
+        background-color: white;
+    }
+
+.btnRemoveParentText {
+    border: none;
+    border: 2px solid #c89328;
+    color: #c89328;
+    background-color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+}
+
+.btnRemoveChildText {
+    border: none;
+    border: 2px solid #c89328;
+    color: #c89328;
+    background-color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
 }

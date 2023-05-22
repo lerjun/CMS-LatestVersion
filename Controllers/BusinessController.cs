@@ -236,7 +236,7 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = _global.Status });
         }
-         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> SaveBusinessType(BusinessTypeModel data)
         {
             try
@@ -257,9 +257,7 @@ namespace AOPC.Controllers
             }
             return Json(new { stats = _global.Status });
         }
- 
-
-        public async Task<IActionResult> UploadFile(List<IFormFile> postedFiles, int id)
+        public async Task<IActionResult> UploadFile(List<IFormFile> postedFiles)
         {
             int i;
             var stream = (dynamic)null;
@@ -290,39 +288,19 @@ namespace AOPC.Controllers
                         var imageBytes = imageStream;
                         string sql = "";
 
-                        if (id != 0)
-                        {
-                            sql += $@"select Top(1) BusinessID from tbl_BusinessModel where Active =5 and id='" + id + "' order by id desc  ";
-
-                        }
-                        else
-                        {
-                            sql += $@"select Top(1) BusinessID from tbl_BusinessModel where Active =5   order by id desc   ";
-                        }
-                        string ext = "";
-                        if(ctr == 0)
-                        {
-                            ext ="";
-                        }
-                        else
-                        {
-                            ext = "(" + ctr + ")";
-                        }
-                        DataTable table = db.SelectDb(sql).Tables[0];
-                        string str = table.Rows[0]["BusinessID"].ToString() + ext;
                         //var id = table.Rows[0]["OfferingID"].ToString();
                         string getextension = Path.GetExtension(Request.Form.Files[i].FileName);
-                        string MyUserDetailsIWantToAdd = str + ".jpg";
+                        //string MyUserDetailsIWantToAdd = str + ".jpg";
     
 
                         img += "https://www.alfardanoysterprivilegeclub.com/assets/img/"+ Request.Form.Files[i].FileName + ";";
 
                         string file = Path.Combine(uploadsFolder, Request.Form.Files[i].FileName.Trim());
                         FileInfo f1 = new FileInfo(file);
-                        if(f1.Exists)
-                        {
-                            f1.Delete();
-                        }
+                        //if(f1.Exists)
+                        //{
+                        //    f1.Delete();
+                        //}
 
                         stream = new FileStream(file, FileMode.Create);
                         await  Request.Form.Files[i].CopyToAsync(stream);
@@ -343,11 +321,11 @@ namespace AOPC.Controllers
                 stream.Dispose();
             }
         
-            if (id != 0 && Request.Form.Files.Count != 0)
-            {
-               string query = $@"update  tbl_BusinessModel set Gallery ='" + img + "'  where  Id='" + id+ "' ";
-                db.AUIDB_WithParam(query);
-            }
+            //if (id != 0 && Request.Form.Files.Count != 0)
+            //{
+            //   string query = $@"update  tbl_BusinessModel set Gallery ='" + img + "'  where  Id='" + id+ "' ";
+            //    db.AUIDB_WithParam(query);
+            //}
             if (Request.Form.Files.Count == 0) { status = "Error"; }
             return Json(new { stats = status });
         }

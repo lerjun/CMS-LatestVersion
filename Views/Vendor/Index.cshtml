@@ -155,7 +155,24 @@
                 name="uploadlogo" accept="image/*"
               />
             </div>
-          </div>  
+          </div>
+             <div class="mod-form-row">
+              <div class="input-container-whole">
+                <div class="input-gallery" id="upload-image-preview_multiple">
+               </div>
+              <div style="padding:10px">
+                                <div class="input-container-whole_">
+                    <label for="fileUpload">Upload Images</label>
+                   <input type="file"
+                   value=""
+                   class="mod-input img-choose"
+                   id="fileUpload" 
+                   accept="image/*"
+                  name="mul_upload"  multiple/>
+                 </div>
+                 </div>
+             </div>
+         </div>
            <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="employeeID">Vendor Name <span class="req" >*</span></label>
@@ -280,11 +297,95 @@
     @section Scripts{
     <script>
       //how to create a pdf file viewer jquery?
-        var i_id = "";
-        var img_edit="";      
-        var img_logo_edit="";      
-        $(document).ready(function () {
 
+        var i_id = "";
+        var img_edit = "";
+        var img_multi = "";
+        $(document).ready(function () {
+            $("input[name=uploadimg]").change(function () {
+
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var img = $('<img>').attr('src', e.target.result);
+                        img.attr('height', '140px');
+                        img.attr('width', '230px');
+                        $('.upload-image-preview').html(img);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+            //$("input[name=mul_upload]").change(function (e) {
+            //      var total_file = document.getElementById("fileUpload").files.length;
+            //      var files = e.target.files,
+            //          filesLength = files.length;
+            //      for (var i = 0; i < filesLength; i++) {
+            //          var f = files[i]
+            //          var fileReader = new FileReader();
+            //          fileReader.onload = (function (e) {
+            //              var file = e.target;
+            //              $('#upload-image-preview_multiple').append("<img class=galley-imgs src=" + e.target.result + " title=" + file.name + "/>");
+            //          });
+            //          fileReader.readAsDataURL(f);
+            //      }
+
+
+            //});
+
+            function GetImageGallery() {
+                IdList = [];
+                $('#upload-image-preview_multiple').each(function (id, item) {
+                    var id = $(item).data('s');
+                    IdList.push({
+                        id: id
+                    });
+                });
+                return IdList;
+            }
+            $("#fileUpload").on("change", function (e) {
+                var files = e.target.files,
+                    filesLength = files.length;
+                var container = $('#upload-image-preview_multiple');
+                var span = $('<span>').attr('class', "remove");
+                var div = $('<span>').attr('class', "pip");
+                for (var i = 0; i < filesLength; i++) {
+                    var f = files[i]
+
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function (e) {
+                        var file = e.target;
+
+                        var img = $('<img>').attr('src', e.target.result);
+
+                        //console.log(f);
+
+
+                        img.attr('height', '50px');
+                        img.attr('width', '50px');
+                        img.attr('id', "");
+                        img.attr('class', "imageThumb");
+                        span.text("x");
+                        span.attr("onclick", "removegallerydata()");
+                        div.append(img);
+                        div.append(imgs);
+                        div.append(span);
+                        container.append(div);
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                        });
+
+                    });
+                    fileReader.readAsDataURL(f);
+                }
+
+                for (var x = 0; x < files.length; x++) {
+                    var imgs = $('<img>').attr('name', "https://www.alfardanoysterprivilegeclub.com/assets/img/" + files[x].name);
+                    div.append(imgs);
+                    //console.log(files[x].name);
+                }
+
+            });
 
                 vbtable = $('#vendor-table').DataTable({
                      "columnDefs": [
@@ -358,7 +459,7 @@
             ShowVendorDetails();
             ShowBusinessAddress();
              ShowOptBtype();
-        });
+        }); 
         $('#vendor-table').on('click', '.tbl-sendemail', function () {
             offerid = $(this).data("id");
             console.log(offerid);
@@ -603,6 +704,47 @@
               img_logo_edit= logo.split('/')[5];
               console.log(img_edit);
             document.getElementById("btn-vendor").innerHTML = 'Update';
+            //let gal_img = gallery;
+            //const myarray = gal_img.split(";");
+            //for (var i = 0; i < myarray.length; i++) {
+            //    //console.log(myarray[i].split('/')[5]);
+            //}
+            var data = {};
+            data.id = i_id;
+            $.ajax({
+                url: '/Vendor/GetVendorGallery',
+                data: {
+                    data: data,
+                },
+                type: "POST",
+                datatype: "json",
+                success: function (data) {
+                    var container = $('#upload-image-preview_multiple');
+                    container.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        //console.log( data[i].gallery)
+                        var img = $('<img>').attr('src', data[i].gallery);
+                        var imgs = $('<img>').attr('name', data[i].gallery);
+                        var span = $('<span>').attr('class', "remove");
+                        var div = $('<span>').attr('class', "pip");
+                        img.attr('height', '50px');
+                        img.attr('width', '50px');
+                        img.attr('id', data[i].id);
+                        img.attr('class', "imageThumb");
+                        span.text("x");
+                        span.attr("onclick", "removegallerydata()");
+                        div.append(img);
+                        div.append(imgs);
+                        div.append(span);
+                        container.append(div);
+
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                        });
+
+                    }
+                }
+            });
             $('#vendormodal').modal('show');
             $(".alert-warning").hide();
 
@@ -647,6 +789,11 @@
         {
          filename = img_edit;
         }
+            var image = "";
+            $('#upload-image-preview_multiple').find('img').each(function (index, value) {
+                image += this.name + "%";
+            });
+
         logofilename=$("#logo-img").val().replace(/.*(\/|\\)/, ''); 
         console.log(logofilename);
         if(logofilename =="" || logofilename == null)
@@ -661,6 +808,7 @@
       data.WebsiteUrl = $("#wURL").val();
       data.Cno = $("#Cno").val();
       data.Email = $("#email").val();
+            data.gallery = image;
       data.Address = $("#address").val();
       data.BusinessLocationID = $("#b-option").val();
       data.BusinessTypeId = $("#btype-option").val();
@@ -701,7 +849,7 @@
                                       if(response.stats=="Inserted Successfully" || response.stats=="Updated Successfully")
                                       {
                                             $.ajax({
-                                              url: '/Vendor/UploadFile',
+                                    url: '/Business/UploadFile',
                                               type: 'POST',
                                               data: formData,
                                               processData: false,

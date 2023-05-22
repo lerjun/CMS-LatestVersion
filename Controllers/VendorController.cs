@@ -23,6 +23,7 @@ using System.Drawing;
 using AuthSystem.Manager;
 using _CMS.Manager;
 using System.Drawing.Imaging;
+using static AOPC.Controllers.BusinessController;
 
 namespace AOPC.Controllers
 {
@@ -66,6 +67,37 @@ namespace AOPC.Controllers
             string response = await client.GetStringAsync(url);
             List<VendorVM> models = JsonConvert.DeserializeObject<List<VendorVM>>(response);
             return new(models);
+        }
+        public class Deletebloc
+        {
+
+            public int Id { get; set; }
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetVendorGallery(Deletebloc data)
+        {
+
+            string result = "";
+            var list = new List<BusinessArray>();
+            try
+            {
+                HttpClient client = new HttpClient();
+                var url = DBConn.HttpString + "/api/ApiVendor/VendorGallery";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token_.GetValue());
+                StringContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                using (var response = await client.PostAsync(url, content))
+                {
+                    string res = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<BusinessArray>>(res);
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                string status = ex.GetBaseException().ToString();
+            }
+            return Json(list);
         }
         [HttpPost]
         public async Task<IActionResult> SaveVendorInfo(VendorModel data)

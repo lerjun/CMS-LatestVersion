@@ -14,7 +14,7 @@
               <th>
                 <button class="register" title="Add New" id="btypeadd-btn"><i class="fas fa-briefcase"></i>Add New</button>
               </th>
-              <th>Description</th>
+ 
               <th>Promo</th>
               <th>Type</th>
               <th>Date Created</th>
@@ -257,7 +257,8 @@
                  </div>
           </div>
  
-          </div> <div class="mod-form-row">
+          </div> 
+          <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="employeeID">Hotel Name <span class="req" >*</span></label>
              <input type="text" id="hotelname" class="mod-input" required />
@@ -352,7 +353,8 @@
       <script >
 
         var i_id = "";
-        var img_edit="";     
+        var img_edit="";    
+         var img_multi="";
           $(document).ready(function () {
               $("input[name=uploadimg]").change(function () {
           
@@ -384,18 +386,45 @@
   
                 
           //});
+
+          function GetImageGallery() {
+            IdList = [];
+                $('#upload-image-preview_multiple').each(function (id, item) {
+                var id = $(item).data('s');
+                IdList.push({
+                    id: id
+                });
+            });
+            return IdList;
+        }
         $("#fileUpload").on("change", function (e) {
             var files = e.target.files,
             filesLength = files.length;
+            var container = $('#upload-image-preview_multiple');
+            var span = $('<span>').attr('class', "remove");
+            var div = $('<span>').attr('class', "pip");
           for (var i = 0; i < filesLength; i++) {
             var f = files[i]
+           
             var fileReader = new FileReader();
             fileReader.onload = (function(e) {
               var file = e.target;
-                     $('#upload-image-preview_multiple').append("<span class=\"pip\">" +
-                "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                            "<br/><span class=\"remove\">x</span>" +
-                            "</span>");
+                    
+                        var img = $('<img>').attr('src', e.target.result);
+                 
+                        console.log(f);
+              
+      
+                        img.attr('height', '50px');
+                        img.attr('width', '50px');
+                        img.attr('id', "");
+                        img.attr('class', "imageThumb");
+                        span.text("x");
+                        span.attr("onclick", "removegallerydata()");
+                        div.append(img);
+                        div.append(imgs);
+                        div.append(span);
+                        container.append(div);
               $(".remove").click(function(){
                 $(this).parent(".pip").remove();
               });
@@ -403,7 +432,13 @@
             });
             fileReader.readAsDataURL(f);
           }
-          console.log(files);
+
+          for(var x=0; x<files.length;x++)
+          {          var imgs = $('<img>').attr('name',"https://www.alfardanoysterprivilegeclub.com/assets/img/"+files[x].name);
+            div.append(imgs);
+              console.log(files[x].name);
+          }
+
         });
           dbtable = $('#businessloc-table').DataTable({
                          
@@ -496,6 +531,7 @@
                           + '" data-url="' + data[i].url
                           + '" data-map="' + data[i].map
                           + '" data-fimg="' + data[i].featureImg
+                            + '" data-gallery="' + data[i].gallery
                           + '" data-services="' + data[i].services + '">'+
           '<svg width="11" height="11" viewBox="0 0 11 11" fill="none"xmlns="http://www.w3.org/2000/svg">' +
           '<path d="M5.02558 1.92456H1.89457C1.65732 1.92456 1.42978 2.0164 1.26201 2.17986C1.09425 2.34333 1 2.56504 1 2.79621V8.89779C1 9.12896 1.09425 9.35067 1.26201 9.51414C1.42978 9.6776 1.65732 9.76944 1.89457 9.76944H8.15659C8.39385 9.76944 8.62139 9.6776 8.78915 9.51414C8.95692 9.35067 9.05117 9.12896 9.05117 8.89779V5.847"' +
@@ -568,7 +604,8 @@
                   Services  = $(this).data("services");
                   FeatureImg   = $(this).data("fimg");
                   Map   = $(this).data("map");
-                  console.log(Services);
+                  gallery =  $(this).data("gallery");
+            //console.log(gallery);
 
                   $('#hotelname').val(BusinessName);
                   $('#btype-option').val(TypeId);
@@ -594,7 +631,11 @@
                    img_edit= FeatureImg.split('/')[5];
                   document.getElementById("bmodal-name").innerHTML= 'Edit Business Location';
                   document.getElementById("btn-save").innerHTML= 'Update';
-
+                  let gal_img = gallery;
+                  const myarray = gal_img.split(";");
+                  for (var i = 0; i < myarray.length; i++) {
+                    //console.log(myarray[i].split('/')[5]);
+                   }
                    var data = {};
                     data.id = i_id;
                         $.ajax({
@@ -608,8 +649,9 @@
                                 var container =  $('#upload-image-preview_multiple');     
                                 container.empty();
                                 for (var i = 0; i < data.length; i++) {
-                                    console.log( data[i].gallery)
+                                    //console.log( data[i].gallery)
                                         var img = $('<img>').attr('src', data[i].gallery);
+                                        var imgs = $('<img>').attr('name', data[i].gallery);
                                         var span = $('<span>').attr('class', "remove");
                                         var div = $('<span>').attr('class', "pip");
                                         img.attr('height', '50px');
@@ -619,9 +661,15 @@
                                         span.text("x");
                                         span.attr("onclick", "removegallerydata()");
                                         div.append(img);
+                                        div.append(imgs);
                                         div.append(span);
                                         container.append(div);
-                                }
+
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                        });
+
+                    }
                     }
             });
                   $('#bmodal').modal('show');
@@ -1002,6 +1050,12 @@
               {
               filename = img_edit;
               }
+              var image="";
+            $('#upload-image-preview_multiple').find('img').each(function (index, value) {
+                 image += this.name +"%";
+               });
+
+            console.log(image);
                 var input = document.getElementById('fileUpload');
               var data = {};
               data.id = i_id;
@@ -1011,6 +1065,7 @@
               data.description  = $("#descrip").val();
               data.address  = $("#Address").val();
               data.Cno  = $("#cno").val();
+              data.gallery= image;
               data.email  = $("#email").val();
               data.url  = $("#Url").val();
               data.Services   = $('#Services').val();
@@ -1024,7 +1079,6 @@
                 formData.append("file", m_files[i]); //loop through all files and append
             }
             formData.append('file', files[0]);
-            formData.append('id', i_id);
             var fileUpload = $("#upload-img").get(0);
             iziToast.question({
                             timeout: 20000,
@@ -1057,7 +1111,7 @@
                                                 contentType: false,
 
                                                 success: function (result) {   
-                                                window.location.reload();
+                                              
                                                 }
                                                }).fail(function () {
                                       alert("There was an Error When Loading Data...");

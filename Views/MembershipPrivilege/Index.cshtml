@@ -165,7 +165,7 @@
                 </div>
                 <div class="input-container-whole">
                   <label for="fname">Validity </label>
-                  <input type="date" id="validity" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input"   />
+                  <input type="date" id="validity" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="mod-input"   />
                 </div>
               
               </div>
@@ -187,19 +187,60 @@
               </div>
               <div class="mod-form-row">
                 <div class="input-container-whole">
-                  <label for="tnc">Terms and Conditions <span class="req" >*</span></label>
+                  <label for="txtCont1">Terms and Conditions <span class="req">*</span></label>
+                  @*<label for="tnc">Terms and Conditions <span class="req" >*</span></label>*@
                   @* <input type="text" value="" id="tnc" class="mod-input" />  *@
-                  <textarea id="tnc" name="Terms and Condition" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+                  @*<textarea id="tnc" name="Terms and Condition" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>*@
+                  <div class="TermsAndConditions">
+                      <div id="txtCont1" class="textCont">
+                        <div id="parentTextContainer" class="parentTextContainer">
+                          ●<textarea></textarea>
+                                        <button onclick="addTermsParent()" class="btnAddParentText">+</button>
+                        </div>
+                        <div class="childTextContainer">
+                          <div id="childTextContainer1" class="childTextItem">
+                            ○<textarea></textarea><button onclick="addChildParentText('1')" class="btnAddChildText">
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+
                 </div>
           </div>
-           <div class="mod-form-row">
+                    <div class="mod-form-row">
+                        <div class="input-container-whole">
+                    <label for="mechanics">Mechanics <span class="req" >*</span></label>
+                        @*<label for="tnc">Terms and Conditions <span class="req" >*</span></label>*@
+                        @* <input type="text" value="" id="tnc" class="mod-input" />  *@
+                        @*<textarea id="tnc" name="Terms and Condition" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>*@
+                            <div class="textContainer">
+                                <div id="txtCont2" class="textCont">
+                                    <div id="parentTextContainer" class="parentTextContainer">
+                                        ●<textarea class="captureInput"></textarea>
+                                        <button onclick="addParentText()" class="btnAddParentText">+</button>
+                                    </div>
+                                    <div class="childTextContainer">
+                                        <div id="childTextContainer1" class="childTextItem">
+                                            ○<textarea></textarea><button onclick="addChildParentText('1')" class="btnAddChildText">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+           @*<div class="mod-form-row">*@
             
-            <div class="input-container-whole">
-              <label for="mechanics">Mechanics <span class="req" >*</span></label>
+            @*<div class="input-container-whole">*@
+              @*<label for="mechanics">Mechanics <span class="req" >*</span></label>*@
               @* <input type="text" value="" id="mechanics" class="mod-input" required/> *@
-              <textarea id="mechanics" name="mechanics" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
-            </div>
-          </div>
+              @*<textarea id="mechanics" name="mechanics" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>*@
+            @*</div>*@
+          @*</div>*@
           <div class="actions" style="align-items: center;">
             @* <div class="actionss">
              <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button>
@@ -247,11 +288,11 @@
               <div class="mod-form-row">
                   <div class="input-container-whole">
                   <label for="fname">Date Used</label>
-                  <input type="date" id="dateuse" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input" />
+                  <input type="date" id="dateuse" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="mod-input" />
                 </div>
                 <div class="input-container-whole">
                   <label for="fname">Date Ended</label>
-                  <input type="date" id="dateended" value="@DateTime.Now.ToString("MM-dd-yyyy")" class="mod-input"   />
+                            <input type="date" id="dateended" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="mod-input" />
                 </div>
               </div>
               <div class="mod-form-row">
@@ -445,6 +486,56 @@
     $("#checkers").html("Check All");
   }
 });
+
+            var textContainer = $(".textContainer");
+            var TermsAndConditions = $(".TermsAndConditions");
+            var textContainerCounter = $(".textContainer .textCont").length;
+            var textChildContainer = $(".childTextContainer");
+
+              function addTermsParent() {
+                TermsAndConditions.append(`<div id="txtCont${textContainerCounter + 1
+                    }" class="textCont"><div id="parentTextContainer" class="parentTextContainer">
+                                    ●<textarea></textarea>  <button onclick="removeParentTextContainer(${textContainerCounter + 1
+                    })" class="btnRemoveParentText">-</button>
+                  </div>
+                  <div class="childTextContainer" >
+                    <div id="childTextContainer${textContainerCounter + 1
+                    }" class="childTextItem">
+                                    ○<textarea></textarea><button onclick="addChildParentText('${textContainerCounter + 1
+                    }')" class="btnAddChildText" >+</button>
+                    </div></div></div>`);
+                textContainerCounter = textContainerCounter + 1;
+            }
+            function addParentText() {
+                textContainer.append(`<div id="txtCont${textContainerCounter + 1
+                    }" class="textCont"><div id="parentTextContainer" class="parentTextContainer">
+                                    ●<textarea></textarea>  <button onclick="removeParentTextContainer(${textContainerCounter + 1
+                    })" class="btnRemoveParentText">-</button>
+                  </div>
+                  <div class="childTextContainer" >
+                    <div id="childTextContainer${textContainerCounter + 1
+                    }" class="childTextItem">
+                                    ○<textarea></textarea><button onclick="addChildParentText('${textContainerCounter + 1
+                    }')" class="btnAddChildText" >+</button>
+                    </div></div></div>`);
+                textContainerCounter = textContainerCounter + 1;
+            }
+            function addChildParentText(count) {
+                console.log("#textCont" + count);
+                $("#txtCont" + count + " .childTextContainer")
+                    .append(` <div id="childTextContainer${count + 1
+                        }" class="childTextItem">
+                        ○<textarea></textarea>
+                        <button onclick="removeChildTextContainer('${count + 1
+                        }')" class="btnRemoveChildText">-</button>
+                  </div>`);
+            }
+            function removeParentTextContainer(count) {
+                $("#txtCont" + count).remove();
+            }
+            function removeChildTextContainer(count) {
+                $("#childTextContainer" + count).remove();
+            }
 $("#checkAll").click(function () {
   $("input:checkbox").not(this).prop("checked", this.checked);
 });
@@ -520,7 +611,21 @@ $("#checkAll2").click(function () {
                     {
                       filename = img_edit;
                     }
-             
+                    var image = "";
+                    //$('.TermsAndConditions').find('input:text, input:password, input:file, select, textarea').each(function () {
+                    //   image += $(this).val();
+                    //});
+
+                    $('.TermsAndConditions').find('input:text, input:password, input:file, select, textarea').each(function (index, value) {
+                        image += $(this).val()+"%";
+                    });
+                    console.log(image);
+                  //var inputValues = $('#TermsAndConditions :textarea').map(function() {
+                  //      return $(this).val();
+
+                        
+                  //  })
+                  //  console.log(inputValues);
                       var data={};
                       data.id = i_id;
                       data.Title =$('#title').val();
@@ -542,20 +647,13 @@ $("#checkAll2").click(function () {
                       formData.append('file', files[0]);
                       var fileUpload = $("#upload-img").get(0);
                       console.log(formData);
-                       if ($('#title').val() == '' || $('#mechanics').val() == '' ||  $('#NoExpiry').prop('selectedIndex') == 0  
-                    ||   $('#isVIP').prop('selectedIndex') == 0 ||   $('#btype-option').prop('selectedIndex') == 0  ) 
-                    {
-                        notifyMsg('Warning!', 'Please fill up all required fields.', 'yellow', 'fas fa-exclamation-triangle');
-                        
-                    }
-                    else
-                    {
+           
                           if (files.length > 0) {
                           if (files[0].size > 500000) {
                               notifyMsg('Warning!', 'Uploaded image reached the maximum file size. Image size should be maximum of 500 KB.', 'yellow', 'fas fa-exclamation-triangle');
                               return false;
                           }
-                    }
+                    
                      iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -856,8 +954,8 @@ $('#privilege-table').on('click', '.tbl-edit', function () {
     vendorID  = $(this).data("vid");
     imgUrl  = $(this).data("imgfile");
     var date = new Date(validity); 
-    var formattedDate = date.toISOString().substring(0, 10); 
-    console.log(imgUrl);
+    var formattedDate = validity.replace(/-/g,"/");
+                console.log(formattedDate);
                       if (imgUrl != null) {
                       var img = $('<img>').attr('src', imgUrl);
                       img.attr('height', '120px');
