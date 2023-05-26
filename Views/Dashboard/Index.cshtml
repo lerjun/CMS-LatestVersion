@@ -223,6 +223,10 @@
                         <option value="0" style="color:gray" hidden>Select Category</option>
                         <option value="Food & Beverage">Restaurant</option>
                         <option value="Hotel">Hotel</option>
+                        <option value="Health">Health</option>
+                        <option value="Shops & Services">Shops & Services</option>
+                        <option value="News & Services">News</option>
+                        <option value="Access to co-working spaces">Access to co-working spaces</option>
                     </select>
                     <select id="cta-day" class="option-filters">
                         <option value="0" style="color:gray" hidden>Filter Date</option>
@@ -249,6 +253,7 @@
                     
                 </tbody>
             </table>
+           
             <a class="btn-view-more" id="vm_action">View More</a>
         </div>
         <div class="news-feed">
@@ -283,6 +288,7 @@
                 </div>
                 <div style="margin:10px">
 
+                <button type="button" class="btn btn-warning btn-nfc" data-toggle="tooltip" data-placement="bottom" title="Print Entire Data" style="width:100%"><i class="fas fa-file-excel"></i>Export excel file</button>
 
                 <table class="myTableMedium" id="n_clicktbl">
                     <thead>
@@ -308,7 +314,7 @@
                 <button type="button" id="h-close" class="close" data-dismiss="modal" aria-hidden="false">x</button>
             </div>
             <div style="margin:10px">
-
+                <button type="button" class="btn btn-warning btn-print" data-toggle="tooltip" data-placement="bottom" title="Print Entire Data" style="width:100%"><i class="fas fa-file-excel"></i>Export excel file</button>
 
                 <table class="myTableMedium" id="n_call" >
                     <thead>
@@ -341,6 +347,7 @@
             </div>
             <div style="margin:10px">
 
+                <button type="button" class="btn btn-warning btn-msc" data-toggle="tooltip" data-placement="bottom" title="Print Entire Data" style="width:100%"><i class="fas fa-file-excel"></i>Export excel file</button>
 
                 <table class="myTableMedium" id="mcs_call">
                     <thead>
@@ -370,6 +377,7 @@
             </div>
             <div style="margin:10px">
 
+                <button type="button" class="btn btn-warning btn-mch" data-toggle="tooltip" data-placement="bottom" title="Print Entire Data" style="width:100%"><i class="fas fa-file-excel"></i>Export excel file</button>
 
                 <table class="myTableMedium" id="mch_call">
                     <thead>
@@ -400,6 +408,7 @@
             </div>
             <div style="margin:10px">
 
+                  <button type="button" class="btn btn-warning btn-mcr" data-toggle="tooltip" data-placement="bottom" title="Print Entire Data" style="width:100%"><i class="fas fa-file-excel"></i>Export excel file</button>
 
                 <table class="myTableMedium" id="mcr_call">
                     <thead>
@@ -495,6 +504,7 @@
                 "paging": true,
                 "aLengthMenu": [10],
                 "searching": false
+
                 , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               });
@@ -516,6 +526,9 @@
                     "bAutoWidth": false,
                     "bLengthChange": false,
                     "searching": false,
+                            "paging": true,
+                      "aLengthMenu": [10],
+                "searching": false,
                     "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
 
               });   
@@ -604,6 +617,27 @@
             ShowGetMostClickRestaurant();
       
         });
+
+        $('.btn-print').click(function () {
+            location.replace("/Dashboard/DownloadCalltoActionExcel");
+
+        });  
+        $('.btn-msc').click(function () {
+            location.replace("/Dashboard/DownloadMCS");
+
+        });  
+        $('.btn-mch').click(function () {
+            location.replace("/Dashboard/DownloadMCH");
+
+        });  
+        $('.btn-mcr').click(function () {
+            location.replace("/Dashboard/DownloadMCR");
+
+        });    
+        $('.btn-nfc').click(function () {
+            location.replace("/Dashboard/DownloadMSC");
+
+        });
         $('#vm_feedclicks').click(function () {
             GetClickCountAll();
             $('#clickModal').modal('show');
@@ -613,77 +647,94 @@
             $('#CallModal').modal('show');
         });
         $('#mcs_vm').click(function () {
-             var data = {};
-            data.day = $('#mcs').val();
-            $.ajax({
-                url: '/Dashboard/PostMostCickStore',
-                data: {
-                    data: data,
-                },
-                type: "POST",
-                datatype: "json",
-                success: function (data) {
-                    mcstable.clear().draw();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#mcs_call").dataTable().fnAddData([
-                            "<td><p></p><p>" + data[i].business + "</p></td>",
-                            "<td><p>" + data[i].count + "</p></td>",
-                            "<td><p>" + data[i].total + "</p></td>",
+         
+              $.blockUI(reloadLoading);
+                setTimeout(function () {
+                    $.ajax(
+                        {
+                            url: "/Dashboard/GetMostClickStore",
+                            data: {
 
-                        ]);
-                    }
-                }
-            });
+                            },
+                            type: "GET",
+                            datatype: "json"
+                        }).done(function (data) {
+                        
+                            mcstable.clear().draw();
+                            for (var i = 0; i < data.length; i++) {
+                                $("#mcs_call").dataTable().fnAddData([
+                                    "<td><p></p><p>" + data[i].business + "</p></td>",
+                                    "<td><p>" + data[i].count + "</p></td>",
+                                    "<td><p>" + data[i].total + "</p></td>",
+
+                                ]);
+                            }
+                            $.unblockUI();
+                        }).fail(function () {
+                            alert("There was an Error When Loading Data...");
+                        });
+                }, 100);
             $('#MostClickStoreModal').modal('show');
         });
         $('#mch_vm').click(function () {
-            var data = {};
-            data.day = $('#mch').val();
-            $.ajax({
-                url: '/Dashboard/PostMostClickedHospitality',
-                data: {
-                    data: data,
-                },
-                type: "POST",
-                datatype: "json",
-                success: function (data) {
-                    mchtable.clear().draw();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#mch_call").dataTable().fnAddData([
-                            "<td><p></p><p>" + data[i].business + "</p></td>",
-                            "<td><p>" + data[i].count + "</p></td>",
-                            "<td><p>" + data[i].total + "</p></td>",
+         
+            $.blockUI(reloadLoading);
+                setTimeout(function () {
+                    $.ajax(
+                        {
+                            url: "/Dashboard/GetMostClickedHospitalityAll",
+                            data: {
 
-                        ]);
-                    }
-                }
-            });
+                            },
+                            type: "GET",
+                            datatype: "json"
+                        }).done(function (data) {
+                 
+                          mchtable.clear().draw();
+                            for (var i = 0; i < data.length; i++) {
+                                $("#mch_call").dataTable().fnAddData([
+                                    "<td><p></p><p>" + data[i].business + "</p></td>",
+                                    "<td><p>" + data[i].count + "</p></td>",
+                                    "<td><p>" + data[i].total + "</p></td>",
+
+                                ]);
+                            }
+                            $.unblockUI();
+                        }).fail(function () {
+                            alert("There was an Error When Loading Data...");
+                        });
+                }, 100);
             $('#ShowGetMostClickModal').modal('show');
         });
         $('#mcr_vm').click(function () {
-           
-            var data = {};
-            data.day = $('#mcr').val();
-            $.ajax({
-                url: '/Dashboard/PostMostClickRestaurant',
-                data: {
-                    data: data,
-                },
-                type: "POST",
-                datatype: "json",
-                success: function (data) {
-              
-                      mcrtable.clear().draw();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#mcr_call").dataTable().fnAddData([
-                            "<td><p></p><p>" + data[i].business + "</p></td>",
-                            "<td><p>" + data[i].count + "</p></td>",
-                            "<td><p>" + data[i].total + "</p></td>",
+    
+             $.blockUI(reloadLoading);
+                setTimeout(function () {
+                    $.ajax(
+                        {
+                            url: "/Dashboard/GetMostClickRestaurantAll",
+                            data: {
 
-                        ]);
-                    }
-                }
-            });
+                            },
+                            type: "GET",
+                            datatype: "json"
+                        }).done(function (data) {
+                 
+                          
+                              mcrtable.clear().draw();
+                            for (var i = 0; i < data.length; i++) {
+                                $("#mcr_call").dataTable().fnAddData([
+                                    "<td><p></p><p>" + data[i].business + "</p></td>",
+                                    "<td><p>" + data[i].count + "</p></td>",
+                                    "<td><p>" + data[i].total + "</p></td>",
+
+                                ]);
+                            }
+                            $.unblockUI();
+                        }).fail(function () {
+                            alert("There was an Error When Loading Data...");
+                        });
+                }, 100);
             $('#ShowMostClickRestoModal').modal('show');
         });
         $('#cta-opt').change(function () {

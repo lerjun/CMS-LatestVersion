@@ -1154,10 +1154,13 @@ table.privTable td {
   font-size: clamp(0.5rem, 2vw, 0.7rem);
   color: var(--dark);
 }
+.dataTables_empty
+{
 
+}
 table.myTableMedium tbody tr td:nth-child(1) {
-    display: flex;
-    justify-content: start;
+    /*    display: flex;
+    justify-content: start;*/
     align-items: center;
     gap: 10px;
     text-overflow: ellipsis;
@@ -1206,13 +1209,23 @@ table.myTableMedium tbody tr td:nth-child(1) .actions {
   transition: all 0.3s ease-in;
   display: flex;
 }
-table.myTableMedium tbody tr td:nth-child(1) .actions_  {
+#datecreated
+{
+        margin-bottom: 0;
+    line-height: 1.5;
+    color: #C89328;
+}
+
+table.myTableMedium tbody tr td:nth-child(1) .actions_ {
     font-size: clamp(0.3rem, 2vw, 0.5rem);
     /* color: var(--shade); */
     opacity: 0;
     height: 0;
     transition: all 0.3s ease-in;
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
 }
 
 table.privTable tbody tr td:nth-child(1) .actions {
@@ -2979,16 +2992,15 @@ label {
 }
 
 .actions {
-  display: flex;
-  width: 100%;
-  justify-content: end;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
 }
 .actions_ {
     display: flex;
     width: 100%;
-    justify-content: flex-end;
     gap: 20px;
     flex-direction: row-reverse;
     align-items: center;

@@ -441,7 +441,7 @@ async function ShowMostClickStoreList() {
     setTimeout(function () {
         $.ajax(
             {
-                url: "/Dashboard/GetMostClickStoreAll",
+                url: "/Dashboard/GetMostClickStore",
                 data: {
 
                 },

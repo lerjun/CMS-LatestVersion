@@ -45,7 +45,7 @@
         </div>
         <div class="business-data">
           <div class="list-title">
-            <h3>Alfardan Businesses</h3>
+            <h3>Hotels</h3>
           </div>
      
           <table class="myTableLarge" id="b-table">
@@ -281,34 +281,33 @@
             </div>
             
           </div>
-          <div class="mod-form-row">
-            <div class="input-container-whole">
-              <label for="fname">Email</label>
-              <input type="email" value="" id="email" class="mod-input" />
-            </div>
-            <div class="input-container-whole">
-              <label for="lname">Url <span class="req" >*</span></label>
-              <input type="text" value="" id="Url" class="mod-input" required/>
-            </div>
-          </div>
+ 
 
           <div class="mod-form-row">
             <div class="input-container-whole">
               <label for="fname">Services</label>
-              <input type="text" value="" id="Services" class="mod-input" />
-            </div>
-            <div class="input-container-whole">
-             <label for="fname">Map <span class="req" >*</span></label>
-              <input type="text" value="" id="Map" class="mod-input" required />
+              @*<input type="text" value="" id="Services" class="mod-input" maxlength="255" placeholder="For multiple data please use {;} to seperate"/>*@
+                            <textarea id="Services" name="Services" rows="4" cols="50" class="mod-input" style="height: 70px;" placeholder="For multiple data please use {;} to seperate"></textarea>
             </div>
           </div>
+                    <div class="mod-form-row">
+                        <div class="input-container-whole">
+                            <label for="fname">Email</label>
+                            <input type="email" value="" id="email" class="mod-input" />
+                        </div>
+                        <div class="input-container-whole">
+                            <label for="lname">Url <span class="req">*</span></label>
+                            <input type="text" value="" id="Url" class="mod-input" required />
+                        </div>
+                    </div>
           <div class="mod-form-row">
             <div class="input-container-whole">
-              <label for="btype-option"> Business Type <span class="req" >*</span></label>
+             @* <label for="btype-option"> Business Type <span class="req" >*</span></label>
                 <select id="btype-option" class="mod-input" required >
 
-                </select>
-                 
+                </select>*@
+                  <label for="fname">Map <span class="req" >*</span></label>
+              <input type="text" value="" id="Map" class="mod-input" required />
             </div>
              <div class="input-container-whole">
               <label for="username">Business Location <span class="req" >*</span></label>
@@ -317,37 +316,21 @@
                 </select>
             </div>
           </div>
-         
-          <div class="actions">
-            <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
-            <input type="submit" value="Submit" id="bsave"/>
-          </div>
-           
-        </form>
-        
+           <div class="actions" style="align-items: center;">
+                        <div class="actionss">
+                            @* <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button> *@
+                            @* <input type="button" value="Add Mechanics" id="btn-register"/> <i class="fas fa-cogs"></i> *@
 
-                </div>
+                        </div>
+
+                        <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+                        <input type="submit" value="Submit" id="bsave" />
+                    </div>
+                    </form>
+                    </div>
             </div>
         </div>
     </div>
-             @* <div class="input-container-whole">
-              <form asp-controller="CMS" class="register-actions" asp-action="Index" method="post"
-                    enctype="multipart/form-data">
-                    <div class="file-upload" style="width:100%">
-                        <div class="file-select">
-                            <div class="file-select-button" id="fileName">Choose Image</div>
-                            <div class="file-select-name" id="noFile">No file chosen...</div>
-                            <input id="chooseFile" type="file" size="1" name="file" accept="excel/*"
-                                class="form-control-sm mb-1" multiple>
-                        </div>
-                         <button type="submit" class="upload-register" id="btnimport" data-toggle="tooltip"
-                        title="Upload Images">
-                        <i class="fas fa-upload"></i> Upload
-                    </button>
-                    </div>
-                   
-                </form> *@
-   
 
 @section Scripts{
       <script >
@@ -921,7 +904,16 @@
               data.city = $('#city').val();
               data.postalCode = $('#postal').val();
               data.Active = "5";
-               // 
+               //
+              let message="";
+              if(i_id != 0)
+              {
+                  message ='Are you sure you want to update business location?';
+              }
+              else
+              {
+                message = 'Are you sure you want to add new business location?';
+              }
               iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -929,7 +921,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to add new business location?',
+                            message: message,
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {
@@ -990,7 +982,15 @@
               data.isVIP = $('#vip-option').val();
               data.PromoText = $('#promoT').val();
               data.ImgURL=filename;
-               
+              let message="";
+              if(i_id != 0)
+              {
+                  message ='Are you sure you want to update business location?';
+              }
+              else
+              {
+                message = 'Are you sure you want to add new business location?';
+              }
                iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -998,7 +998,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to add new business type?',
+                message: message,
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {
@@ -1060,7 +1060,7 @@
               var data = {};
               data.id = i_id;
               data.businessName  = $("#hotelname").val();
-              data.TypeId  = $("#btype-option").val();
+              data.TypeId  = "1";
               data.LocationID  = $("#bloc-option").val();
               data.description  = $("#descrip").val();
               data.address  = $("#Address").val();
@@ -1080,6 +1080,13 @@
             }
             formData.append('file', files[0]);
             var fileUpload = $("#upload-img").get(0);
+            let message = "";
+            if (i_id != 0) {
+                message = 'Are you sure you want to update business location?';
+            }
+            else {
+                message = 'Are you sure you want to add new business location?';
+            }
             iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -1087,7 +1094,7 @@
                             id: 'question',
                             zindex: 999,
                             title: 'Confirmation',
-                            message: 'Are you sure you want to Add new business?',
+                message: message,
                             position: 'center',
                             buttons: [
                                 ['<button><b>YES</b></button>', function (instance, toast) {

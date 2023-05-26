@@ -168,10 +168,21 @@
               <input type="number" value="" id="vipcount" class="mod-input"  />
             </div>
           </div>
+@*
           <div class="actions">
-            <a  data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel" disabled>Cancel</a>
-            <input type="submit" value="Submit" id="_btn-register"/>
-          </div>
+                        <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancesl</u></a>
+                        <input type="submit" value="Submit" id="_btn-register" />
+                    </div>*@
+                    <div class="actions" style="align-items: center;">
+                        <div class="actionss">
+                            @* <button class="register" type="button" style ="margin-bottom: 5px;font-size: 13px;    padding: 5px 15px 5px 5px;height: 25px;font-size: clamp(0.5rem, 2vw, 0.7rem);" title="Add New" id="add Mechanics"><i class="fas fa-id-card"></i>Add Mechanics</button> *@
+                            @* <input type="button" value="Add Mechanics" id="btn-register"/> <i class="fas fa-cogs"></i> *@
+
+                        </div>
+
+                        <a data-dismiss="modal" aria-hidden="false" style="cursor:pointer" class="cancel"><u>Cancel</u></a>
+                        <input type="submit" value="Submit" id="_btn-register" />
+                    </div>
         </form>
 
 
@@ -187,17 +198,21 @@
             $(document).ready(function () {
                
                corptable = $('#_corporate-table').DataTable({
-                    "bPaginate": false,
-                    "bFilter": false,
-                    "stripeClasses": [],
-                    "ordering": false,
-                    "ordering": false,
-                    "info": false,
-                    "bInfo": false,
-                    "bAutoWidth": false,
-                    "bLengthChange": false, 
-                    "oLanguage": { "sZeroRecords": "", "sEmptyTable": ""
-                }});
+                "bPaginate": false,
+                "bFilter": false,
+                "stripeClasses": [],
+                "ordering": false,
+                "ordering": false,
+                "info": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "bLengthChange": false,
+                "paging": true,
+                "aLengthMenu": [4],
+                "searching": true
+                , "oLanguage": { "sZeroRecords": "", "sEmptyTable": "" }
+
+            });
                ShowCorporateDetails();
                CorpShowOptionMembership();
                CorpShowCorporateOption();

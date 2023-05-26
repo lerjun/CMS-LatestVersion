@@ -153,7 +153,7 @@
                 <div class="input-container-whole">
                   <label for="email">Description </label>
                   @* <input type="text" value="" id="description" class="mod-input" /> *@
-                  <textarea id="descrip" name="Address" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
+                            <textarea id="descrip" name="Description" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>
                 </div>
               </div>
               <div class="mod-form-row">
@@ -195,11 +195,11 @@
                       <div id="txtCont1" class="textCont">
                         <div id="parentTextContainer" class="parentTextContainer">
                           ●<textarea></textarea>
-                                        <button onclick="addTermsParent()" class="btnAddParentText">+</button>
+                                        <button onclick="addTermsParent()" type="button"  return false; class="btnAddParentText">+</button>
                         </div>
                         <div class="childTextContainer">
                           <div id="childTextContainer1" class="childTextItem">
-                            ○<textarea></textarea><button onclick="addChildParentText('1')" class="btnAddChildText">
+                            ○<textarea></textarea><button type="button" onclick="addChildParentText('1')"  return false; class="btnAddChildText">
                               +
                             </button>
                           </div>
@@ -215,15 +215,15 @@
                         @*<label for="tnc">Terms and Conditions <span class="req" >*</span></label>*@
                         @* <input type="text" value="" id="tnc" class="mod-input" />  *@
                         @*<textarea id="tnc" name="Terms and Condition" rows="4" cols="50" class="mod-input" style="height: 40px;"></textarea>*@
-                            <div class="textContainer">
+                            <div class="Mechanics">
                                 <div id="txtCont2" class="textCont">
                                     <div id="parentTextContainer" class="parentTextContainer">
                                         ●<textarea class="captureInput"></textarea>
-                                        <button onclick="addParentText()" class="btnAddParentText">+</button>
+                                        <button onclick="addParentText()" type="button"  return false; class="btnAddParentText">+</button>
                                     </div>
                                     <div class="childTextContainer">
                                         <div id="childTextContainer1" class="childTextItem">
-                                            ○<textarea></textarea><button onclick="addChildParentText('1')" class="btnAddChildText">
+                                            ○<textarea></textarea><button type="button"  return false; onclick="addChildParentText('1')" class="btnAddChildText">
                                                 +
                                             </button>
                                         </div>
@@ -495,13 +495,13 @@
               function addTermsParent() {
                 TermsAndConditions.append(`<div id="txtCont${textContainerCounter + 1
                     }" class="textCont"><div id="parentTextContainer" class="parentTextContainer">
-                                    ●<textarea></textarea>  <button onclick="removeParentTextContainer(${textContainerCounter + 1
+                                    ●<textarea></textarea>  <button type="button" return false; onclick="removeParentTextContainer(${textContainerCounter + 1
                     })" class="btnRemoveParentText">-</button>
                   </div>
                   <div class="childTextContainer" >
                     <div id="childTextContainer${textContainerCounter + 1
                     }" class="childTextItem">
-                                    ○<textarea></textarea><button onclick="addChildParentText('${textContainerCounter + 1
+                                    ○<textarea></textarea><button type="button" return false; onclick="addChildParentText('${textContainerCounter + 1
                     }')" class="btnAddChildText" >+</button>
                     </div></div></div>`);
                 textContainerCounter = textContainerCounter + 1;
@@ -509,24 +509,25 @@
             function addParentText() {
                 textContainer.append(`<div id="txtCont${textContainerCounter + 1
                     }" class="textCont"><div id="parentTextContainer" class="parentTextContainer">
-                                    ●<textarea></textarea>  <button onclick="removeParentTextContainer(${textContainerCounter + 1
+                                    ●<textarea></textarea>  <button  return false; onclick="removeParentTextContainer(${textContainerCounter + 1
                     })" class="btnRemoveParentText">-</button>
                   </div>
                   <div class="childTextContainer" >
                     <div id="childTextContainer${textContainerCounter + 1
                     }" class="childTextItem">
-                                    ○<textarea></textarea><button onclick="addChildParentText('${textContainerCounter + 1
+                                                ○<textarea></textarea><button return false; onclick="addChildParentText('${textContainerCounter + 1
                     }')" class="btnAddChildText" >+</button>
                     </div></div></div>`);
                 textContainerCounter = textContainerCounter + 1;
             }
             function addChildParentText(count) {
+               
                 console.log("#textCont" + count);
                 $("#txtCont" + count + " .childTextContainer")
                     .append(` <div id="childTextContainer${count + 1
                         }" class="childTextItem">
                         ○<textarea></textarea>
-                        <button onclick="removeChildTextContainer('${count + 1
+                        <button  return false; onclick="removeChildTextContainer('${count + 1
                         }')" class="btnRemoveChildText">-</button>
                   </div>`);
             }
@@ -611,33 +612,29 @@ $("#checkAll2").click(function () {
                     {
                       filename = img_edit;
                     }
-                    var image = "";
-                    //$('.TermsAndConditions').find('input:text, input:password, input:file, select, textarea').each(function () {
-                    //   image += $(this).val();
-                    //});
+                    var termsandconditions = "";
+                    var mecha = "";
+            
 
                     $('.TermsAndConditions').find('input:text, input:password, input:file, select, textarea').each(function (index, value) {
-                        image += $(this).val()+"%";
+                        termsandconditions += $(this).val() + "^";
                     });
-                    console.log(image);
-                  //var inputValues = $('#TermsAndConditions :textarea').map(function() {
-                  //      return $(this).val();
-
-                        
-                  //  })
-                  //  console.log(inputValues);
+                    console.log(termsandconditions);
+                    $('.Mechanics').find('input:text, input:password, input:file, select, textarea').each(function (index, value) {
+                        mecha += $(this).val() + "^";
+                    });
                       var data={};
                       data.id = i_id;
                       data.Title =$('#title').val();
-                      data.Description =$('#description').val();
-                      data.Mechanics =$('#mechanics').val();
+                    data.Description = $('#descrip').val();
+                    data.Mechanics = mecha;
                       data.Validity =$('#validity').val();
                       data.NoExpiry =$('#NoExpiry').val();
                       data.ImgUrl =filename;
                       data.VendorID =$('#vendor-option').val();
                       data.isVIP =$('#isVIP').val();
                       data.BusinessTypeID =$('#btype-option').val();
-                      data.tmc =$('#tnc').val();
+                      data.tmc =termsandconditions;
                       data.Active = 5;
                        
 
@@ -648,12 +645,7 @@ $("#checkAll2").click(function () {
                       var fileUpload = $("#upload-img").get(0);
                       console.log(formData);
            
-                          if (files.length > 0) {
-                          if (files[0].size > 500000) {
-                              notifyMsg('Warning!', 'Uploaded image reached the maximum file size. Image size should be maximum of 500 KB.', 'yellow', 'fas fa-exclamation-triangle');
-                              return false;
-                          }
-                    
+                    console.log(data);
                      iziToast.question({
                             timeout: 20000,
                             close: false,
@@ -693,8 +685,8 @@ $("#checkAll2").click(function () {
 
                                 }],
                             ]
-                        });
-                    }   
+                       });
+                    
                     });
                      $('#mem-submit').submit(function(e){
                     e.preventDefault();
@@ -1079,7 +1071,7 @@ function CheckedRows() {
                       data.vipCount = vipcount; *@
                       var data = {};
                       data.IdList = CheckedRows();
-                       
+         
                       iziToast.question({
                           timeout: 20000,
                           close: false,
@@ -1101,7 +1093,7 @@ function CheckedRows() {
                                       type: "POST",
                                       datatype: "json"
                                   }).done(function (data) {
-                                       
+                                console.log(data);
                                       if(data.stats == "Duplicate Entry")
                                       {
                                     notifyMsg('Warning!', data.stats, 'red', 'fas fa-exclamation-triangle');

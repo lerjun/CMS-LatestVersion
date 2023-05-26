@@ -15,7 +15,7 @@
             // return "ec2-35-79-24-148.ap-northeast-1.compute.amazonaws.com"; // live AWS
             // return "http://172.31.17.67"; // live
            //return "http://ec2-43-204-237-103.ap-south-1.compute.amazonaws.com:8082"; // live AOPC
-            //return "https://api.alfardanoysterprivilegeclub.com"; // live AOPC
+        //    return "https://api.alfardanoysterprivilegeclub.com"; // live AOPC
             // return "https://43.204.237.103"; // live ALFARDAN 
             //  return "http://192.168.100.90"; // local 
            
@@ -25,7 +25,7 @@
         private static string GetPath()
         {
            return    "C:\\Files\\";
-          //return "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
+         // return "C:\\inetpub\\AOPCAPP\\public\\assets\\img\\";
         }
 
         public static string ConnectionString
